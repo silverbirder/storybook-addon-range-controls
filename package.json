@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "description": "Stress-test Storybook components with seeded, edge-case args.tress-test Storybook components with seeded, edge-case args.",
   "keywords": [
-    "storybook-addons", "testing", "visual-testing", "stress", "storybook-addons"
+    "storybook-addons",
+    "testing",
+    "visual-testing",
+    "stress",
+    "storybook-addons"
   ],
   "repository": {
     "type": "git",
