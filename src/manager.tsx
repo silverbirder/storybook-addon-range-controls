@@ -27,13 +27,13 @@ addons.register(ADDON_ID, (api) => {
     type: types.PANEL,
     title: "My addon",
     match: ({ viewMode }) => viewMode === "story",
-    render: ({ active }) => <Panel active={active} />,
+    render: ({ active }) => <Panel active={active ?? false} />,
   });
 
   // Register a tab
   addons.add(TAB_ID, {
     type: types.TAB,
     title: "My addon",
-    render: ({ active }) => <Tab active={active} />,
+    render: ({ active }) => <Tab active={active ?? false} />,
   });
 });

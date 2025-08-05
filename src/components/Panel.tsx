@@ -1,11 +1,11 @@
 import React, { Fragment, memo, useCallback, useState } from "react";
-import { Result } from "src/types";
-import { AddonPanel } from "storybook/internal/components";
+import type { Result, StressAddonParameters } from "src/types";
+import { AddonPanel, Code } from "storybook/internal/components";
 import { Button, Placeholder, TabsState } from "storybook/internal/components";
-import { useChannel } from "storybook/manager-api";
+import { useChannel, useParameter } from "storybook/manager-api";
 import { styled, useTheme } from "storybook/theming";
 
-import { EVENTS } from "../constants";
+import { EVENTS, KEY } from "../constants";
 import { List } from "./List";
 
 interface PanelProps {
@@ -17,6 +17,10 @@ export const RequestDataButton = styled(Button)({
 });
 
 export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
+  const config = useParameter<StressAddonParameters>(KEY, {
+    enabled: false,
+    message: "No parameters configured",
+  });
   const theme = useTheme();
 
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
@@ -44,11 +48,11 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
       >
         <div id="overview" title="Overview" color={theme.color.positive}>
           <Placeholder>
-            <Fragment>
-              Addons can gather details about how a story is rendered. This is
-              panel uses a tab pattern. Click the button below to fetch data for
-              the other two tabs.
-            </Fragment>
+            <Code>
+              {typeof config === "string"
+                ? config
+                : JSON.stringify(config, null, 2)}
+            </Code>
             <Fragment>
               <RequestDataButton onClick={fetchData}>
                 Request data

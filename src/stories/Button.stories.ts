@@ -16,11 +16,12 @@ const meta: Meta<typeof Button> = {
   },
   tags: ["autodocs"],
   parameters: {
-    myAddonParameter: `
-<MyComponent boolProp scalarProp={1} complexProp={{ foo: 1, bar: '2' }}>
-  <SomeOtherComponent funcProp={(a) => a.id} />
-</MyComponent>
-`,
+    "my-addon": {
+      enabled: true,
+      message: "Default stress test configuration",
+      iterations: 5,
+      delay: 100,
+    },
   },
 };
 
@@ -34,11 +35,25 @@ export const Primary: Story = {
     primary: true,
     label: "Button",
   },
+  parameters: {
+    "my-addon": {
+      enabled: true,
+      message: "Primary button stress test",
+      iterations: 10,
+      delay: 50,
+    },
+  },
 };
 
 export const Secondary: Story = {
   args: {
     label: "Button",
+  },
+  parameters: {
+    "my-addon": {
+      enabled: false,
+      message: "Secondary button - stress test disabled",
+    },
   },
 };
 
@@ -46,6 +61,14 @@ export const Large: Story = {
   args: {
     size: "large",
     label: "Button",
+  },
+  parameters: {
+    "my-addon": {
+      enabled: true,
+      message: "Large button stress test with custom settings",
+      iterations: 3,
+      delay: 200,
+    },
   },
 };
 

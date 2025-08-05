@@ -1,4 +1,4 @@
-import { Result } from "src/types";
+import type { Result } from "src/types";
 import { useEffect, useChannel } from "storybook/preview-api";
 import type { DecoratorFunction } from "storybook/internal/types";
 

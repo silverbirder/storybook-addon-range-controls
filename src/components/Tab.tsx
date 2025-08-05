@@ -5,6 +5,7 @@ import { useGlobals, useParameter } from "storybook/manager-api";
 import { styled } from "storybook/theming";
 
 import { KEY } from "../constants";
+import type { StressAddonParameters } from "../types";
 
 interface TabProps {
   active: boolean;
@@ -25,9 +26,9 @@ const TabInner = styled.div({
 
 export const Tab: React.FC<TabProps> = ({ active }) => {
   // https://storybook.js.org/docs/react/addons/addons-api#useparameter
-  const config = useParameter<string>(
+  const config = useParameter<StressAddonParameters>(
     KEY,
-    "fallback value of config from parameter",
+    { enabled: false, message: "No parameters configured" },
   );
 
   // https://storybook.js.org/docs/addons/addons-api#useglobals
@@ -59,7 +60,7 @@ export const Tab: React.FC<TabProps> = ({ active }) => {
           <code>&lt;Code /&gt;</code> component below. Or build a completely
           custom UI.
         </p>
-        <Code>{config}</Code>
+        <Code>{typeof config === 'string' ? config : JSON.stringify(config, null, 2)}</Code>
         <p>
           You can also have interactive UI here, like a button that updates a
           global:{" "}
