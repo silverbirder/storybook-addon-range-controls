@@ -21,6 +21,21 @@ const meta: Meta<typeof Button> = {
       message: "Default stress test configuration",
       iterations: 5,
       delay: 100,
+      propsConfig: {
+        label: {
+          type: "string",
+          length: 20,
+        },
+        size: {
+          type: "string",
+        },
+        primary: {
+          type: "boolean",
+        },
+        backgroundColor: {
+          type: "string",
+        },
+      },
     },
   },
 };
@@ -41,6 +56,18 @@ export const Primary: Story = {
       message: "Primary button stress test",
       iterations: 10,
       delay: 50,
+      propsConfig: {
+        label: {
+          type: "string",
+          length: 30,
+        },
+        primary: {
+          type: "boolean",
+        },
+        backgroundColor: {
+          type: "string",
+        },
+      },
     },
   },
 };
