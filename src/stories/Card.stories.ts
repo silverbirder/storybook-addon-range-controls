@@ -6,8 +6,6 @@ const meta: Meta<typeof Card> = {
   component: Card,
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Card stress test configuration",
       propsConfig: {
         title: {
           type: "string",
@@ -83,8 +81,6 @@ export const Draft: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Draft card stress test",
       propsConfig: {
         title: {
           type: "string",

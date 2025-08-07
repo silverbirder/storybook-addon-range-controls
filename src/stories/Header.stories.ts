@@ -8,8 +8,6 @@ const meta: Meta<typeof Header> = {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
     "my-addon": {
-      enabled: true,
-      message: "Header stress test configuration",
       propsConfig: {
         user: {
           name: {
@@ -33,8 +31,6 @@ export const LoggedIn: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "LoggedIn header stress test",
       propsConfig: {
         user: {
           name: {

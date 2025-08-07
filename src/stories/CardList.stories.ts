@@ -76,8 +76,6 @@ const meta: Meta<typeof CardList> = {
   parameters: {
     layout: "fullscreen",
     "my-addon": {
-      enabled: true,
-      message: "CardList stress test configuration",
       propsConfig: {
         cards: {
           type: "array",
@@ -160,8 +158,6 @@ export const GridLayout: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Grid layout stress test",
       propsConfig: {
         cards: {
           type: "array",
@@ -228,8 +224,6 @@ export const ListLayout: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "List layout stress test",
       propsConfig: {
         cards: {
           type: "array",
@@ -283,8 +277,6 @@ export const ManyCards: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Many cards stress test - test layout breaking",
       propsConfig: {
         cards: {
           type: "array",
@@ -353,8 +345,6 @@ export const FilteredCards: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Filtered cards stress test",
       propsConfig: {
         cards: {
           type: "array",
@@ -386,8 +376,6 @@ export const EmptyState: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Empty state stress test",
       propsConfig: {
         cards: {
           type: "array",
@@ -448,8 +436,6 @@ export const ExtremeLongContent: Story = {
   },
   parameters: {
     "my-addon": {
-      enabled: true,
-      message: "Extreme content length stress test",
       propsConfig: {
         cards: {
           type: "array",
