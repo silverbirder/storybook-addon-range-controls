@@ -25,12 +25,10 @@ const PropLabel = styled.label({
   display: "block",
   fontWeight: "bold",
   marginBottom: "8px",
-  color: "#333",
 });
 
 const PropValue = styled.div({
   fontSize: "12px",
-  color: "#666",
   marginBottom: "8px",
 });
 
@@ -226,9 +224,7 @@ const PropControl: React.FC<{
                   <div>Length: {localValue.length}</div>
                 </>
               )}
-              <div
-                style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}
-              >
+              <div style={{ fontSize: "12px", marginBottom: "8px" }}>
                 Array with {localValue.length} items
               </div>
 
@@ -290,7 +286,6 @@ const PropControl: React.FC<{
                     <div
                       style={{
                         fontSize: "12px",
-                        color: "#666",
                         fontStyle: "italic",
                       }}
                     >
