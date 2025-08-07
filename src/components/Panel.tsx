@@ -24,8 +24,8 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
 
   return (
     <AddonPanel {...props}>
-      <div id="props" title="Props Stress Test" color={theme.color.primary}>
-        {config.propsConfig && (
+      <div color={theme.color.primary}>
+        {config.propsConfig && args && (
           <PropControls
             args={args}
             propConfigs={config.propsConfig}
