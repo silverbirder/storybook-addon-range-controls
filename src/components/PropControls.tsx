@@ -10,7 +10,7 @@ interface PropControlsProps {
 
 const Container = styled.div({
   padding: "16px",
-  maxHeight: "400px",
+  maxHeight: "99999px",
   overflowY: "auto",
 });
 
