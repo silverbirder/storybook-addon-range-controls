@@ -45,59 +45,6 @@ const NestedContainer = styled.div({
   paddingLeft: "12px",
 });
 
-const generateRandomValue = (config: PropConfig, currentValue: any): any => {
-  switch (config.type) {
-    case "string":
-      const length = config.length || Math.floor(Math.random() * 50) + 1;
-      return Array.from({ length }, () =>
-        String.fromCharCode(Math.floor(Math.random() * 26) + 97),
-      ).join("");
-
-    case "number":
-      const min = config.min || 0;
-      const max = config.max || 100;
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-
-    case "boolean":
-      return Math.random() > 0.5;
-
-    case "array":
-      const arrayLength = config.length || Math.floor(Math.random() * 10) + 1;
-      // Try to preserve the structure of existing array items
-      if (Array.isArray(currentValue) && currentValue.length > 0) {
-        const sampleItem = currentValue[0];
-        return Array.from({ length: arrayLength }, (_, i) => {
-          if (typeof sampleItem === "object" && sampleItem !== null) {
-            // For complex objects (like Card data), generate similar structure
-            if ("id" in sampleItem && "title" in sampleItem) {
-              return {
-                ...sampleItem,
-                id: `generated-${i + 1}`,
-                title: `Generated Card ${i + 1}`,
-                description: `This is a generated description for item ${i + 1}`,
-                tags: Array.isArray(sampleItem.tags)
-                  ? [...sampleItem.tags.slice(0, 2), `Gen${i}`]
-                  : [`Tag${i}`],
-                rating: Math.round((Math.random() * 4 + 1) * 10) / 10,
-              };
-            } else {
-              // For other objects, create similar structure
-              return { ...sampleItem, id: `generated-${i + 1}` };
-            }
-          } else {
-            // For primitive items
-            return `Generated Item ${i + 1}`;
-          }
-        });
-      } else {
-        return Array.from({ length: arrayLength }, (_, i) => `Item ${i + 1}`);
-      }
-
-    default:
-      return currentValue;
-  }
-};
-
 const PropControl: React.FC<{
   propKey: string;
   value: any;
@@ -384,21 +331,6 @@ const PropControl: React.FC<{
       <PropLabel>{propKey}</PropLabel>
       <PropValue>Type: {propConfig.type}</PropValue>
       {renderControl()}
-      <button
-        onClick={() =>
-          handleChange(generateRandomValue(propConfig, localValue))
-        }
-        style={{
-          marginTop: "8px",
-          padding: "4px 8px",
-          fontSize: "12px",
-          border: "1px solid #ccc",
-          borderRadius: "3px",
-          cursor: "pointer",
-        }}
-      >
-        Random
-      </button>
     </PropGroup>
   );
 });
