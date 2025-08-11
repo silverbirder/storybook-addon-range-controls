@@ -10,6 +10,7 @@ export interface PropConfig {
   step?: number;
   length?: number;
   items?: PropConfigs;
+  defaultItem?: any | ((index: number) => any);
 }
 
 export interface PropConfigs {

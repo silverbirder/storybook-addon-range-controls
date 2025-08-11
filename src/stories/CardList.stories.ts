@@ -80,6 +80,19 @@ const meta: Meta<typeof CardList> = {
         cards: {
           type: "array",
           length: 50,
+          defaultItem: (index: number) => ({
+            id: `card-${index + 1}`,
+            title: "x",
+            description: "x",
+            tags: [`Tag${(index % 5) + 1}`],
+            rating: 0,
+            isPublished: false,
+            metadata: {
+              author: "x",
+              publishedDate: "2024-01-01",
+              category: "x",
+            },
+          }),
           items: {
             title: {
               type: "string",
@@ -92,6 +105,7 @@ const meta: Meta<typeof CardList> = {
             tags: {
               type: "array",
               length: 10,
+              defaultItem: "x",
             },
             rating: {
               type: "number",
@@ -155,299 +169,5 @@ export const GridLayout: Story = {
     showFilters: true,
     sortBy: "title",
     sortOrder: "asc",
-  },
-  parameters: {
-    "my-addon": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          length: 20,
-          items: {
-            title: {
-              type: "string",
-              length: 80,
-            },
-            description: {
-              type: "string",
-              length: 300,
-            },
-            tags: {
-              type: "array",
-              length: 8,
-            },
-            rating: {
-              type: "number",
-              min: 1,
-              max: 5,
-              step: 0.5,
-            },
-            isPublished: {
-              type: "boolean",
-            },
-            metadata: {
-              author: {
-                type: "string",
-                length: 40,
-              },
-              publishedDate: {
-                type: "string",
-                length: 15,
-              },
-              category: {
-                type: "string",
-                length: 25,
-              },
-            },
-          },
-        },
-        maxColumns: {
-          type: "number",
-          min: 1,
-          max: 5,
-          step: 1,
-        },
-        showFilters: {
-          type: "boolean",
-        },
-      },
-    },
-  },
-};
-
-export const ListLayout: Story = {
-  args: {
-    cards: generateSampleCards(4),
-    layout: "list",
-    showFilters: true,
-    sortBy: "rating",
-    sortOrder: "desc",
-  },
-  parameters: {
-    "my-addon": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          length: 15,
-          items: {
-            title: {
-              type: "string",
-              length: 60,
-            },
-            description: {
-              type: "string",
-              length: 200,
-            },
-            tags: {
-              type: "array",
-              length: 6,
-            },
-            rating: {
-              type: "number",
-              min: 0,
-              max: 5,
-              step: 0.2,
-            },
-            isPublished: {
-              type: "boolean",
-            },
-          },
-        },
-        showFilters: {
-          type: "boolean",
-        },
-        sortBy: {
-          type: "string",
-        },
-        sortOrder: {
-          type: "string",
-        },
-      },
-    },
-  },
-};
-
-export const ManyCards: Story = {
-  args: {
-    cards: generateSampleCards(12),
-    layout: "grid",
-    maxColumns: 4,
-    showFilters: true,
-    sortBy: "date",
-    sortOrder: "desc",
-  },
-  parameters: {
-    "my-addon": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          length: 100,
-          items: {
-            title: {
-              type: "string",
-              length: 150,
-            },
-            description: {
-              type: "string",
-              length: 800,
-            },
-            tags: {
-              type: "array",
-              length: 15,
-            },
-            rating: {
-              type: "number",
-              min: 0,
-              max: 5,
-              step: 0.1,
-            },
-            isPublished: {
-              type: "boolean",
-            },
-            metadata: {
-              author: {
-                type: "string",
-                length: 60,
-              },
-              publishedDate: {
-                type: "string",
-                length: 25,
-              },
-              category: {
-                type: "string",
-                length: 40,
-              },
-            },
-          },
-        },
-        maxColumns: {
-          type: "number",
-          min: 1,
-          max: 8,
-          step: 1,
-        },
-        showFilters: {
-          type: "boolean",
-        },
-      },
-    },
-  },
-};
-
-export const FilteredCards: Story = {
-  args: {
-    cards: generateSampleCards(8),
-    layout: "grid",
-    maxColumns: 3,
-    showFilters: true,
-    filterByCategory: "Technology",
-    sortBy: "rating",
-    sortOrder: "desc",
-  },
-  parameters: {
-    "my-addon": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          length: 30,
-        },
-        filterByCategory: {
-          type: "string",
-        },
-        maxColumns: {
-          type: "number",
-          min: 1,
-          max: 6,
-          step: 1,
-        },
-        showFilters: {
-          type: "boolean",
-        },
-      },
-    },
-  },
-};
-
-export const EmptyState: Story = {
-  args: {
-    cards: [],
-    layout: "grid",
-    maxColumns: 3,
-    showFilters: true,
-  },
-  parameters: {
-    "my-addon": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          length: 10,
-        },
-        showFilters: {
-          type: "boolean",
-        },
-      },
-    },
-  },
-};
-
-export const ExtremeLongContent: Story = {
-  args: {
-    cards: [
-      {
-        id: "extreme-1",
-        title:
-          "This is an extremely long title that should test how the card component handles very long text content and whether it breaks the layout or maintains proper formatting",
-        description:
-          "This is an extremely long description that contains a lot of text to test how the component handles lengthy content. It should wrap properly and not break the layout. This description continues with even more text to really stress test the component's ability to handle large amounts of content without breaking the design or causing overflow issues.",
-        tags: [
-          "VeryLongTagName",
-          "AnotherExtremelyLongTagThatShouldTestWrapping",
-          "Tag3",
-          "Tag4",
-          "Tag5",
-          "Tag6",
-          "Tag7",
-          "Tag8",
-        ],
-        rating: 4.8,
-        metadata: {
-          author: "John Doe with a Very Long Name That Might Cause Issues",
-          publishedDate: "2024-01-15",
-          category: "Technology with Very Long Category Name",
-        },
-        isPublished: true,
-      },
-      {
-        id: "extreme-2",
-        title: "Short",
-        description: "Short desc.",
-        tags: ["A"],
-        rating: 1.0,
-        metadata: {
-          author: "X",
-          publishedDate: "2024-01-01",
-          category: "Tech",
-        },
-        isPublished: false,
-      },
-    ],
-    layout: "grid",
-    maxColumns: 2,
-    showFilters: true,
-  },
-  parameters: {
-    "my-addon": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          length: 5,
-        },
-        maxColumns: {
-          type: "number",
-          min: 1,
-          max: 4,
-          step: 1,
-        },
-      },
-    },
   },
 };

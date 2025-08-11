@@ -1,54 +1,25 @@
 import type {
   Renderer,
+  StoryContext,
   PartialStoryFn as StoryFunction,
 } from "storybook/internal/types";
+import { useEffect, useChannel } from "storybook/preview-api";
+import { EVENTS, KEY } from "./constants";
+import { serializeFunctions } from "./utils/serialize";
 
 export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
-  // context: StoryContext<Renderer>,
+  context: StoryContext<Renderer>,
 ) => {
-  // const [globals] = useGlobals();
-  // const myAddon = globals[KEY];
-  // const canvas = context.canvasElement as ParentNode;
+  const emit = useChannel({});
 
-  // Is the addon being used in the docs panel
-  // const isInDocs = context.viewMode === "docs";
-
-  // useEffect(() => {
-  //   if (!isInDocs) {
-  //     addExtraContentToStory(canvas, {
-  //       myAddon,
-  //     });
-  //   }
-  // }, [myAddon, isInDocs]);
+  useEffect(() => {
+    const params = context.parameters?.[KEY];
+    if (params) {
+      const serialized = JSON.stringify(serializeFunctions(params));
+      emit(EVENTS.PARAMETERS_SYNC, serialized);
+    }
+  }, [context.id, context.parameters]);
 
   return StoryFn();
 };
-
-/**
- * It's not really recommended to inject content into the canvas like this.
- * But there are use cases
- */
-// function addExtraContentToStory(canvas: ParentNode, state: Object) {
-//   const preElement =
-//     canvas.querySelector(`[data-id="${KEY}"]`) ||
-//     canvas.appendChild(document.createElement("pre"));
-
-//   preElement.setAttribute("data-id", KEY);
-//   preElement.setAttribute(
-//     "style",
-//     `
-//     margin-top: 1rem;
-//     padding: 1rem;
-//     background-color: #eee;
-//     border-radius: 3px;
-//     overflow: scroll;
-//   `,
-//   );
-
-//   preElement.innerHTML = `This snippet is injected by the withGlobals decorator.
-// It updates as the user interacts with the ⚡ or Theme tools in the toolbar above.
-
-// ${JSON.stringify(state, null, 2)}
-// `;
-// }

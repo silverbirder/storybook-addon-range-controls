@@ -9,4 +9,5 @@ export const EVENTS = {
   REQUEST: `${ADDON_ID}/request`,
   UPDATE_ARGS: `${ADDON_ID}/update-args`,
   ARGS_UPDATED: `${ADDON_ID}/args-updated`,
+  PARAMETERS_SYNC: `${ADDON_ID}/parameters-sync`,
 };
