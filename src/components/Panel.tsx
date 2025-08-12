@@ -5,7 +5,7 @@ import { useParameter, useArgs, useChannel } from "storybook/manager-api";
 import { useTheme } from "storybook/theming";
 
 import { KEY, EVENTS } from "../constants";
-import { PropControls } from "./NewPropControls";
+import { PropControls } from "./PropControls";
 import { reviveFunctions } from "../utils/serialize";
 
 interface PanelProps {

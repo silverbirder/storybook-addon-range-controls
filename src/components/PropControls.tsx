@@ -1,343 +1,36 @@
-import React, { memo, useCallback, useState, useEffect } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { styled } from "storybook/theming";
+import { Badge, Button } from "storybook/internal/components";
 import type { PropConfig, PropConfigs } from "../types";
 
-interface PropControlsProps {
+type Props = {
   args: Record<string, any>;
   propConfigs: PropConfigs;
   onArgsChange: (newArgs: Record<string, any>) => void;
-}
+};
 
-const Container = styled.div({
-  padding: "16px",
-  maxHeight: "99999px",
-  overflowY: "auto",
-});
-
-const PropGroup = styled.div({
-  marginBottom: "16px",
-  border: "1px solid #e0e0e0",
-  borderRadius: "4px",
-  padding: "12px",
-});
-
-const PropLabel = styled.label({
-  display: "block",
-  fontWeight: "bold",
-  marginBottom: "8px",
-});
-
-const PropValue = styled.div({
-  fontSize: "12px",
-  marginBottom: "8px",
-});
-
-const RangeInput = styled.input({
-  width: "100%",
-  marginBottom: "8px",
-});
-
-const NestedContainer = styled.div({
-  marginLeft: "16px",
-  borderLeft: "2px solid #e0e0e0",
-  paddingLeft: "12px",
-});
-
-const PropControl: React.FC<{
-  propKey: string;
-  value: any;
-  config: PropConfig | PropConfigs;
-  onValueChange: (newValue: any) => void;
-  level?: number;
-}> = memo(({ propKey, value, config, onValueChange, level = 0 }) => {
-  const [localValue, setLocalValue] = useState(value);
-
-  useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
-
-  const handleChange = useCallback(
-    (newValue: any) => {
-      setLocalValue(newValue);
-      onValueChange(newValue);
-    },
-    [onValueChange],
-  );
-
-  // If config is PropConfigs (nested object), render nested controls
-  if (typeof config === "object" && !("type" in config)) {
-    if (typeof value !== "object" || value === null) {
-      return (
-        <PropGroup>
-          <PropLabel>{propKey}</PropLabel>
-          <PropValue>Invalid object value</PropValue>
-        </PropGroup>
-      );
-    }
-
-    return (
-      <PropGroup>
-        <PropLabel>{propKey}</PropLabel>
-        <NestedContainer>
-          {Object.entries(config).map(([nestedKey, nestedConfig]) => (
-            <PropControl
-              key={nestedKey}
-              propKey={nestedKey}
-              value={value[nestedKey]}
-              config={nestedConfig}
-              onValueChange={(newNestedValue) => {
-                const newValue = { ...value, [nestedKey]: newNestedValue };
-                handleChange(newValue);
-              }}
-              level={level + 1}
-            />
-          ))}
-        </NestedContainer>
-      </PropGroup>
-    );
-  }
-
-  // Handle primitive prop controls
-  const propConfig = config as PropConfig;
-
-  const renderControl = () => {
-    switch (propConfig.type) {
-      case "string":
-        if (propConfig.length) {
-          return (
-            <>
-              <RangeInput
-                type="range"
-                min="1"
-                max={propConfig.length * 2}
-                value={String(localValue).length}
-                onChange={(e) => {
-                  const targetLength = parseInt(e.target.value);
-                  const newValue =
-                    targetLength > String(localValue).length
-                      ? String(localValue).padEnd(targetLength, "x")
-                      : String(localValue).slice(0, targetLength);
-                  handleChange(newValue);
-                }}
-              />
-              <div>Length: {String(localValue).length}</div>
-            </>
-          );
-        }
-        return (
-          <input
-            type="text"
-            value={String(localValue)}
-            onChange={(e) => handleChange(e.target.value)}
-            style={{ width: "100%" }}
-          />
-        );
-
-      case "number":
-        const min = propConfig.min || 0;
-        const max = propConfig.max || 100;
-        const step = propConfig.step || 1;
-        return (
-          <>
-            <RangeInput
-              type="range"
-              min={min}
-              max={max}
-              step={step}
-              value={Number(localValue) || min}
-              onChange={(e) => handleChange(Number(e.target.value))}
-            />
-            <div>Value: {localValue}</div>
-          </>
-        );
-
-      case "boolean":
-        return (
-          <input
-            type="checkbox"
-            checked={Boolean(localValue)}
-            onChange={(e) => handleChange(e.target.checked)}
-          />
-        );
-
-      case "array":
-        if (Array.isArray(localValue)) {
-          return (
-            <>
-              {propConfig.length && (
-                <>
-                  <RangeInput
-                    type="range"
-                    min="0"
-                    max={propConfig.length * 2}
-                    value={localValue.length}
-                    onChange={(e) => {
-                      const targetLength = parseInt(e.target.value);
-                      const newArray = Array.isArray(localValue)
-                        ? [...localValue]
-                        : [];
-                      if (targetLength > newArray.length) {
-                        for (let i = newArray.length; i < targetLength; i++) {
-                          // Try to preserve the structure of existing items
-                          if (newArray.length > 0) {
-                            const sampleItem = newArray[0];
-                            if (
-                              typeof sampleItem === "object" &&
-                              sampleItem !== null
-                            ) {
-                              // Handle Card-like objects
-                              if ("id" in sampleItem && "title" in sampleItem) {
-                                newArray.push({
-                                  ...sampleItem,
-                                  id: `item-${i + 1}`,
-                                  title: `Generated Card ${i + 1}`,
-                                  description: `Generated description for item ${i + 1}`,
-                                  tags: Array.isArray(sampleItem.tags)
-                                    ? [
-                                        ...sampleItem.tags.slice(0, 2),
-                                        `Gen${i}`,
-                                      ]
-                                    : [`Tag${i}`],
-                                  rating:
-                                    Math.round((Math.random() * 4 + 1) * 10) /
-                                    10,
-                                });
-                              } else {
-                                newArray.push({
-                                  ...sampleItem,
-                                  id: `item-${i + 1}`,
-                                });
-                              }
-                            } else {
-                              newArray.push(`Item ${i + 1}`);
-                            }
-                          } else {
-                            newArray.push(`Item ${i + 1}`);
-                          }
-                        }
-                      } else {
-                        newArray.splice(targetLength);
-                      }
-                      handleChange(newArray);
-                    }}
-                  />
-                  <div>Length: {localValue.length}</div>
-                </>
-              )}
-              <div style={{ fontSize: "12px", marginBottom: "8px" }}>
-                Array with {localValue.length} items
-              </div>
-
-              {/* Show individual array item controls if items config is provided */}
-              {propConfig.items && localValue.length > 0 && (
-                <NestedContainer>
-                  <div
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    Edit Individual Items:
-                  </div>
-                  {localValue
-                    .slice(0, Math.min(5, localValue.length))
-                    .map((item, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          marginBottom: "12px",
-                          border: "1px solid #ddd",
-                          borderRadius: "4px",
-                          padding: "8px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "bold",
-                            marginBottom: "4px",
-                          }}
-                        >
-                          Item {index + 1}
-                        </div>
-                        {Object.entries(propConfig.items!).map(
-                          ([itemKey, itemConfig]) => (
-                            <PropControl
-                              key={`${index}-${itemKey}`}
-                              propKey={itemKey}
-                              value={item?.[itemKey]}
-                              config={itemConfig}
-                              onValueChange={(newItemValue) => {
-                                const newArray = [...localValue];
-                                newArray[index] = {
-                                  ...newArray[index],
-                                  [itemKey]: newItemValue,
-                                };
-                                handleChange(newArray);
-                              }}
-                              level={level + 1}
-                            />
-                          ),
-                        )}
-                      </div>
-                    ))}
-                  {localValue.length > 5 && (
-                    <div
-                      style={{
-                        fontSize: "12px",
-                        fontStyle: "italic",
-                      }}
-                    >
-                      Showing first 5 items. Total: {localValue.length}
-                    </div>
-                  )}
-                </NestedContainer>
-              )}
-            </>
-          );
-        } else {
-          return (
-            <>
-              <div>Invalid array value - resetting</div>
-              <button
-                onClick={() => handleChange([])}
-                style={{
-                  padding: "4px 8px",
-                  fontSize: "12px",
-                  border: "1px solid #ccc",
-                  borderRadius: "3px",
-                  cursor: "pointer",
-                }}
-              >
-                Reset to empty array
-              </button>
-            </>
-          );
-        }
-
-      default:
-        return <div>Unsupported type: {propConfig.type}</div>;
-    }
-  };
-
-  return (
-    <PropGroup>
-      <PropLabel>{propKey}</PropLabel>
-      <PropValue>Type: {propConfig.type}</PropValue>
-      {renderControl()}
-    </PropGroup>
-  );
-});
-
-export const PropControls: React.FC<PropControlsProps> = memo(
-  ({ args, propConfigs, onArgsChange }) => {
+export const PropControls = memo(
+  ({ args, propConfigs, onArgsChange }: Props) => {
     const handlePropChange = useCallback(
       (propKey: string, newValue: any) => {
         const newArgs = { ...args, [propKey]: newValue };
         onArgsChange(newArgs);
       },
       [args, onArgsChange],
+    );
+
+    const handleApplyToAll = useCallback(
+      (sourceIndex: number, propKey: string) => {
+        const currentArray = Array.isArray(args[propKey]) ? args[propKey] : [];
+        if (sourceIndex >= 0 && sourceIndex < currentArray.length) {
+          const template = deepClone(currentArray[sourceIndex]);
+          const newArray = Array.from({ length: currentArray.length }, () =>
+            deepClone(template),
+          );
+          handlePropChange(propKey, newArray);
+        }
+      },
+      [args, handlePropChange],
     );
 
     return (
@@ -349,9 +42,299 @@ export const PropControls: React.FC<PropControlsProps> = memo(
             value={args[propKey]}
             config={config}
             onValueChange={(newValue) => handlePropChange(propKey, newValue)}
+            handleApplyToAll={handleApplyToAll}
           />
         ))}
       </Container>
+    );
+  },
+);
+
+const spacing = 12;
+const Container = styled.div`
+  padding: ${spacing}px;
+`;
+
+const StyledDetails = styled.details`
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 8px;
+`;
+
+const StyledSummary = styled.summary`
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 4px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &::marker {
+    display: none;
+  }
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::before {
+    content: "▶";
+    margin-right: 8px;
+    transition: transform 0.2s;
+  }
+
+  details[open] &::before {
+    transform: rotate(90deg);
+  }
+`;
+
+const DetailsContent = styled.div`
+  padding: 12px;
+`;
+
+const deepClone = (obj: any): any => {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (obj instanceof Date) return new Date(obj.getTime());
+  if (obj instanceof Array) return obj.map((item) => deepClone(item));
+  if (typeof obj === "object") {
+    const cloned: any = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        cloned[key] = deepClone(obj[key]);
+      }
+    }
+    return cloned;
+  }
+  return obj;
+};
+
+type PropControlProps = {
+  propKey: string;
+  value: any;
+  config: PropConfig | PropConfigs;
+  onValueChange: (newValue: any) => void;
+  level?: number;
+  handleApplyToAll?: (sourceIndex: number, propKey: string) => void;
+};
+
+const PropControl = memo(
+  ({
+    propKey,
+    value,
+    config,
+    onValueChange,
+    level = 0,
+    handleApplyToAll,
+  }: PropControlProps) => {
+    const [localValue, setLocalValue] = useState(value);
+
+    useEffect(() => {
+      setLocalValue(value);
+    }, [value]);
+
+    const handleChange = useCallback(
+      (newValue: any) => {
+        setLocalValue(newValue);
+        onValueChange(newValue);
+      },
+      [onValueChange],
+    );
+    if (typeof config === "object" && !("type" in config)) {
+      return (
+        <StyledDetails open={level === 0}>
+          <StyledSummary>
+            <span>{propKey}</span>
+            <Badge status="neutral">{Object.keys(config).length} keys</Badge>
+          </StyledSummary>
+          <DetailsContent>
+            {Object.entries(config).map(([itemKey, itemConfig]) => (
+              <PropControl
+                key={itemKey}
+                propKey={itemKey}
+                value={value?.[itemKey]}
+                config={itemConfig}
+                onValueChange={(newValue) =>
+                  handleChange({ ...value, [itemKey]: newValue })
+                }
+                level={level + 1}
+              />
+            ))}
+          </DetailsContent>
+        </StyledDetails>
+      );
+    }
+    const propConfig = config as PropConfig;
+
+    switch (propConfig.type) {
+      case "string":
+        return (
+          <StyledDetails open={level === 0}>
+            <StyledSummary>
+              <span>{propKey}</span>
+              <Badge status="neutral">len: {String(localValue).length}</Badge>
+            </StyledSummary>
+            <DetailsContent>
+              <input
+                type="range"
+                max={propConfig.length}
+                value={String(localValue).length}
+                onChange={(e) => {
+                  const targetLength = parseInt(e.target.value);
+                  const newValue =
+                    targetLength > String(localValue).length
+                      ? String(localValue).padEnd(targetLength, "x")
+                      : String(localValue).slice(0, targetLength);
+                  handleChange(newValue);
+                }}
+              />
+            </DetailsContent>
+          </StyledDetails>
+        );
+      case "number":
+        const min = propConfig.min ?? 0;
+        const max = propConfig.max ?? 100;
+        const step = propConfig.step ?? 1;
+        return (
+          <StyledDetails open={level === 0}>
+            <StyledSummary>
+              <span>{propKey}</span>
+              <Badge status="neutral">{Number(localValue) ?? min}</Badge>
+            </StyledSummary>
+            <DetailsContent>
+              <input
+                type="range"
+                min={min}
+                max={max}
+                step={step}
+                value={Number(localValue) ?? min}
+                onChange={(e) => handleChange(Number(e.target.value))}
+              />
+            </DetailsContent>
+          </StyledDetails>
+        );
+      case "boolean":
+        return (
+          <StyledDetails open={level === 0}>
+            <StyledSummary>
+              <span>{propKey}</span>
+              <Badge status={Boolean(localValue) ? "positive" : "neutral"}>
+                {Boolean(localValue) ? "true" : "false"}
+              </Badge>
+            </StyledSummary>
+            <DetailsContent>
+              <input
+                type="checkbox"
+                checked={Boolean(localValue)}
+                onChange={(e) => handleChange(e.target.checked)}
+              />
+            </DetailsContent>
+          </StyledDetails>
+        );
+      case "array":
+        const currentArray = Array.isArray(localValue) ? localValue : [];
+        const defaultItem = propConfig.defaultItem;
+        return (
+          <StyledDetails open={level === 0}>
+            <StyledSummary>
+              <span>{propKey}</span>
+              <Badge status="neutral">length: {currentArray.length}</Badge>
+            </StyledSummary>
+            <DetailsContent>
+              <input
+                type="range"
+                max={propConfig.length}
+                value={currentArray.length}
+                onChange={(e) => {
+                  const targetLength = parseInt(e.target.value);
+                  let newArray = [...currentArray];
+                  if (targetLength > currentArray.length) {
+                    const itemsToAdd = targetLength - currentArray.length;
+                    for (let i = 0; i < itemsToAdd; i++) {
+                      const newIndex = currentArray.length + i;
+                      let newItem;
+                      if (defaultItem && typeof defaultItem === "function") {
+                        newItem = defaultItem(newIndex);
+                      } else if (defaultItem) {
+                        newItem = defaultItem;
+                      } else if (currentArray.length > 0) {
+                        newItem = JSON.parse(
+                          JSON.stringify(currentArray[currentArray.length - 1]),
+                        );
+                      } else {
+                        newItem = {};
+                      }
+                      newArray.push(newItem);
+                    }
+                  } else if (targetLength < currentArray.length) {
+                    newArray = newArray.slice(0, targetLength);
+                  }
+                  handleChange(newArray);
+                }}
+              />
+              {propConfig.items && localValue && localValue.length > 0 && (
+                <div>
+                  {localValue
+                    .slice(0, Math.min(5, localValue.length))
+                    .map((item: any, index: number) => (
+                      <StyledDetails key={index}>
+                        <StyledSummary>
+                          <span>Item #{index}</span>
+                          <div>
+                            {handleApplyToAll && (
+                              <Button
+                                size="small"
+                                variant="outline"
+                                onClick={() => handleApplyToAll(index, propKey)}
+                              >
+                                全てに適用
+                              </Button>
+                            )}
+                          </div>
+                        </StyledSummary>
+                        <DetailsContent>
+                          {Object.entries(propConfig.items!).map(
+                            ([itemKey, itemConfig]) => (
+                              <PropControl
+                                key={itemKey}
+                                propKey={itemKey}
+                                value={item?.[itemKey]}
+                                config={itemConfig}
+                                onValueChange={(newItemValue) => {
+                                  const newArray = [...localValue];
+                                  newArray[index] = {
+                                    ...newArray[index],
+                                    [itemKey]: newItemValue,
+                                  };
+                                  handleChange(newArray);
+                                }}
+                                level={level + 1}
+                              />
+                            ),
+                          )}
+                        </DetailsContent>
+                      </StyledDetails>
+                    ))}
+                  {localValue.length > 5 && (
+                    <Badge status="warning">
+                      Showing first 5 items. Total: {localValue.length}
+                    </Badge>
+                  )}
+                </div>
+              )}
+            </DetailsContent>
+          </StyledDetails>
+        );
+    }
+
+    return (
+      <StyledDetails>
+        <StyledSummary>
+          <span>{propKey}</span>
+        </StyledSummary>
+        <DetailsContent></DetailsContent>
+      </StyledDetails>
     );
   },
 );
