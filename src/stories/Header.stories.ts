@@ -7,7 +7,7 @@ const meta: Meta<typeof Header> = {
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         user: {
           name: {
@@ -30,7 +30,7 @@ export const LoggedIn: Story = {
     },
   },
   parameters: {
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         user: {
           name: {

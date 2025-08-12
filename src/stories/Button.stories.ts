@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
   },
   tags: ["autodocs"],
   parameters: {
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         label: {
           type: "string",
@@ -47,7 +47,7 @@ export const Primary: Story = {
     label: "Button",
   },
   parameters: {
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         label: {
           type: "string",

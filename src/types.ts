@@ -17,6 +17,6 @@ export interface PropConfigs {
   [key: string]: PropConfig | PropConfigs;
 }
 
-export interface StressAddonParameters {
+export interface RangeControlsParameters {
   propsConfig?: PropConfigs;
 }

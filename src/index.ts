@@ -1,4 +1,4 @@
 // make it work with --isolatedModules
 export default {};
 
-export type { StressAddonParameters } from './types';
+export type { RangeControlsParameters } from "./types";

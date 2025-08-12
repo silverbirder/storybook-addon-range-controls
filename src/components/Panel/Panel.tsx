@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState } from "react";
-import type { StressAddonParameters } from "src/types";
+import type { RangeControlsParameters } from "src/types";
 import { AddonPanel } from "storybook/internal/components";
 import { useParameter, useArgs, useChannel } from "storybook/manager-api";
 import { useTheme } from "storybook/theming";
@@ -13,19 +13,19 @@ interface PanelProps {
 }
 
 export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
-  const config = useParameter<StressAddonParameters>(KEY, {});
+  const config = useParameter<RangeControlsParameters>(KEY, {});
   const theme = useTheme();
   const [args, updateArgs] = useArgs();
 
   const [syncedParams, setSyncedParams] = useState<
-    StressAddonParameters | undefined
+    RangeControlsParameters | undefined
   >(undefined);
 
   useChannel({
     [EVENTS.PARAMETERS_SYNC]: (serialized: string) => {
       try {
         const parsed = JSON.parse(serialized);
-        const revived = reviveFunctions<StressAddonParameters>(parsed);
+  const revived = reviveFunctions<RangeControlsParameters>(parsed);
         setSyncedParams(revived);
       } catch (e) {
         console.error("Failed to deserialize parameters", e);
@@ -43,7 +43,7 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
   const effective = {
     ...(config || {}),
     ...(syncedParams || {}),
-  } as StressAddonParameters;
+  } as RangeControlsParameters;
 
   return (
     <AddonPanel {...props}>

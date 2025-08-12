@@ -5,7 +5,7 @@ const meta: Meta<typeof Card> = {
   title: "Example/Card",
   component: Card,
   parameters: {
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         title: {
           type: "string",
@@ -80,7 +80,7 @@ export const Draft: Story = {
     isPublished: false,
   },
   parameters: {
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         title: {
           type: "string",

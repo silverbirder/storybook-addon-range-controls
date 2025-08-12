@@ -1,5 +1,6 @@
-# Storybook Addon Stress Tester
-Stress-test Storybook components with seeded, edge-case args.
+# Storybook Addon Range Controls
+
+Range your story args to quickly probe layout breaks: scale text length, item counts, and numbers via sliders.
 
 ### Development scripts
 
@@ -16,7 +17,7 @@ This will convert all code to JS. It is a destructive process, so we recommended
 
 ![Demo](https://user-images.githubusercontent.com/42671/107857205-e7044380-6dfa-11eb-8718-ad02e3ba1a3f.gif)
 
-The addon code lives in `src`. It demonstrates all core addon related concepts. The three [UI paradigms](https://storybook.js.org/docs/react/addons/addon-types#ui-based-addons)
+The addon code lives in `src`. It demonstrates core addon concepts. The three [UI paradigms](https://storybook.js.org/docs/react/addons/addon-types#ui-based-addons)
 
 - `src/Tool.tsx`
 - `src/Panel.tsx`
@@ -32,7 +33,7 @@ Managing State and interacting with a story:
 
 Your addon might use one or more of these patterns. Feel free to delete unused code. Update `src/manager.ts` and `src/preview.ts` accordingly.
 
-Lastly, configure you addon name in `src/constants.ts`.
+Lastly, configure your addon name in `src/constants.ts`.
 
 ### Bundling
 
@@ -73,14 +74,14 @@ To get started, replace this README with the content in this sample template.
 ### Sample documentation template
 
 ````md
-# My Addon
+# Range Controls
 
 ## Installation
 
 First, install the package.
 
 ```sh
-npm install --save-dev my-addon
+npm install --save-dev storybook-addon-range-controls
 ```
 
 Then, register it as an addon in `.storybook/main.js`.
@@ -95,7 +96,7 @@ const config: StorybookConfig = {
   // ...rest of config
   addons: [
     '@storybook/addon-docs'
-    'my-addon', // 👈 register the addon here
+    'storybook-addon-range-controls', // 👈 register the addon here
   ],
 };
 
@@ -111,18 +112,18 @@ component level, as below, to affect all stories in the file, or you can do it f
 // Button.stories.ts
 
 // Replace your-framework with the name of your framework
-import type { Meta } from '@storybook/your-framework';
+import type { Meta } from "@storybook/your-framework";
 
-import { Button } from './Button';
+import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
   component: Button,
   parameters: {
-    myAddon: {
+    "range-controls": {
       exampleParameter: true,
       // See API section below for available parameters
-    }
-  }
+    },
+  },
 };
 
 export default meta;
@@ -134,7 +135,7 @@ Another way to use the addon is...
 
 ### Parameters
 
-This addon contributes the following parameters to Storybook, under the `myAddon` namespace:
+This addon contributes the following parameters to Storybook, under the `range-controls` namespace:
 
 #### `disable`
 
@@ -160,9 +161,9 @@ const config: StorybookConfig = {
   addons: [
     "@storybook/addon-docs",
     {
-      name: "my-addon",
+      name: "storybook-addon-range-controls",
       options: {
-        // 👈 options for my-addon go here
+        // 👈 options for range-controls go here
       },
     },
   ],

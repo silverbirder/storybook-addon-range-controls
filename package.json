@@ -1,17 +1,18 @@
 {
-  "name": "storybook-addon-stress",
+  "name": "storybook-addon-range-controls",
   "version": "0.0.0",
-  "description": "Stress-test Storybook components with seeded, edge-case args.tress-test Storybook components with seeded, edge-case args.",
+  "description": "Range your Storybook args with sliders to quickly increase/decrease lengths, counts, and numbers for layout validation.",
   "keywords": [
     "storybook-addons",
     "testing",
     "visual-testing",
-    "stress",
+    "range",
+    "controls",
     "storybook-addons"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/silverbirder/storybook-addon-stress"
+    "url": "https://github.com/silverbirder/storybook-addon-range-controls"
   },
   "type": "module",
   "license": "MIT",
@@ -89,7 +90,7 @@
     ]
   },
   "storybook": {
-    "displayName": "Stress Tester",
+    "displayName": "Range Controls",
     "supportedFrameworks": [
       "react"
     ],

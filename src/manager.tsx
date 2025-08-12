@@ -8,7 +8,7 @@ import { ADDON_ID, PANEL_ID } from "./constants";
 addons.register(ADDON_ID, (api) => {
   addons.add(PANEL_ID, {
     type: types.PANEL,
-    title: "My addon",
+    title: "Range Controls",
     match: ({ viewMode }) => viewMode === "story",
     render: ({ active }) => <Panel active={active ?? false} />,
   });

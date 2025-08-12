@@ -75,7 +75,7 @@ const meta: Meta<typeof CardList> = {
   component: CardList,
   parameters: {
     layout: "fullscreen",
-    "my-addon": {
+    "range-controls": {
       propsConfig: {
         cards: {
           type: "array",
