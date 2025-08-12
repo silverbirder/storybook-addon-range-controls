@@ -1,7 +1,8 @@
 import React, { memo, useCallback } from "react";
-import { styled } from "storybook/theming";
-import type { PropConfigs } from "../types";
-import { PropControl } from "./PropControl";
+import type { PropConfigs } from "../../types";
+import { PropControl } from "../PropControl";
+import { Container } from "./PropControls.styles";
+import { deepClone } from "../../utils/deepClone";
 
 type Props = {
   args: Record<string, any>;
@@ -49,23 +50,3 @@ export const PropControls = memo(
     );
   },
 );
-
-const Container = styled.div`
-  padding: 12px;
-`;
-
-const deepClone = (obj: any): any => {
-  if (obj === null || typeof obj !== "object") return obj;
-  if (obj instanceof Date) return new Date(obj.getTime());
-  if (obj instanceof Array) return obj.map((item) => deepClone(item));
-  if (typeof obj === "object") {
-    const cloned: any = {};
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        cloned[key] = deepClone(obj[key]);
-      }
-    }
-    return cloned;
-  }
-  return obj;
-};

@@ -1,7 +1,7 @@
 import React from "react";
 import { addons, types } from "storybook/manager-api";
 
-import { Panel } from "./components/Panel";
+import { Panel } from "./components";
 import { ADDON_ID, PANEL_ID } from "./constants";
 
 // Register the addon
