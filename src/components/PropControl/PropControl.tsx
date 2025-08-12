@@ -6,6 +6,7 @@ import {
   StyledSummary,
   DetailsContent,
 } from "./PropControl.styles";
+import { usePropControl } from "./PropControl.hooks";
 
 type Props = {
   propKey: string;
@@ -25,20 +26,13 @@ export const PropControl = memo(
     level = 0,
     handleApplyToAll,
   }: Props) => {
-    const [localValue, setLocalValue] = useState(value);
+    const { isObjectConfig, localValue, handleChange } = usePropControl({
+      value,
+      config,
+      onValueChange,
+    });
 
-    useEffect(() => {
-      setLocalValue(value);
-    }, [value]);
-
-    const handleChange = useCallback(
-      (newValue: any) => {
-        setLocalValue(newValue);
-        onValueChange(newValue);
-      },
-      [onValueChange],
-    );
-    if (typeof config === "object" && !("type" in config)) {
+    if (isObjectConfig) {
       return (
         <StyledDetails open={level === 0}>
           <StyledSummary>

@@ -8,11 +8,11 @@ import { KEY, EVENTS } from "../../constants";
 import { PropControls } from "../PropControls";
 import { reviveFunctions } from "../../utils/serialize";
 
-interface PanelProps {
+type Props = {
   active: boolean;
-}
+};
 
-export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
+export const Panel = memo((props: Props) => {
   const config = useParameter<RangeControlsParameters>(KEY, {});
   const theme = useTheme();
   const [args, updateArgs] = useArgs();
@@ -25,7 +25,7 @@ export const Panel: React.FC<PanelProps> = memo(function MyPanel(props) {
     [EVENTS.PARAMETERS_SYNC]: (serialized: string) => {
       try {
         const parsed = JSON.parse(serialized);
-  const revived = reviveFunctions<RangeControlsParameters>(parsed);
+        const revived = reviveFunctions<RangeControlsParameters>(parsed);
         setSyncedParams(revived);
       } catch (e) {
         console.error("Failed to deserialize parameters", e);
