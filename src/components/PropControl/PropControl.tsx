@@ -5,6 +5,9 @@ import {
   StyledDetails,
   StyledSummary,
   DetailsContent,
+  SummaryContent,
+  SummaryTitle,
+  SummaryBadge,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -28,8 +31,12 @@ export const PropControl = memo(
       return (
         <StyledDetails>
           <StyledSummary>
-            <span>{propKey}</span>
-            <Badge status="neutral">{Object.keys(config).length} keys</Badge>
+            <SummaryContent>
+              <SummaryTitle>{propKey}</SummaryTitle>
+              <SummaryBadge status="neutral">
+                {Object.keys(config).length} keys
+              </SummaryBadge>
+            </SummaryContent>
           </StyledSummary>
           <DetailsContent>
             {Object.entries(config).map(([itemKey, itemConfig]) => (
@@ -58,8 +65,12 @@ export const PropControl = memo(
         return (
           <StyledDetails>
             <StyledSummary>
-              <span>{propKey}</span>
-              <Badge status="neutral">{String(localValue).length} chars</Badge>
+              <SummaryContent>
+                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryBadge status="neutral">
+                  {String(localValue).length} chars
+                </SummaryBadge>
+              </SummaryContent>
             </StyledSummary>
             <DetailsContent>
               <input
@@ -88,8 +99,12 @@ export const PropControl = memo(
         return (
           <StyledDetails>
             <StyledSummary>
-              <span>{propKey}</span>
-              <Badge status="neutral">{Number(localValue) ?? min}</Badge>
+              <SummaryContent>
+                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryBadge status="neutral">
+                  {Number(localValue) ?? min}
+                </SummaryBadge>
+              </SummaryContent>
             </StyledSummary>
             <DetailsContent>
               <input
@@ -108,10 +123,12 @@ export const PropControl = memo(
         return (
           <StyledDetails>
             <StyledSummary>
-              <span>{propKey}</span>
-              <Badge status="neutral">
-                {Boolean(localValue) ? "true" : "false"}
-              </Badge>
+              <SummaryContent>
+                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryBadge status="neutral">
+                  {Boolean(localValue) ? "true" : "false"}
+                </SummaryBadge>
+              </SummaryContent>
             </StyledSummary>
             <DetailsContent>
               <input
@@ -131,8 +148,12 @@ export const PropControl = memo(
         return (
           <StyledDetails>
             <StyledSummary>
-              <span>{propKey}</span>
-              <Badge status="neutral">{currentArray.length} items</Badge>
+              <SummaryContent>
+                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryBadge status="neutral">
+                  {currentArray.length} items
+                </SummaryBadge>
+              </SummaryContent>
             </StyledSummary>
             <DetailsContent>
               <input
@@ -173,7 +194,9 @@ export const PropControl = memo(
                   {localValue.map((item: any, index: number) => (
                     <StyledDetails key={index}>
                       <StyledSummary>
-                        <span>Item #{index}</span>
+                        <SummaryContent>
+                          <SummaryTitle>Item #{index}</SummaryTitle>
+                        </SummaryContent>
                       </StyledSummary>
                       <DetailsContent>
                         {Object.entries(propConfig.items!).map(

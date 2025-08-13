@@ -1,3 +1,4 @@
+import { Badge } from "storybook/internal/components";
 import { styled, color, background, typography } from "storybook/theming";
 
 export const StyledDetails = styled.details`
@@ -15,7 +16,7 @@ export const StyledSummary = styled.summary`
   border-radius: ${({ theme }) => theme.input.borderRadius}px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   color: ${color.defaultText};
   background: ${background.content};
 
@@ -49,4 +50,20 @@ export const DetailsContent = styled.div`
   border-top: 1px solid ${color.border};
   color: ${color.defaultText};
   font-size: ${typography.size.s2}px;
+`;
+
+export const SummaryContent = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: space-between;
+`;
+
+export const SummaryTitle = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const SummaryBadge = styled(Badge)`
+  margin-left: auto;
 `;
