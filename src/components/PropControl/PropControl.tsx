@@ -14,18 +14,10 @@ type Props = {
   config: PropConfig | PropConfigs;
   onValueChange: (newValue: any) => void;
   level?: number;
-  handleApplyToAll?: (sourceIndex: number, propKey: string) => void;
 };
 
 export const PropControl = memo(
-  ({
-    propKey,
-    value,
-    config,
-    onValueChange,
-    level = 0,
-    handleApplyToAll,
-  }: Props) => {
+  ({ propKey, value, config, onValueChange, level = 0 }: Props) => {
     const { isObjectConfig, localValue, handleChange } = usePropControl({
       value,
       config,
@@ -173,17 +165,6 @@ export const PropControl = memo(
                       <StyledDetails key={index}>
                         <StyledSummary>
                           <span>Item #{index}</span>
-                          <div>
-                            {handleApplyToAll && (
-                              <Button
-                                size="small"
-                                variant="outline"
-                                onClick={() => handleApplyToAll(index, propKey)}
-                              >
-                                全てに適用
-                              </Button>
-                            )}
-                          </div>
                         </StyledSummary>
                         <DetailsContent>
                           {Object.entries(propConfig.items!).map(
@@ -221,13 +202,6 @@ export const PropControl = memo(
       }
     }
 
-    return (
-      <StyledDetails>
-        <StyledSummary>
-          <span>{propKey}</span>
-        </StyledSummary>
-        <DetailsContent></DetailsContent>
-      </StyledDetails>
-    );
+    return null;
   },
 );

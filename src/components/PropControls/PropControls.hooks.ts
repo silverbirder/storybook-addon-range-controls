@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { deepClone } from "../../utils/deepClone";
 
 type Props = {
   args: Record<string, any>;
@@ -15,19 +14,5 @@ export const usePropControls = ({ args, onArgsChange }: Props) => {
     [args, onArgsChange],
   );
 
-  const handleApplyToAll = useCallback(
-    (sourceIndex: number, propKey: string) => {
-      const currentArray = Array.isArray(args[propKey]) ? args[propKey] : [];
-      if (sourceIndex >= 0 && sourceIndex < currentArray.length) {
-        const template = deepClone(currentArray[sourceIndex]);
-        const newArray = Array.from({ length: currentArray.length }, () =>
-          deepClone(template),
-        );
-        handlePropChange(propKey, newArray);
-      }
-    },
-    [args, handlePropChange],
-  );
-
-  return { handleApplyToAll, handlePropChange } as const;
+  return { handlePropChange } as const;
 };

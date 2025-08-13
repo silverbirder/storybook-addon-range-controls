@@ -12,7 +12,7 @@ type Props = {
 
 export const PropControls = memo(
   ({ args, propConfigs, onArgsChange }: Props) => {
-    const { handleApplyToAll, handlePropChange } = usePropControls({
+    const { handlePropChange } = usePropControls({
       args,
       onArgsChange,
     });
@@ -26,7 +26,6 @@ export const PropControls = memo(
             value={args[propKey]}
             config={config}
             onValueChange={(newValue) => handlePropChange(propKey, newValue)}
-            handleApplyToAll={handleApplyToAll}
           />
         ))}
       </Container>
