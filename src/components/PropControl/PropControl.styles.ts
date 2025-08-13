@@ -173,3 +173,23 @@ export const RangeInput = styled.input`
   width: 100%;
   margin-bottom: ${({ theme }) => theme.layoutMargin}px;
 `;
+
+export const DeleteButton = styled.button`
+  background: ${({ theme }) => theme.color.negative};
+  color: ${({ theme }) => theme.color.lightest};
+  cursor: pointer;
+  border: transparent;
+
+  &::before {
+    content: "×";
+    font-size: ${typography.size.s2}px;
+    font-weight: bold;
+  }
+`;
+
+export const ItemHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;

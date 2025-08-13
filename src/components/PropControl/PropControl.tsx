@@ -19,6 +19,8 @@ import {
   MultiSelectCheckbox,
   MultiSelectLabel,
   RangeInput,
+  DeleteButton,
+  ItemHeader,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -261,7 +263,19 @@ export const PropControl = memo(
                       <StyledDetails key={index}>
                         <StyledSummary>
                           <SummaryContent>
-                            <SummaryTitle>item #{index + 1}</SummaryTitle>
+                            <ItemHeader>
+                              <SummaryTitle>item #{index + 1}</SummaryTitle>
+                              <DeleteButton
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  const newArray = localValue.filter(
+                                    (_: any, i: number) => i !== index,
+                                  );
+                                  handleChange(newArray);
+                                }}
+                              ></DeleteButton>
+                            </ItemHeader>
                           </SummaryContent>
                         </StyledSummary>
                         <DetailsContent>
