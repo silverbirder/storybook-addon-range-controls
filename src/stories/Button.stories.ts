@@ -26,6 +26,9 @@ const meta: Meta<typeof Button> = {
       size: {
         type: "string",
       },
+      primary: {
+        type: "boolean",
+      },
       backgroundColor: {
         type: "string",
       },
@@ -42,19 +45,6 @@ export const Primary: Story = {
   args: {
     primary: true,
     label: "Button",
-  },
-  parameters: {
-    range: {
-      label: {
-        type: "string",
-        min: 1,
-        max: 30,
-        step: 1,
-      },
-      backgroundColor: {
-        type: "string",
-      },
-    },
   },
 };
 

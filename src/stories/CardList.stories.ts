@@ -78,7 +78,7 @@ const meta: Meta<typeof CardList> = {
     range: {
       cards: {
         type: "array",
-        default: (index: number) => ({
+        defaultItem: (index: number) => ({
           id: `card-${index + 1}`,
           title: "x",
           description: "x",
@@ -100,12 +100,15 @@ const meta: Meta<typeof CardList> = {
           },
           tags: {
             type: "array",
-            default: "x",
+            defaultItem: "x",
           },
           rating: {
             type: "number",
             min: 0,
             step: 0.1,
+          },
+          isPublished: {
+            type: "boolean",
           },
           metadata: {
             type: "object",
@@ -122,19 +125,50 @@ const meta: Meta<typeof CardList> = {
         },
       },
       layout: {
-        type: "string",
+        type: "enum",
+        selection: "single",
+        options: [
+          { label: "Grid Layout", value: "grid" },
+          { label: "List Layout", value: "list" },
+          { label: "Card Layout", value: "card" },
+        ],
       },
       maxColumns: {
         type: "number",
       },
-      filterByCategory: {
-        type: "string",
+      showFilters: {
+        type: "boolean",
+      },
+      selectedCategories: {
+        type: "enum",
+        selection: "multiple",
+        options: [
+          { label: "Technology", value: "Technology" },
+          { label: "Design", value: "Design" },
+          { label: "Business", value: "Business" },
+          { label: "Science", value: "Science" },
+          { label: "Art", value: "Art" },
+          { label: "Education", value: "Education" },
+        ],
       },
       sortBy: {
-        type: "string",
+        type: "enum",
+        selection: "single",
+        options: [
+          { label: "Title", value: "title" },
+          { label: "Rating", value: "rating" },
+          { label: "Date", value: "date" },
+          { label: "Author", value: "author" },
+          { label: "Category", value: "category" },
+        ],
       },
       sortOrder: {
-        type: "string",
+        type: "enum",
+        selection: "single",
+        options: [
+          { label: "Ascending", value: "asc" },
+          { label: "Descending", value: "desc" },
+        ],
       },
     },
   },
@@ -151,5 +185,6 @@ export const GridLayout: Story = {
     showFilters: true,
     sortBy: "title",
     sortOrder: "asc",
+    selectedCategories: ["Technology", "Design"],
   },
 };

@@ -21,9 +21,9 @@ interface CardListProps {
   layout?: "grid" | "list";
   maxColumns?: number;
   showFilters?: boolean;
-  filterByCategory?: string;
   sortBy?: "title" | "rating" | "date";
   sortOrder?: "asc" | "desc";
+  selectedCategories?: string[];
 }
 
 export const CardList = ({
@@ -31,17 +31,20 @@ export const CardList = ({
   layout = "grid",
   maxColumns = 3,
   showFilters = false,
-  filterByCategory,
   sortBy = "title",
   sortOrder = "asc",
+  selectedCategories = [],
 }: CardListProps) => {
   // Ensure cards is always an array
   const safeCards = Array.isArray(cards) ? cards : [];
 
-  // Filter cards by category if specified
-  const filteredCards = filterByCategory
-    ? safeCards.filter((card) => card?.metadata?.category === filterByCategory)
-    : safeCards;
+  // Filter cards by selected categories
+  const filteredCards =
+    selectedCategories.length > 0
+      ? safeCards.filter((card) =>
+          selectedCategories.includes(card?.metadata?.category),
+        )
+      : safeCards;
 
   // Sort cards
   const sortedCards = [...filteredCards].sort((a, b) => {
@@ -85,7 +88,9 @@ export const CardList = ({
             <span>
               Sort by: {sortBy} ({sortOrder})
             </span>
-            {filterByCategory && <span>Filter: {filterByCategory}</span>}
+            {selectedCategories.length > 0 && (
+              <span>Categories: {selectedCategories.join(", ")}</span>
+            )}
           </div>
         </div>
       )}
