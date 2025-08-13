@@ -8,7 +8,6 @@ export interface PropConfig {
   min?: number;
   max?: number;
   step?: number;
-  length?: number;
   items?: PropConfigs;
   defaultItem?: any | ((index: number) => any);
 }

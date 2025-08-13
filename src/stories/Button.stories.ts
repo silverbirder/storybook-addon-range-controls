@@ -20,7 +20,9 @@ const meta: Meta<typeof Button> = {
       propsConfig: {
         label: {
           type: "string",
-          length: 20,
+          min: 1,
+          max: 20,
+          step: 1,
         },
         size: {
           type: "string",
@@ -51,7 +53,9 @@ export const Primary: Story = {
       propsConfig: {
         label: {
           type: "string",
-          length: 30,
+          min: 1,
+          max: 30,
+          step: 1,
         },
         primary: {
           type: "boolean",

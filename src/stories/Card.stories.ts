@@ -9,15 +9,21 @@ const meta: Meta<typeof Card> = {
       propsConfig: {
         title: {
           type: "string",
-          length: 100,
+          min: 1,
+          max: 100,
+          step: 1,
         },
         description: {
           type: "string",
-          length: 500,
+          min: 10,
+          max: 500,
+          step: 10,
         },
         tags: {
           type: "array",
-          length: 10,
+          min: 0,
+          max: 10,
+          step: 1,
         },
         rating: {
           type: "number",
@@ -28,15 +34,21 @@ const meta: Meta<typeof Card> = {
         metadata: {
           author: {
             type: "string",
-            length: 50,
+            min: 1,
+            max: 50,
+            step: 1,
           },
           publishedDate: {
             type: "string",
-            length: 20,
+            min: 8,
+            max: 20,
+            step: 1,
           },
           category: {
             type: "string",
-            length: 30,
+            min: 1,
+            max: 30,
+            step: 1,
           },
         },
         isPublished: {
@@ -84,15 +96,21 @@ export const Draft: Story = {
       propsConfig: {
         title: {
           type: "string",
-          length: 200,
+          min: 1,
+          max: 200,
+          step: 1,
         },
         description: {
           type: "string",
-          length: 1000,
+          min: 10,
+          max: 1000,
+          step: 20,
         },
         tags: {
           type: "array",
-          length: 20,
+          min: 0,
+          max: 20,
+          step: 1,
         },
         rating: {
           type: "number",
@@ -103,15 +121,21 @@ export const Draft: Story = {
         metadata: {
           author: {
             type: "string",
-            length: 100,
+            min: 1,
+            max: 100,
+            step: 1,
           },
           publishedDate: {
             type: "string",
-            length: 30,
+            min: 8,
+            max: 30,
+            step: 1,
           },
           category: {
             type: "string",
-            length: 50,
+            min: 1,
+            max: 50,
+            step: 1,
           },
         },
         isPublished: {

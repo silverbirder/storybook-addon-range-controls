@@ -79,7 +79,9 @@ const meta: Meta<typeof CardList> = {
       propsConfig: {
         cards: {
           type: "array",
-          length: 50,
+          min: 0,
+          max: 50,
+          step: 1,
           defaultItem: (index: number) => ({
             id: `card-${index + 1}`,
             title: "x",
@@ -96,15 +98,21 @@ const meta: Meta<typeof CardList> = {
           items: {
             title: {
               type: "string",
-              length: 100,
+              min: 1,
+              max: 100,
+              step: 1,
             },
             description: {
               type: "string",
-              length: 500,
+              min: 10,
+              max: 500,
+              step: 10,
             },
             tags: {
               type: "array",
-              length: 10,
+              min: 0,
+              max: 10,
+              step: 1,
               defaultItem: "x",
             },
             rating: {
@@ -119,15 +127,21 @@ const meta: Meta<typeof CardList> = {
             metadata: {
               author: {
                 type: "string",
-                length: 50,
+                min: 1,
+                max: 50,
+                step: 1,
               },
               publishedDate: {
                 type: "string",
-                length: 20,
+                min: 8,
+                max: 20,
+                step: 1,
               },
               category: {
                 type: "string",
-                length: 30,
+                min: 1,
+                max: 30,
+                step: 1,
               },
             },
           },

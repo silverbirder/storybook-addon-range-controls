@@ -51,7 +51,10 @@ export const PropControl = memo(
     const propConfig = config as PropConfig;
 
     switch (propConfig.type) {
-      case "string":
+      case "string": {
+        const min = propConfig.min ?? 0;
+        const max = propConfig.max ?? 100;
+        const step = propConfig.step ?? 1;
         return (
           <StyledDetails>
             <StyledSummary>
@@ -61,7 +64,9 @@ export const PropControl = memo(
             <DetailsContent>
               <input
                 type="range"
-                max={propConfig.length}
+                min={min}
+                max={max}
+                step={step}
                 value={String(localValue).length}
                 onChange={(e) => {
                   const targetLength = parseInt(e.target.value);
@@ -75,6 +80,7 @@ export const PropControl = memo(
             </DetailsContent>
           </StyledDetails>
         );
+      }
       case "number": {
         const min = propConfig.min ?? 0;
         const max = propConfig.max ?? 100;
@@ -119,6 +125,9 @@ export const PropControl = memo(
       case "array": {
         const currentArray = Array.isArray(localValue) ? localValue : [];
         const defaultItem = propConfig.defaultItem;
+        const min = propConfig.min ?? 0;
+        const max = propConfig.max ?? 10;
+        const step = propConfig.step ?? 1;
         return (
           <StyledDetails>
             <StyledSummary>
@@ -128,7 +137,9 @@ export const PropControl = memo(
             <DetailsContent>
               <input
                 type="range"
-                max={propConfig.length}
+                min={min}
+                max={max}
+                step={step}
                 value={currentArray.length}
                 onChange={(e) => {
                   const targetLength = parseInt(e.target.value);

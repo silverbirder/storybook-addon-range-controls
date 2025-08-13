@@ -12,7 +12,9 @@ const meta: Meta<typeof Header> = {
         user: {
           name: {
             type: "string",
-            length: 50,
+            min: 1,
+            max: 50,
+            step: 1,
           },
         },
       },
@@ -35,7 +37,9 @@ export const LoggedIn: Story = {
         user: {
           name: {
             type: "string",
-            length: 100,
+            min: 1,
+            max: 100,
+            step: 1,
           },
         },
       },
