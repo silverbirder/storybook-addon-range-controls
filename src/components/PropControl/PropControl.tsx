@@ -14,6 +14,10 @@ import {
   DisplayLimitLabel,
   DirectEditContainer,
   DirectEditInput,
+  MultiSelectContainer,
+  MultiSelectOption,
+  MultiSelectCheckbox,
+  MultiSelectLabel,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -287,6 +291,126 @@ export const PropControl = memo(
             </DetailsContent>
           </StyledDetails>
         );
+      }
+      case "enum": {
+        const options = propConfig.options || [];
+        const selection = propConfig.selection || "single";
+        if (selection === "single") {
+          return (
+            <StyledDetails>
+              <StyledSummary>
+                <SummaryContent>
+                  <SummaryTitle>
+                    {propKey}
+                    <TypeLabel>(enum - single)</TypeLabel>
+                  </SummaryTitle>
+                  <SummaryBadge status="neutral">
+                    {localValue || "none"}
+                  </SummaryBadge>
+                </SummaryContent>
+              </StyledSummary>
+              <DetailsContent>
+                <select
+                  value={localValue || ""}
+                  onChange={(e) => {
+                    const selectedValue = e.target.value;
+                    const option = options.find(
+                      (opt) =>
+                        typeof opt === "object" &&
+                        "value" in opt &&
+                        opt.value === selectedValue,
+                    );
+                    if (
+                      option &&
+                      typeof option === "object" &&
+                      "value" in option
+                    ) {
+                      handleChange(option.value);
+                    } else {
+                      handleChange(selectedValue);
+                    }
+                  }}
+                >
+                  <option value="">-- Select option --</option>
+                  {options.map((option, index) => {
+                    if (
+                      typeof option === "object" &&
+                      "label" in option &&
+                      "value" in option
+                    ) {
+                      return (
+                        <option key={index} value={option.value}>
+                          {option.label}
+                        </option>
+                      );
+                    } else {
+                      return (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      );
+                    }
+                  })}
+                </select>
+              </DetailsContent>
+            </StyledDetails>
+          );
+        } else {
+          const selectedValues = Array.isArray(localValue) ? localValue : [];
+          return (
+            <StyledDetails>
+              <StyledSummary>
+                <SummaryContent>
+                  <SummaryTitle>
+                    {propKey}
+                    <TypeLabel>(enum - multiple)</TypeLabel>
+                  </SummaryTitle>
+                  <SummaryBadge status="neutral">
+                    {selectedValues.length} selected
+                  </SummaryBadge>
+                </SummaryContent>
+              </StyledSummary>
+              <DetailsContent>
+                <MultiSelectContainer>
+                  {options.map((option, index) => {
+                    const optionValue =
+                      typeof option === "object" && "value" in option
+                        ? option.value
+                        : option;
+                    const optionLabel =
+                      typeof option === "object" && "label" in option
+                        ? option.label
+                        : option;
+                    const isChecked = selectedValues.includes(optionValue);
+                    return (
+                      <MultiSelectOption key={index}>
+                        <MultiSelectCheckbox
+                          type="checkbox"
+                          id={`${propKey}-${index}`}
+                          checked={isChecked}
+                          onChange={(e) => {
+                            let newValues;
+                            if (e.target.checked) {
+                              newValues = [...selectedValues, optionValue];
+                            } else {
+                              newValues = selectedValues.filter(
+                                (v) => v !== optionValue,
+                              );
+                            }
+                            handleChange(newValues);
+                          }}
+                        />
+                        <MultiSelectLabel htmlFor={`${propKey}-${index}`}>
+                          {optionLabel}
+                        </MultiSelectLabel>
+                      </MultiSelectOption>
+                    );
+                  })}
+                </MultiSelectContainer>
+              </DetailsContent>
+            </StyledDetails>
+          );
+        }
       }
     }
 

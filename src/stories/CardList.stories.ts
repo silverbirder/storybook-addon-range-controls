@@ -125,7 +125,13 @@ const meta: Meta<typeof CardList> = {
         },
       },
       layout: {
-        type: "string",
+        type: "enum",
+        selection: "single",
+        options: [
+          { label: "Grid Layout", value: "grid" },
+          { label: "List Layout", value: "list" },
+          { label: "Card Layout", value: "card" },
+        ],
       },
       maxColumns: {
         type: "number",
@@ -133,14 +139,36 @@ const meta: Meta<typeof CardList> = {
       showFilters: {
         type: "boolean",
       },
-      filterByCategory: {
-        type: "string",
+      selectedCategories: {
+        type: "enum",
+        selection: "multiple",
+        options: [
+          { label: "Technology", value: "Technology" },
+          { label: "Design", value: "Design" },
+          { label: "Business", value: "Business" },
+          { label: "Science", value: "Science" },
+          { label: "Art", value: "Art" },
+          { label: "Education", value: "Education" },
+        ],
       },
       sortBy: {
-        type: "string",
+        type: "enum",
+        selection: "single",
+        options: [
+          { label: "Title", value: "title" },
+          { label: "Rating", value: "rating" },
+          { label: "Date", value: "date" },
+          { label: "Author", value: "author" },
+          { label: "Category", value: "category" },
+        ],
       },
       sortOrder: {
-        type: "string",
+        type: "enum",
+        selection: "single",
+        options: [
+          { label: "Ascending", value: "asc" },
+          { label: "Descending", value: "desc" },
+        ],
       },
     },
   },
@@ -157,5 +185,6 @@ export const GridLayout: Story = {
     showFilters: true,
     sortBy: "title",
     sortOrder: "asc",
+    selectedCategories: ["Technology", "Design"],
   },
 };

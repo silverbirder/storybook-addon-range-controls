@@ -125,3 +125,36 @@ export const DirectEditInput = styled.input`
     border-color: ${color.secondary};
   }
 `;
+
+export const MultiSelectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.layoutMargin / 2}px;
+`;
+
+export const MultiSelectOption = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: ${({ theme }) => theme.layoutMargin / 2}px;
+  padding: ${({ theme }) => theme.layoutMargin / 2}px;
+  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: ${background.hoverable};
+  }
+`;
+
+export const MultiSelectCheckbox = styled.input`
+  margin-right: ${({ theme }) => theme.layoutMargin / 2}px;
+  cursor: pointer;
+  accent-color: ${color.secondary};
+`;
+
+export const MultiSelectLabel = styled.label`
+  cursor: pointer;
+  font-size: ${typography.size.s2}px;
+  color: ${color.defaultText};
+  user-select: none;
+  flex: 1;
+`;
