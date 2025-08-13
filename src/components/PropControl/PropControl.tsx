@@ -18,6 +18,7 @@ import {
   MultiSelectOption,
   MultiSelectCheckbox,
   MultiSelectLabel,
+  RangeInput,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -97,7 +98,7 @@ export const PropControl = memo(
               </SummaryContent>
             </StyledSummary>
             <DetailsContent>
-              <input
+              <RangeInput
                 type="range"
                 min={min}
                 max={max}
@@ -140,7 +141,7 @@ export const PropControl = memo(
               </SummaryContent>
             </StyledSummary>
             <DetailsContent>
-              <input
+              <RangeInput
                 type="range"
                 min={min}
                 max={max}
@@ -204,7 +205,7 @@ export const PropControl = memo(
               </SummaryContent>
             </StyledSummary>
             <DetailsContent>
-              <input
+              <RangeInput
                 type="range"
                 min={min}
                 max={max}

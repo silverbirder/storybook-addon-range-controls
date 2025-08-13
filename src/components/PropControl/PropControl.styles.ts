@@ -168,3 +168,8 @@ export const MultiSelectLabel = styled.label`
   user-select: none;
   flex: 1;
 `;
+
+export const RangeInput = styled.input`
+  width: 100%;
+  margin-bottom: ${({ theme }) => theme.layoutMargin}px;
+`;
