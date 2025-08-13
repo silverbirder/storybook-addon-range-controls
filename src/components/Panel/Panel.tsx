@@ -48,10 +48,10 @@ export const Panel = memo((props: Props) => {
   return (
     <AddonPanel {...props}>
       <div color={theme.color.primary}>
-        {effective.propsConfig && args && (
+        {effective && args && Object.keys(effective).length > 0 && (
           <PropControls
             args={args}
-            propConfigs={effective.propsConfig}
+            propConfigs={effective}
             onArgsChange={handleArgsChange}
           />
         )}

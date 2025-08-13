@@ -16,6 +16,4 @@ export interface PropConfigs {
   [key: string]: PropConfig | PropConfigs;
 }
 
-export interface RangeControlsParameters {
-  propsConfig?: PropConfigs;
-}
+export interface RangeControlsParameters extends PropConfigs {}

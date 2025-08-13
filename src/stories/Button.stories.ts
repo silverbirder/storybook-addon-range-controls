@@ -17,22 +17,20 @@ const meta: Meta<typeof Button> = {
   tags: ["autodocs"],
   parameters: {
     "range-controls": {
-      propsConfig: {
-        label: {
-          type: "string",
-          min: 1,
-          max: 20,
-          step: 1,
-        },
-        size: {
-          type: "string",
-        },
-        primary: {
-          type: "boolean",
-        },
-        backgroundColor: {
-          type: "string",
-        },
+      label: {
+        type: "string",
+        min: 1,
+        max: 20,
+        step: 1,
+      },
+      size: {
+        type: "string",
+      },
+      primary: {
+        type: "boolean",
+      },
+      backgroundColor: {
+        type: "string",
       },
     },
   },
@@ -50,19 +48,17 @@ export const Primary: Story = {
   },
   parameters: {
     "range-controls": {
-      propsConfig: {
-        label: {
-          type: "string",
-          min: 1,
-          max: 30,
-          step: 1,
-        },
-        primary: {
-          type: "boolean",
-        },
-        backgroundColor: {
-          type: "string",
-        },
+      label: {
+        type: "string",
+        min: 1,
+        max: 30,
+        step: 1,
+      },
+      primary: {
+        type: "boolean",
+      },
+      backgroundColor: {
+        type: "string",
       },
     },
   },

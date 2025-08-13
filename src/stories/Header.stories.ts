@@ -8,14 +8,12 @@ const meta: Meta<typeof Header> = {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
     "range-controls": {
-      propsConfig: {
-        user: {
-          name: {
-            type: "string",
-            min: 1,
-            max: 50,
-            step: 1,
-          },
+      user: {
+        name: {
+          type: "string",
+          min: 1,
+          max: 50,
+          step: 1,
         },
       },
     },
@@ -33,14 +31,12 @@ export const LoggedIn: Story = {
   },
   parameters: {
     "range-controls": {
-      propsConfig: {
-        user: {
-          name: {
-            type: "string",
-            min: 1,
-            max: 100,
-            step: 1,
-          },
+      user: {
+        name: {
+          type: "string",
+          min: 1,
+          max: 100,
+          step: 1,
         },
       },
     },

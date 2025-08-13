@@ -6,54 +6,52 @@ const meta: Meta<typeof Card> = {
   component: Card,
   parameters: {
     "range-controls": {
-      propsConfig: {
-        title: {
+      title: {
+        type: "string",
+        min: 1,
+        max: 100,
+        step: 1,
+      },
+      description: {
+        type: "string",
+        min: 10,
+        max: 500,
+        step: 10,
+      },
+      tags: {
+        type: "array",
+        min: 0,
+        max: 10,
+        step: 1,
+      },
+      rating: {
+        type: "number",
+        min: 1,
+        max: 5,
+        step: 0.1,
+      },
+      metadata: {
+        author: {
           type: "string",
           min: 1,
-          max: 100,
+          max: 50,
           step: 1,
         },
-        description: {
+        publishedDate: {
           type: "string",
-          min: 10,
-          max: 500,
-          step: 10,
-        },
-        tags: {
-          type: "array",
-          min: 0,
-          max: 10,
+          min: 8,
+          max: 20,
           step: 1,
         },
-        rating: {
-          type: "number",
+        category: {
+          type: "string",
           min: 1,
-          max: 5,
-          step: 0.1,
+          max: 30,
+          step: 1,
         },
-        metadata: {
-          author: {
-            type: "string",
-            min: 1,
-            max: 50,
-            step: 1,
-          },
-          publishedDate: {
-            type: "string",
-            min: 8,
-            max: 20,
-            step: 1,
-          },
-          category: {
-            type: "string",
-            min: 1,
-            max: 30,
-            step: 1,
-          },
-        },
-        isPublished: {
-          type: "boolean",
-        },
+      },
+      isPublished: {
+        type: "boolean",
       },
     },
   },
@@ -93,54 +91,52 @@ export const Draft: Story = {
   },
   parameters: {
     "range-controls": {
-      propsConfig: {
-        title: {
+      title: {
+        type: "string",
+        min: 1,
+        max: 200,
+        step: 1,
+      },
+      description: {
+        type: "string",
+        min: 10,
+        max: 1000,
+        step: 20,
+      },
+      tags: {
+        type: "array",
+        min: 0,
+        max: 20,
+        step: 1,
+      },
+      rating: {
+        type: "number",
+        min: 0,
+        max: 5,
+        step: 0.5,
+      },
+      metadata: {
+        author: {
           type: "string",
           min: 1,
-          max: 200,
+          max: 100,
           step: 1,
         },
-        description: {
+        publishedDate: {
           type: "string",
-          min: 10,
-          max: 1000,
-          step: 20,
-        },
-        tags: {
-          type: "array",
-          min: 0,
-          max: 20,
+          min: 8,
+          max: 30,
           step: 1,
         },
-        rating: {
-          type: "number",
-          min: 0,
-          max: 5,
-          step: 0.5,
+        category: {
+          type: "string",
+          min: 1,
+          max: 50,
+          step: 1,
         },
-        metadata: {
-          author: {
-            type: "string",
-            min: 1,
-            max: 100,
-            step: 1,
-          },
-          publishedDate: {
-            type: "string",
-            min: 8,
-            max: 30,
-            step: 1,
-          },
-          category: {
-            type: "string",
-            min: 1,
-            max: 50,
-            step: 1,
-          },
-        },
-        isPublished: {
-          type: "boolean",
-        },
+      },
+      isPublished: {
+        type: "boolean",
       },
     },
   },

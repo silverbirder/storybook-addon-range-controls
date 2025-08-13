@@ -76,97 +76,95 @@ const meta: Meta<typeof CardList> = {
   parameters: {
     layout: "fullscreen",
     "range-controls": {
-      propsConfig: {
-        cards: {
-          type: "array",
-          min: 0,
-          max: 50,
-          step: 1,
-          default: (index: number) => ({
-            id: `card-${index + 1}`,
-            title: "x",
-            description: "x",
-            tags: [`Tag${(index % 5) + 1}`],
-            rating: 0,
-            isPublished: false,
-            metadata: {
-              author: "x",
-              publishedDate: "2024-01-01",
-              category: "x",
-            },
-          }),
-          items: {
-            title: {
+      cards: {
+        type: "array",
+        min: 0,
+        max: 50,
+        step: 1,
+        default: (index: number) => ({
+          id: `card-${index + 1}`,
+          title: "x",
+          description: "x",
+          tags: [`Tag${(index % 5) + 1}`],
+          rating: 0,
+          isPublished: false,
+          metadata: {
+            author: "x",
+            publishedDate: "2024-01-01",
+            category: "x",
+          },
+        }),
+        items: {
+          title: {
+            type: "string",
+            min: 1,
+            max: 100,
+            step: 1,
+          },
+          description: {
+            type: "string",
+            min: 10,
+            max: 500,
+            step: 10,
+          },
+          tags: {
+            type: "array",
+            min: 0,
+            max: 10,
+            step: 1,
+            default: "x",
+          },
+          rating: {
+            type: "number",
+            min: 0,
+            max: 5,
+            step: 0.1,
+          },
+          isPublished: {
+            type: "boolean",
+          },
+          metadata: {
+            author: {
               type: "string",
               min: 1,
-              max: 100,
+              max: 50,
               step: 1,
             },
-            description: {
+            publishedDate: {
               type: "string",
-              min: 10,
-              max: 500,
-              step: 10,
-            },
-            tags: {
-              type: "array",
-              min: 0,
-              max: 10,
+              min: 8,
+              max: 20,
               step: 1,
-              default: "x",
             },
-            rating: {
-              type: "number",
-              min: 0,
-              max: 5,
-              step: 0.1,
-            },
-            isPublished: {
-              type: "boolean",
-            },
-            metadata: {
-              author: {
-                type: "string",
-                min: 1,
-                max: 50,
-                step: 1,
-              },
-              publishedDate: {
-                type: "string",
-                min: 8,
-                max: 20,
-                step: 1,
-              },
-              category: {
-                type: "string",
-                min: 1,
-                max: 30,
-                step: 1,
-              },
+            category: {
+              type: "string",
+              min: 1,
+              max: 30,
+              step: 1,
             },
           },
         },
-        layout: {
-          type: "string",
-        },
-        maxColumns: {
-          type: "number",
-          min: 1,
-          max: 6,
-          step: 1,
-        },
-        showFilters: {
-          type: "boolean",
-        },
-        filterByCategory: {
-          type: "string",
-        },
-        sortBy: {
-          type: "string",
-        },
-        sortOrder: {
-          type: "string",
-        },
+      },
+      layout: {
+        type: "string",
+      },
+      maxColumns: {
+        type: "number",
+        min: 1,
+        max: 6,
+        step: 1,
+      },
+      showFilters: {
+        type: "boolean",
+      },
+      filterByCategory: {
+        type: "string",
+      },
+      sortBy: {
+        type: "string",
+      },
+      sortOrder: {
+        type: "string",
       },
     },
   },
