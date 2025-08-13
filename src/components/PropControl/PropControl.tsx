@@ -12,6 +12,8 @@ import {
   DisplayLimitInput,
   DisplayLimitInfo,
   DisplayLimitLabel,
+  DirectEditContainer,
+  DirectEditInput,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -106,6 +108,15 @@ export const PropControl = memo(
                   handleChange(newValue);
                 }}
               />
+              <DirectEditContainer>
+                <DirectEditInput
+                  type="text"
+                  value={localValue}
+                  onChange={(e) => {
+                    handleChange(e.target.value);
+                  }}
+                />
+              </DirectEditContainer>
             </DetailsContent>
           </StyledDetails>
         );
@@ -133,6 +144,18 @@ export const PropControl = memo(
                 value={Number(localValue) ?? min}
                 onChange={(e) => handleChange(Number(e.target.value))}
               />
+              <DirectEditContainer>
+                <DirectEditInput
+                  type="number"
+                  min={min}
+                  max={max}
+                  step={step}
+                  value={localValue}
+                  onChange={(e) => {
+                    handleChange(Number(e.target.value));
+                  }}
+                />
+              </DirectEditContainer>
             </DetailsContent>
           </StyledDetails>
         );

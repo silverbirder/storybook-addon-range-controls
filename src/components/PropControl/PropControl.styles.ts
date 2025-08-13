@@ -105,3 +105,23 @@ export const DisplayLimitInfo = styled.span`
   margin-left: ${({ theme }) => theme.layoutMargin / 2}px;
   color: ${color.mediumdark};
 `;
+
+export const DirectEditContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const DirectEditInput = styled.input`
+  flex: 1;
+  padding: ${({ theme }) => theme.layoutMargin / 2}px;
+  font-size: ${typography.size.s2}px;
+  border: 1px solid ${color.border};
+  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+  background: ${background.content};
+  color: ${color.defaultText};
+
+  &:focus {
+    outline: none;
+    border-color: ${color.secondary};
+  }
+`;
