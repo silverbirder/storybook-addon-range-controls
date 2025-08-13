@@ -1,20 +1,27 @@
-import { styled } from "storybook/theming";
+import { styled, color, background, typography } from "storybook/theming";
 
 export const StyledDetails = styled.details`
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  border: 1px solid ${color.border};
+  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+  margin-bottom: ${({ theme }) => theme.layoutMargin}px;
+  background: ${background.content};
 `;
 
 export const StyledSummary = styled.summary`
-  padding: 8px 12px;
+  padding: ${({ theme }) => theme.layoutMargin}px;
   cursor: pointer;
-  font-weight: 500;
-  border-radius: 4px;
-  user-select: none;
+  font-weight: ${typography.weight.bold};
+  font-size: ${typography.size.s2}px;
+  border-radius: ${({ theme }) => theme.input.borderRadius}px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: ${color.defaultText};
+  background: ${background.content};
+
+  &:hover {
+    background: ${background.hoverable};
+  }
 
   &::marker {
     display: none;
@@ -26,8 +33,9 @@ export const StyledSummary = styled.summary`
 
   &::before {
     content: "▶";
-    margin-right: 8px;
+    margin-right: ${({ theme }) => theme.layoutMargin}px;
     transition: transform 0.2s;
+    color: ${color.mediumdark};
   }
 
   details[open] > &::before {
@@ -36,5 +44,9 @@ export const StyledSummary = styled.summary`
 `;
 
 export const DetailsContent = styled.div`
-  padding: 12px;
+  padding: ${({ theme }) => theme.layoutMargin}px;
+  background: ${background.content};
+  border-top: 1px solid ${color.border};
+  color: ${color.defaultText};
+  font-size: ${typography.size.s2}px;
 `;

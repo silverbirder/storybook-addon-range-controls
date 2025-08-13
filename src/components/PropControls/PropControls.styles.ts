@@ -1,5 +1,6 @@
-import { styled } from "storybook/theming";
+import { styled, background } from "storybook/theming";
 
 export const Container = styled.div`
-  padding: 12px;
+  padding: ${({ theme }) => theme.layoutMargin}px;
+  background: ${background.content};
 `;
