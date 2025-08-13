@@ -119,7 +119,7 @@ import { Button } from "./Button";
 const meta: Meta<typeof Button> = {
   component: Button,
   parameters: {
-    "range-controls": {
+    range: {
       exampleParameter: true,
       // See API section below for available parameters
     },

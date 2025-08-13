@@ -5,7 +5,7 @@ const meta: Meta<typeof Card> = {
   title: "Example/Card",
   component: Card,
   parameters: {
-    "range-controls": {
+    range: {
       title: {
         type: "string",
         min: 1,
@@ -90,7 +90,7 @@ export const Draft: Story = {
     isPublished: false,
   },
   parameters: {
-    "range-controls": {
+    range: {
       title: {
         type: "string",
         min: 1,

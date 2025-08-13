@@ -75,7 +75,7 @@ const meta: Meta<typeof CardList> = {
   component: CardList,
   parameters: {
     layout: "fullscreen",
-    "range-controls": {
+    range: {
       cards: {
         type: "array",
         default: (index: number) => ({

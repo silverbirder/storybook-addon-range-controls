@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
   },
   tags: ["autodocs"],
   parameters: {
-    "range-controls": {
+    range: {
       label: {
         type: "string",
         min: 1,
@@ -47,7 +47,7 @@ export const Primary: Story = {
     label: "Button",
   },
   parameters: {
-    "range-controls": {
+    range: {
       label: {
         type: "string",
         min: 1,
