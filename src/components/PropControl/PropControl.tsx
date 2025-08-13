@@ -69,12 +69,12 @@ export const PropControl = memo(
       );
     }
     const propConfig = config as PropConfig;
+    const min = propConfig.min;
+    const max = propConfig.max;
+    const step = propConfig.step;
 
     switch (propConfig.type) {
       case "string": {
-        const min = propConfig.min ?? 0;
-        const max = propConfig.max ?? 100;
-        const step = propConfig.step ?? 1;
         return (
           <StyledDetails>
             <StyledSummary>
@@ -109,9 +109,6 @@ export const PropControl = memo(
         );
       }
       case "number": {
-        const min = propConfig.min ?? 0;
-        const max = propConfig.max ?? 100;
-        const step = propConfig.step ?? 1;
         return (
           <StyledDetails>
             <StyledSummary>
@@ -164,9 +161,6 @@ export const PropControl = memo(
       case "array": {
         const currentArray = Array.isArray(localValue) ? localValue : [];
         const defaultItem = propConfig.default;
-        const min = propConfig.min ?? 0;
-        const max = propConfig.max ?? 10;
-        const step = propConfig.step ?? 1;
         return (
           <StyledDetails>
             <StyledSummary>

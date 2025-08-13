@@ -78,9 +78,6 @@ const meta: Meta<typeof CardList> = {
     "range-controls": {
       cards: {
         type: "array",
-        min: 0,
-        max: 50,
-        step: 1,
         default: (index: number) => ({
           id: `card-${index + 1}`,
           title: "x",
@@ -97,27 +94,17 @@ const meta: Meta<typeof CardList> = {
         items: {
           title: {
             type: "string",
-            min: 1,
-            max: 100,
-            step: 1,
           },
           description: {
             type: "string",
-            min: 10,
-            max: 500,
-            step: 10,
           },
           tags: {
             type: "array",
-            min: 0,
-            max: 10,
-            step: 1,
             default: "x",
           },
           rating: {
             type: "number",
             min: 0,
-            max: 5,
             step: 0.1,
           },
           isPublished: {
@@ -126,21 +113,12 @@ const meta: Meta<typeof CardList> = {
           metadata: {
             author: {
               type: "string",
-              min: 1,
-              max: 50,
-              step: 1,
             },
             publishedDate: {
               type: "string",
-              min: 8,
-              max: 20,
-              step: 1,
             },
             category: {
               type: "string",
-              min: 1,
-              max: 30,
-              step: 1,
             },
           },
         },
@@ -150,9 +128,6 @@ const meta: Meta<typeof CardList> = {
       },
       maxColumns: {
         type: "number",
-        min: 1,
-        max: 6,
-        step: 1,
       },
       showFilters: {
         type: "boolean",
