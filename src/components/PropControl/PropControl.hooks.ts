@@ -9,7 +9,9 @@ type Props = {
 
 export const usePropControl = ({ value, config, onValueChange }: Props) => {
   const [localValue, setLocalValue] = useState(value);
-  const [displayLimit, setDisplayLimit] = useState(5);
+  const [displayLimit, setDisplayLimit] = useState(
+    value?.length ? Math.min(value.length, 5) : 5,
+  );
 
   const isObjectConfig = useMemo(
     () => "type" in config && config.type === "object",
@@ -19,6 +21,11 @@ export const usePropControl = ({ value, config, onValueChange }: Props) => {
   useEffect(() => {
     setLocalValue(value);
   }, [value]);
+  useEffect(() => {
+    if (localValue?.length) {
+      setDisplayLimit(Math.min(localValue.length, displayLimit));
+    }
+  }, [localValue, displayLimit]);
 
   const handleChange = useCallback(
     (newValue: any) => {
