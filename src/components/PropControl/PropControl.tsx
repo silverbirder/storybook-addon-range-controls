@@ -59,7 +59,7 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
-              <Badge status="neutral">len: {String(localValue).length}</Badge>
+              <Badge status="neutral">{String(localValue).length} chars</Badge>
             </StyledSummary>
             <DetailsContent>
               <input
@@ -109,7 +109,7 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
-              <Badge status={Boolean(localValue) ? "positive" : "neutral"}>
+              <Badge status="neutral">
                 {Boolean(localValue) ? "true" : "false"}
               </Badge>
             </StyledSummary>
@@ -132,7 +132,7 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
-              <Badge status="neutral">length: {currentArray.length}</Badge>
+              <Badge status="neutral">{currentArray.length} items</Badge>
             </StyledSummary>
             <DetailsContent>
               <input
@@ -170,41 +170,34 @@ export const PropControl = memo(
               />
               {propConfig.items && localValue && localValue.length > 0 && (
                 <div>
-                  {localValue
-                    .slice(0, Math.min(5, localValue.length))
-                    .map((item: any, index: number) => (
-                      <StyledDetails key={index}>
-                        <StyledSummary>
-                          <span>Item #{index}</span>
-                        </StyledSummary>
-                        <DetailsContent>
-                          {Object.entries(propConfig.items!).map(
-                            ([itemKey, itemConfig]) => (
-                              <PropControl
-                                key={itemKey}
-                                propKey={itemKey}
-                                value={item?.[itemKey]}
-                                config={itemConfig}
-                                onValueChange={(newItemValue) => {
-                                  const newArray = [...localValue];
-                                  newArray[index] = {
-                                    ...newArray[index],
-                                    [itemKey]: newItemValue,
-                                  };
-                                  handleChange(newArray);
-                                }}
-                                level={level + 1}
-                              />
-                            ),
-                          )}
-                        </DetailsContent>
-                      </StyledDetails>
-                    ))}
-                  {localValue.length > 5 && (
-                    <Badge status="warning">
-                      Showing first 5 items. Total: {localValue.length}
-                    </Badge>
-                  )}
+                  {localValue.map((item: any, index: number) => (
+                    <StyledDetails key={index}>
+                      <StyledSummary>
+                        <span>Item #{index}</span>
+                      </StyledSummary>
+                      <DetailsContent>
+                        {Object.entries(propConfig.items!).map(
+                          ([itemKey, itemConfig]) => (
+                            <PropControl
+                              key={itemKey}
+                              propKey={itemKey}
+                              value={item?.[itemKey]}
+                              config={itemConfig}
+                              onValueChange={(newItemValue) => {
+                                const newArray = [...localValue];
+                                newArray[index] = {
+                                  ...newArray[index],
+                                  [itemKey]: newItemValue,
+                                };
+                                handleChange(newArray);
+                              }}
+                              level={level + 1}
+                            />
+                          ),
+                        )}
+                      </DetailsContent>
+                    </StyledDetails>
+                  ))}
                 </div>
               )}
             </DetailsContent>
