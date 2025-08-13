@@ -137,6 +137,29 @@ export const PropControl = memo(
           </StyledDetails>
         );
       }
+      case "boolean":
+        return (
+          <StyledDetails>
+            <StyledSummary>
+              <SummaryContent>
+                <SummaryTitle>
+                  {propKey}
+                  <TypeLabel>(boolean)</TypeLabel>
+                </SummaryTitle>
+                <SummaryBadge status="neutral">
+                  {Boolean(localValue) ? "true" : "false"}
+                </SummaryBadge>
+              </SummaryContent>
+            </StyledSummary>
+            <DetailsContent>
+              <input
+                type="checkbox"
+                checked={Boolean(localValue)}
+                onChange={(e) => handleChange(e.target.checked)}
+              />
+            </DetailsContent>
+          </StyledDetails>
+        );
       case "array": {
         const currentArray = Array.isArray(localValue) ? localValue : [];
         const defaultItem = propConfig.default;
