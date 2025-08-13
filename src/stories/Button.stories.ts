@@ -46,22 +46,6 @@ export const Primary: Story = {
     primary: true,
     label: "Button",
   },
-  parameters: {
-    range: {
-      label: {
-        type: "string",
-        min: 1,
-        max: 30,
-        step: 1,
-      },
-      primary: {
-        type: "boolean",
-      },
-      backgroundColor: {
-        type: "string",
-      },
-    },
-  },
 };
 
 export const Secondary: Story = {

@@ -93,7 +93,7 @@ export const PropControl = memo(
                   <TypeLabel>(string)</TypeLabel>
                 </SummaryTitle>
                 <SummaryBadge status="neutral">
-                  {String(localValue).length} chars
+                  {(localValue ?? "").length} chars
                 </SummaryBadge>
               </SummaryContent>
             </StyledSummary>
@@ -103,13 +103,13 @@ export const PropControl = memo(
                 min={min}
                 max={max}
                 step={step}
-                value={String(localValue).length}
+                value={(localValue ?? "").length}
                 onChange={(e) => {
                   const targetLength = parseInt(e.target.value);
                   const newValue =
-                    targetLength > String(localValue).length
-                      ? String(localValue).padEnd(targetLength, "x")
-                      : String(localValue).slice(0, targetLength);
+                    targetLength > (localValue ?? "").length
+                      ? (localValue ?? "").padEnd(targetLength, "x")
+                      : (localValue ?? "").slice(0, targetLength);
                   handleChange(newValue);
                 }}
               />
