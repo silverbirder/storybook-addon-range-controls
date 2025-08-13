@@ -9,7 +9,7 @@ export interface PropConfig {
   max?: number;
   step?: number;
   items?: PropConfigs;
-  defaultItem?: any | ((index: number) => any);
+  default?: any | ((index: number) => any);
 }
 
 export interface PropConfigs {

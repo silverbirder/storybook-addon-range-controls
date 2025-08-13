@@ -82,7 +82,7 @@ const meta: Meta<typeof CardList> = {
           min: 0,
           max: 50,
           step: 1,
-          defaultItem: (index: number) => ({
+          default: (index: number) => ({
             id: `card-${index + 1}`,
             title: "x",
             description: "x",
@@ -113,7 +113,7 @@ const meta: Meta<typeof CardList> = {
               min: 0,
               max: 10,
               step: 1,
-              defaultItem: "x",
+              default: "x",
             },
             rating: {
               type: "number",

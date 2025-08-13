@@ -124,7 +124,7 @@ export const PropControl = memo(
         );
       case "array": {
         const currentArray = Array.isArray(localValue) ? localValue : [];
-        const defaultItem = propConfig.defaultItem;
+        const defaultItem = propConfig.default;
         const min = propConfig.min ?? 0;
         const max = propConfig.max ?? 10;
         const step = propConfig.step ?? 1;
