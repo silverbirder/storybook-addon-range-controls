@@ -64,6 +64,12 @@ export const SummaryTitle = styled.div`
   align-items: center;
 `;
 
+export const TypeLabel = styled.span`
+  font-size: ${typography.size.s1}px;
+  color: ${color.mediumdark};
+  margin-left: ${({ theme }) => theme.layoutMargin / 2}px;
+`;
+
 export const SummaryBadge = styled(Badge)`
   margin-left: auto;
 `;

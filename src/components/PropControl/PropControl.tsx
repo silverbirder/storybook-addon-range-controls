@@ -8,6 +8,7 @@ import {
   SummaryContent,
   SummaryTitle,
   SummaryBadge,
+  TypeLabel,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -32,7 +33,10 @@ export const PropControl = memo(
         <StyledDetails>
           <StyledSummary>
             <SummaryContent>
-              <SummaryTitle>{propKey}</SummaryTitle>
+              <SummaryTitle>
+                {propKey}
+                <TypeLabel>(object)</TypeLabel>
+              </SummaryTitle>
               <SummaryBadge status="neutral">
                 {Object.keys(config).length} keys
               </SummaryBadge>
@@ -66,7 +70,10 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <SummaryContent>
-                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryTitle>
+                  {propKey}
+                  <TypeLabel>(string)</TypeLabel>
+                </SummaryTitle>
                 <SummaryBadge status="neutral">
                   {String(localValue).length} chars
                 </SummaryBadge>
@@ -100,7 +107,10 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <SummaryContent>
-                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryTitle>
+                  {propKey}
+                  <TypeLabel>(number)</TypeLabel>
+                </SummaryTitle>
                 <SummaryBadge status="neutral">
                   {Number(localValue) ?? min}
                 </SummaryBadge>
@@ -124,7 +134,10 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <SummaryContent>
-                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryTitle>
+                  {propKey}
+                  <TypeLabel>(boolean)</TypeLabel>
+                </SummaryTitle>
                 <SummaryBadge status="neutral">
                   {Boolean(localValue) ? "true" : "false"}
                 </SummaryBadge>
@@ -149,7 +162,10 @@ export const PropControl = memo(
           <StyledDetails>
             <StyledSummary>
               <SummaryContent>
-                <SummaryTitle>{propKey}</SummaryTitle>
+                <SummaryTitle>
+                  {propKey}
+                  <TypeLabel>(array)</TypeLabel>
+                </SummaryTitle>
                 <SummaryBadge status="neutral">
                   {currentArray.length} items
                 </SummaryBadge>
