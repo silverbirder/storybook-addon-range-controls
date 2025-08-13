@@ -107,9 +107,6 @@ const meta: Meta<typeof CardList> = {
             min: 0,
             step: 0.1,
           },
-          isPublished: {
-            type: "boolean",
-          },
           metadata: {
             author: {
               type: "string",
@@ -128,9 +125,6 @@ const meta: Meta<typeof CardList> = {
       },
       maxColumns: {
         type: "number",
-      },
-      showFilters: {
-        type: "boolean",
       },
       filterByCategory: {
         type: "string",

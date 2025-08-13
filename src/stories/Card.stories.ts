@@ -50,9 +50,6 @@ const meta: Meta<typeof Card> = {
           step: 1,
         },
       },
-      isPublished: {
-        type: "boolean",
-      },
     },
   },
 };
@@ -134,9 +131,6 @@ export const Draft: Story = {
           max: 50,
           step: 1,
         },
-      },
-      isPublished: {
-        type: "boolean",
       },
     },
   },

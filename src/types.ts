@@ -4,7 +4,7 @@ export interface Result {
 }
 
 export interface PropConfig {
-  type: "string" | "number" | "boolean" | "array" | "object";
+  type: "string" | "number" | "array" | "object";
   min?: number;
   max?: number;
   step?: number;
