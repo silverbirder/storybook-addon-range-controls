@@ -78,7 +78,7 @@ const meta: Meta<typeof CardList> = {
     range: {
       cards: {
         type: "array",
-        default: (index: number) => ({
+        defaultItem: (index: number) => ({
           id: `card-${index + 1}`,
           title: "x",
           description: "x",
@@ -100,7 +100,7 @@ const meta: Meta<typeof CardList> = {
           },
           tags: {
             type: "array",
-            default: "x",
+            defaultItem: "x",
           },
           rating: {
             type: "number",

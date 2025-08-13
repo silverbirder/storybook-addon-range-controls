@@ -185,7 +185,7 @@ export const PropControl = memo(
         );
       case "array": {
         const currentArray = Array.isArray(localValue) ? localValue : [];
-        const defaultItem = propConfig.default;
+        const defaultItem = propConfig.defaultItem;
         return (
           <StyledDetails>
             <StyledSummary>
