@@ -12,7 +12,7 @@ export const usePropControl = ({ value, config, onValueChange }: Props) => {
   const [displayLimit, setDisplayLimit] = useState(5);
 
   const isObjectConfig = useMemo(
-    () => typeof config === "object" && !("type" in config),
+    () => "type" in config && config.type === "object",
     [config],
   );
 

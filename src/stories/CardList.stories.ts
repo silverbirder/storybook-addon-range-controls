@@ -108,6 +108,7 @@ const meta: Meta<typeof CardList> = {
             step: 0.1,
           },
           metadata: {
+            type: "object",
             author: {
               type: "string",
             },

@@ -52,18 +52,20 @@ export const PropControl = memo(
             </SummaryContent>
           </StyledSummary>
           <DetailsContent>
-            {Object.entries(config).map(([itemKey, itemConfig]) => (
-              <PropControl
-                key={itemKey}
-                propKey={itemKey}
-                value={value?.[itemKey]}
-                config={itemConfig}
-                onValueChange={(newValue) =>
-                  handleChange({ ...value, [itemKey]: newValue })
-                }
-                level={level + 1}
-              />
-            ))}
+            {Object.entries(config)
+              .filter(([itemKey]) => itemKey !== "type")
+              .map(([itemKey, itemConfig]) => (
+                <PropControl
+                  key={itemKey}
+                  propKey={itemKey}
+                  value={value?.[itemKey]}
+                  config={itemConfig}
+                  onValueChange={(newValue) =>
+                    handleChange({ ...value, [itemKey]: newValue })
+                  }
+                  level={level + 1}
+                />
+              ))}
           </DetailsContent>
         </StyledDetails>
       );

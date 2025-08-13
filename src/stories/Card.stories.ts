@@ -113,6 +113,7 @@ export const Draft: Story = {
         step: 0.5,
       },
       metadata: {
+        type: "object",
         author: {
           type: "string",
           min: 1,

@@ -9,6 +9,7 @@ const meta: Meta<typeof Header> = {
     layout: "fullscreen",
     range: {
       user: {
+        type: "object",
         name: {
           type: "string",
           min: 1,
