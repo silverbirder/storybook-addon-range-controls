@@ -1,5 +1,5 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
-import { Badge, Button } from "storybook/internal/components";
+import React, { memo } from "react";
+import { Badge } from "storybook/internal/components";
 import type { PropConfig, PropConfigs } from "../../types";
 import {
   StyledDetails,
