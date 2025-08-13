@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { Badge } from "storybook/internal/components";
 import type { PropConfig, PropConfigs } from "../../types";
 import {
   StyledDetails,
@@ -9,6 +8,10 @@ import {
   SummaryTitle,
   SummaryBadge,
   TypeLabel,
+  DisplayLimitContainer,
+  DisplayLimitInput,
+  DisplayLimitInfo,
+  DisplayLimitLabel,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -22,7 +25,13 @@ type Props = {
 
 export const PropControl = memo(
   ({ propKey, value, config, onValueChange, level = 0 }: Props) => {
-    const { isObjectConfig, localValue, handleChange } = usePropControl({
+    const {
+      isObjectConfig,
+      localValue,
+      handleChange,
+      displayLimit,
+      handleDisplayLimitChange,
+    } = usePropControl({
       value,
       config,
       onValueChange,
@@ -207,36 +216,53 @@ export const PropControl = memo(
               />
               {propConfig.items && localValue && localValue.length > 0 && (
                 <div>
-                  {localValue.map((item: any, index: number) => (
-                    <StyledDetails key={index}>
-                      <StyledSummary>
-                        <SummaryContent>
-                          <SummaryTitle>Item #{index}</SummaryTitle>
-                        </SummaryContent>
-                      </StyledSummary>
-                      <DetailsContent>
-                        {Object.entries(propConfig.items!).map(
-                          ([itemKey, itemConfig]) => (
-                            <PropControl
-                              key={itemKey}
-                              propKey={itemKey}
-                              value={item?.[itemKey]}
-                              config={itemConfig}
-                              onValueChange={(newItemValue) => {
-                                const newArray = [...localValue];
-                                newArray[index] = {
-                                  ...newArray[index],
-                                  [itemKey]: newItemValue,
-                                };
-                                handleChange(newArray);
-                              }}
-                              level={level + 1}
-                            />
-                          ),
-                        )}
-                      </DetailsContent>
-                    </StyledDetails>
-                  ))}
+                  <DisplayLimitContainer>
+                    <DisplayLimitLabel>Showing</DisplayLimitLabel>
+                    <DisplayLimitInput
+                      type="number"
+                      min={1}
+                      max={localValue.length}
+                      value={displayLimit}
+                      onChange={(e) =>
+                        handleDisplayLimitChange(parseInt(e.target.value))
+                      }
+                    />
+                    <DisplayLimitInfo>
+                      of {localValue.length} items
+                    </DisplayLimitInfo>
+                  </DisplayLimitContainer>
+                  {localValue
+                    .slice(0, displayLimit)
+                    .map((item: any, index: number) => (
+                      <StyledDetails key={index}>
+                        <StyledSummary>
+                          <SummaryContent>
+                            <SummaryTitle>item #{index + 1}</SummaryTitle>
+                          </SummaryContent>
+                        </StyledSummary>
+                        <DetailsContent>
+                          {Object.entries(propConfig.items!).map(
+                            ([itemKey, itemConfig]) => (
+                              <PropControl
+                                key={itemKey}
+                                propKey={itemKey}
+                                value={item?.[itemKey]}
+                                config={itemConfig}
+                                onValueChange={(newItemValue) => {
+                                  const newArray = [...localValue];
+                                  newArray[index] = {
+                                    ...newArray[index],
+                                    [itemKey]: newItemValue,
+                                  };
+                                  handleChange(newArray);
+                                }}
+                                level={level + 1}
+                              />
+                            ),
+                          )}
+                        </DetailsContent>
+                      </StyledDetails>
+                    ))}
                 </div>
               )}
             </DetailsContent>

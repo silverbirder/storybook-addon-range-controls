@@ -9,6 +9,7 @@ type Props = {
 
 export const usePropControl = ({ value, config, onValueChange }: Props) => {
   const [localValue, setLocalValue] = useState(value);
+  const [displayLimit, setDisplayLimit] = useState(5);
 
   const isObjectConfig = useMemo(
     () => typeof config === "object" && !("type" in config),
@@ -27,5 +28,15 @@ export const usePropControl = ({ value, config, onValueChange }: Props) => {
     [onValueChange],
   );
 
-  return { isObjectConfig, localValue, handleChange } as const;
+  const handleDisplayLimitChange = useCallback((newLimit: number) => {
+    setDisplayLimit(Math.max(1, newLimit || 1));
+  }, []);
+
+  return {
+    isObjectConfig,
+    localValue,
+    handleChange,
+    displayLimit,
+    handleDisplayLimitChange,
+  } as const;
 };

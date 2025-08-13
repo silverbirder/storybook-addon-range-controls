@@ -13,7 +13,7 @@ export const StyledSummary = styled.summary`
   cursor: pointer;
   font-weight: ${typography.weight.bold};
   font-size: ${typography.size.s2}px;
-  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+  border-radius: ${({ theme }) => theme.input.borderRadius / 2}px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -72,4 +72,36 @@ export const TypeLabel = styled.span`
 
 export const SummaryBadge = styled(Badge)`
   margin-left: auto;
+`;
+
+export const DisplayLimitContainer = styled.div`
+  margin-bottom: ${({ theme }) => theme.layoutMargin}px;
+  padding: ${({ theme }) => theme.layoutMargin}px;
+  background: ${color.tertiary};
+  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+`;
+
+export const DisplayLimitLabel = styled.label`
+  font-size: ${typography.size.s1}px;
+  margin-right: ${({ theme }) => theme.layoutMargin / 2}px;
+  color: ${color.mediumdark};
+`;
+
+export const DisplayLimitInput = styled.input`
+  font-size: ${typography.size.s1}px;
+  border: 1px solid ${color.border};
+  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+  background: ${background.content};
+  color: ${color.defaultText};
+
+  &:focus {
+    outline: none;
+    border-color: ${color.secondary};
+  }
+`;
+
+export const DisplayLimitInfo = styled.span`
+  font-size: ${typography.size.s1}px;
+  margin-left: ${({ theme }) => theme.layoutMargin / 2}px;
+  color: ${color.mediumdark};
 `;
