@@ -1,11 +1,12 @@
 import { Badge } from "storybook/internal/components";
-import { styled, color, background, typography } from "storybook/theming";
+import { styled, typography } from "storybook/theming";
 
 export const StyledDetails = styled.details`
-  border: 1px solid ${color.border};
-  border-radius: ${({ theme }) => theme.input.borderRadius}px;
+  border: 1px solid
+    ${({ theme }) =>
+      theme.base === "dark" ? theme.color.dark : theme.color.border};
   margin-bottom: ${({ theme }) => theme.layoutMargin}px;
-  background: ${background.content};
+  background: ${({ theme }) => theme.color.lightest};
 `;
 
 export const StyledSummary = styled.summary`
@@ -13,15 +14,15 @@ export const StyledSummary = styled.summary`
   cursor: pointer;
   font-weight: ${typography.weight.bold};
   font-size: ${typography.size.s2}px;
-  border-radius: ${({ theme }) => theme.input.borderRadius / 2}px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: ${color.defaultText};
-  background: ${background.content};
+  color: ${({ theme }) => theme.color.defaultText};
+  background: ${({ theme }) => theme.background.content};
 
   &:hover {
-    background: ${background.hoverable};
+    background: ${({ theme }) =>
+      theme.base === "dark" ? theme.color.darker : theme.color.lighter};
   }
 
   &::marker {
@@ -36,7 +37,8 @@ export const StyledSummary = styled.summary`
     content: "▶";
     margin-right: ${({ theme }) => theme.layoutMargin}px;
     transition: transform 0.2s;
-    color: ${color.mediumdark};
+    color: ${({ theme }) =>
+      theme.base === "dark" ? theme.color.mediumlight : theme.color.mediumdark};
   }
 
   details[open] > &::before {
@@ -46,9 +48,8 @@ export const StyledSummary = styled.summary`
 
 export const DetailsContent = styled.div`
   padding: ${({ theme }) => theme.layoutMargin}px;
-  background: ${background.content};
-  border-top: 1px solid ${color.border};
-  color: ${color.defaultText};
+  background: ${({ theme }) => theme.background.content};
+  color: ${({ theme }) => theme.color.defaultText};
   font-size: ${typography.size.s2}px;
 `;
 
@@ -66,7 +67,8 @@ export const SummaryTitle = styled.div`
 
 export const TypeLabel = styled.span`
   font-size: ${typography.size.s1}px;
-  color: ${color.mediumdark};
+  color: ${({ theme }) =>
+    theme.base === "dark" ? theme.color.mediumlight : theme.color.mediumdark};
   margin-left: ${({ theme }) => theme.layoutMargin / 2}px;
 `;
 
@@ -77,33 +79,38 @@ export const SummaryBadge = styled(Badge)`
 export const DisplayLimitContainer = styled.div`
   margin-bottom: ${({ theme }) => theme.layoutMargin}px;
   padding: ${({ theme }) => theme.layoutMargin}px;
-  background: ${color.tertiary};
+  background: ${({ theme }) =>
+    theme.base === "dark" ? theme.color.darker : theme.color.lighter};
   border-radius: ${({ theme }) => theme.input.borderRadius}px;
 `;
 
 export const DisplayLimitLabel = styled.label`
   font-size: ${typography.size.s1}px;
   margin-right: ${({ theme }) => theme.layoutMargin / 2}px;
-  color: ${color.mediumdark};
+  color: ${({ theme }) =>
+    theme.base === "dark" ? theme.color.mediumlight : theme.color.mediumdark};
 `;
 
 export const DisplayLimitInput = styled.input`
   font-size: ${typography.size.s1}px;
-  border: 1px solid ${color.border};
+  border: 1px solid
+    ${({ theme }) =>
+      theme.base === "dark" ? theme.color.dark : theme.color.border};
   border-radius: ${({ theme }) => theme.input.borderRadius}px;
-  background: ${background.content};
-  color: ${color.defaultText};
+  background: ${({ theme }) => theme.background.content};
+  color: ${({ theme }) => theme.color.defaultText};
 
   &:focus {
     outline: none;
-    border-color: ${color.secondary};
+    border-color: ${({ theme }) => theme.color.secondary};
   }
 `;
 
 export const DisplayLimitInfo = styled.span`
   font-size: ${typography.size.s1}px;
   margin-left: ${({ theme }) => theme.layoutMargin / 2}px;
-  color: ${color.mediumdark};
+  color: ${({ theme }) =>
+    theme.base === "dark" ? theme.color.mediumlight : theme.color.mediumdark};
 `;
 
 export const DirectEditContainer = styled.div`
@@ -115,14 +122,16 @@ export const DirectEditInput = styled.input`
   flex: 1;
   padding: ${({ theme }) => theme.layoutMargin / 2}px;
   font-size: ${typography.size.s2}px;
-  border: 1px solid ${color.border};
+  border: 1px solid
+    ${({ theme }) =>
+      theme.base === "dark" ? theme.color.dark : theme.color.border};
   border-radius: ${({ theme }) => theme.input.borderRadius}px;
-  background: ${background.content};
-  color: ${color.defaultText};
+  background: ${({ theme }) => theme.background.content};
+  color: ${({ theme }) => theme.color.defaultText};
 
   &:focus {
     outline: none;
-    border-color: ${color.secondary};
+    border-color: ${({ theme }) => theme.color.secondary};
   }
 `;
 
@@ -141,20 +150,21 @@ export const MultiSelectOption = styled.div`
   transition: background-color 0.2s ease;
 
   &:hover {
-    background: ${background.hoverable};
+    background: ${({ theme }) =>
+      theme.base === "dark" ? theme.color.darker : theme.color.lighter};
   }
 `;
 
 export const MultiSelectCheckbox = styled.input`
   margin-right: ${({ theme }) => theme.layoutMargin / 2}px;
   cursor: pointer;
-  accent-color: ${color.secondary};
+  accent-color: ${({ theme }) => theme.color.secondary};
 `;
 
 export const MultiSelectLabel = styled.label`
   cursor: pointer;
-  font-size: ${typography.size.s2}px;
-  color: ${color.defaultText};
+  font-size: ${({ theme }) => theme.typography.size.s2}px;
+  color: ${({ theme }) => theme.color.defaultText};
   user-select: none;
   flex: 1;
 `;
