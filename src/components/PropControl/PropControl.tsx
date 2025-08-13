@@ -26,7 +26,7 @@ export const PropControl = memo(
 
     if (isObjectConfig) {
       return (
-        <StyledDetails open={level === 0}>
+        <StyledDetails>
           <StyledSummary>
             <span>{propKey}</span>
             <Badge status="neutral">{Object.keys(config).length} keys</Badge>
@@ -53,7 +53,7 @@ export const PropControl = memo(
     switch (propConfig.type) {
       case "string":
         return (
-          <StyledDetails open={level === 0}>
+          <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
               <Badge status="neutral">len: {String(localValue).length}</Badge>
@@ -80,7 +80,7 @@ export const PropControl = memo(
         const max = propConfig.max ?? 100;
         const step = propConfig.step ?? 1;
         return (
-          <StyledDetails open={level === 0}>
+          <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
               <Badge status="neutral">{Number(localValue) ?? min}</Badge>
@@ -100,7 +100,7 @@ export const PropControl = memo(
       }
       case "boolean":
         return (
-          <StyledDetails open={level === 0}>
+          <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
               <Badge status={Boolean(localValue) ? "positive" : "neutral"}>
@@ -120,7 +120,7 @@ export const PropControl = memo(
         const currentArray = Array.isArray(localValue) ? localValue : [];
         const defaultItem = propConfig.defaultItem;
         return (
-          <StyledDetails open={level === 0}>
+          <StyledDetails>
             <StyledSummary>
               <span>{propKey}</span>
               <Badge status="neutral">length: {currentArray.length}</Badge>

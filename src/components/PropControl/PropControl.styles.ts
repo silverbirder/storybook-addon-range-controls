@@ -30,7 +30,7 @@ export const StyledSummary = styled.summary`
     transition: transform 0.2s;
   }
 
-  details[open] &::before {
+  details[open] > &::before {
     transform: rotate(90deg);
   }
 `;
