@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-range-controls",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Range your Storybook args with sliders to quickly increase/decrease lengths, counts, and numbers for layout validation.",
   "keywords": [
     "storybook-addons",
