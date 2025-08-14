@@ -70,7 +70,7 @@ This addon contributes the following parameters to Storybook, under the `range` 
 
 | type      | description                                   | additional keys                              |
 | --------- | --------------------------------------------- | -------------------------------------------- |
-| `string`  | Adjust string length via a **range slider**   | `min`, `max`, `step`                         |
+| `string`  | Adjust string length via a **range slider**   | `min`, `max`, `step`, `defaultChar`          |
 | `number`  | Adjust a numeric value via a **range slider** | `min`, `max`, `step`                         |
 | `array`   | Adjust array length via a **range slider**    | `min`, `max`, `step`, `items`, `defaultItem` |
 | `enum`    | Enum with single/multiple selection           | `selection`, `options`                       |
@@ -84,6 +84,12 @@ This addon contributes the following parameters to Storybook, under the `range` 
 | `min`  | `number` | `0`     | Minimum value of the range |
 | `max`  | `number` | `100`   | Maximum value of the range |
 | `step` | `number` | `1`     | Step interval              |
+
+For `string` only:
+
+| key           | type     | default | description                                             |
+| ------------- | -------- | ------- | ------------------------------------------------------- |
+| `defaultChar` | `string` | `"x"`   | Character used to pad when increasing length via slider |
 
 #### array
 
@@ -128,6 +134,8 @@ const meta: Meta<typeof Button> = {
     range: {
       // string: adjust length with a range slider
       title: { type: "string", min: 0, max: 50, step: 5 },
+      // You can change the padding character when slider grows the string
+      subtitle: { type: "string", min: 0, max: 30, step: 1, defaultChar: "·" },
 
       // number: adjust numeric value with a range slider
       count: { type: "number", min: 0, max: 20, step: 1 },

@@ -94,9 +94,11 @@ const meta: Meta<typeof CardList> = {
         items: {
           title: {
             type: "string",
+            defaultChar: "·",
           },
           description: {
             type: "string",
+            defaultChar: "·",
           },
           tags: {
             type: "array",
@@ -114,12 +116,14 @@ const meta: Meta<typeof CardList> = {
             type: "object",
             author: {
               type: "string",
+              defaultChar: "·",
             },
             publishedDate: {
               type: "string",
             },
             category: {
               type: "string",
+              defaultChar: "·",
             },
           },
         },

@@ -86,6 +86,7 @@ export const PropControl = memo(
 
     switch (propConfig.type) {
       case "string": {
+        const padChar = (propConfig as PropConfig).defaultChar ?? "x";
         return (
           <StyledDetails>
             <StyledSummary>
@@ -110,7 +111,7 @@ export const PropControl = memo(
                   const targetLength = parseInt(e.target.value);
                   const newValue =
                     targetLength > (localValue ?? "").length
-                      ? (localValue ?? "").padEnd(targetLength, "x")
+                      ? (localValue ?? "").padEnd(targetLength, padChar)
                       : (localValue ?? "").slice(0, targetLength);
                   handleChange(newValue);
                 }}

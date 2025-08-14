@@ -3,6 +3,8 @@ export interface PropConfig {
   min?: number;
   max?: number;
   step?: number;
+  // for string
+  defaultChar?: string;
   // for array
   items?: PropConfigs;
   defaultItem?: any | ((index: number) => any);

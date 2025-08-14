@@ -13,6 +13,7 @@ const meta: Meta<typeof Button> = {
         min: 1,
         max: 20,
         step: 1,
+  defaultChar: "·",
       },
       primary: {
         type: "boolean",
