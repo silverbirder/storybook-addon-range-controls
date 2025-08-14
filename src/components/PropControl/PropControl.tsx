@@ -19,6 +19,8 @@ import {
   MultiSelectCheckbox,
   MultiSelectLabel,
   RangeInput,
+  DeleteButton,
+  ItemHeader,
 } from "./PropControl.styles";
 import { usePropControl } from "./PropControl.hooks";
 
@@ -78,9 +80,9 @@ export const PropControl = memo(
       );
     }
     const propConfig = config as PropConfig;
-    const min = propConfig.min;
-    const max = propConfig.max;
-    const step = propConfig.step;
+    const min = propConfig.min ?? 0;
+    const max = propConfig.max ?? 100;
+    const step = propConfig.step ?? 1;
 
     switch (propConfig.type) {
       case "string": {
@@ -228,7 +230,7 @@ export const PropControl = memo(
                           JSON.stringify(currentArray[currentArray.length - 1]),
                         );
                       } else {
-                        newItem = {};
+                        newItem = "x";
                       }
                       newArray.push(newItem);
                     }
@@ -261,7 +263,19 @@ export const PropControl = memo(
                       <StyledDetails key={index}>
                         <StyledSummary>
                           <SummaryContent>
-                            <SummaryTitle>item #{index + 1}</SummaryTitle>
+                            <ItemHeader>
+                              <SummaryTitle>item #{index + 1}</SummaryTitle>
+                              <DeleteButton
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  const newArray = localValue.filter(
+                                    (_: any, i: number) => i !== index,
+                                  );
+                                  handleChange(newArray);
+                                }}
+                              ></DeleteButton>
+                            </ItemHeader>
                           </SummaryContent>
                         </StyledSummary>
                         <DetailsContent>

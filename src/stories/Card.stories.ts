@@ -23,6 +23,7 @@ const meta: Meta<typeof Card> = {
         min: 0,
         max: 10,
         step: 1,
+        defaultItem: "Tag",
       },
       rating: {
         type: "number",
@@ -35,12 +36,6 @@ const meta: Meta<typeof Card> = {
           type: "string",
           min: 1,
           max: 50,
-          step: 1,
-        },
-        publishedDate: {
-          type: "string",
-          min: 8,
-          max: 20,
           step: 1,
         },
         category: {
@@ -73,72 +68,5 @@ export const Default: Story = {
       category: "Technology",
     },
     isPublished: true,
-  },
-};
-
-export const Draft: Story = {
-  args: {
-    title: "Draft Article",
-    description: "This is a draft article that hasn't been published yet.",
-    tags: ["Draft", "Work in Progress"],
-    rating: 3.0,
-    metadata: {
-      author: "Jane Smith",
-      publishedDate: "2024-02-01",
-      category: "Draft",
-    },
-    isPublished: false,
-  },
-  parameters: {
-    range: {
-      title: {
-        type: "string",
-        min: 1,
-        max: 200,
-        step: 1,
-      },
-      description: {
-        type: "string",
-        min: 10,
-        max: 1000,
-        step: 20,
-      },
-      tags: {
-        type: "array",
-        min: 0,
-        max: 20,
-        step: 1,
-      },
-      rating: {
-        type: "number",
-        min: 0,
-        max: 5,
-        step: 0.5,
-      },
-      metadata: {
-        type: "object",
-        author: {
-          type: "string",
-          min: 1,
-          max: 100,
-          step: 1,
-        },
-        publishedDate: {
-          type: "string",
-          min: 8,
-          max: 30,
-          step: 1,
-        },
-        category: {
-          type: "string",
-          min: 1,
-          max: 50,
-          step: 1,
-        },
-      },
-      isPublished: {
-        type: "boolean",
-      },
-    },
   },
 };

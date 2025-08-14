@@ -84,11 +84,11 @@ const meta: Meta<typeof CardList> = {
           description: "x",
           tags: [`Tag${(index % 5) + 1}`],
           rating: 0,
-          isPublished: false,
+          isPublished: true,
           metadata: {
             author: "x",
             publishedDate: "2024-01-01",
-            category: "x",
+            category: "Technology",
           },
         }),
         items: {
@@ -100,7 +100,7 @@ const meta: Meta<typeof CardList> = {
           },
           tags: {
             type: "array",
-            defaultItem: "x",
+            defaultItem: "Tag1",
           },
           rating: {
             type: "number",
@@ -177,7 +177,7 @@ const meta: Meta<typeof CardList> = {
 export default meta;
 type Story = StoryObj<typeof CardList>;
 
-export const GridLayout: Story = {
+export const Default: Story = {
   args: {
     cards: generateSampleCards(6),
     layout: "grid",
@@ -185,6 +185,6 @@ export const GridLayout: Story = {
     showFilters: true,
     sortBy: "title",
     sortOrder: "asc",
-    selectedCategories: ["Technology", "Design"],
+    selectedCategories: [],
   },
 };
