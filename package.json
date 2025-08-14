@@ -4,8 +4,6 @@
   "description": "Range your Storybook args with sliders to quickly increase/decrease lengths, counts, and numbers for layout validation.",
   "keywords": [
     "storybook-addons",
-    "testing",
-    "visual-testing",
     "range",
     "controls",
     "storybook-addons"

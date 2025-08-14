@@ -15,12 +15,12 @@ npm install --save-dev storybook-addon-range-controls
 Then, register it as an addon in `.storybook/main.js`.
 
 ```ts
-// .storybook/main.ts
+// .storybook/main.js
 
 // Replace your-framework with the framework you are using (e.g., react, nextjs)
 import type { StorybookConfig } from "@storybook/react";
 
-const config: StorybookConfig = {
+const config = {
   // ...rest of config
   addons: [
     "@storybook/addon-docs",
@@ -62,90 +62,128 @@ export default meta;
 
 This addon contributes the following parameters to Storybook, under the `range` namespace:
 
-### Overview
+| key  | value                                               | required |
+| ---- | --------------------------------------------------- | -------- |
+| type | `string` `number` `array` `boolean` `object` `enum` | true     |
 
-`range` is an object that assigns a control configuration (PropConfig) to each arg key.
+### Types and additional options
 
-- Root: `parameters.range` is `{ [argKey]: PropConfig | PropConfigs }`
-- Nesting: use `type: "object"` to define nested configs (PropConfigs)
-- Arrays: `type: "array"` lets you change array length via a slider; `items` defines the element shape
+| type      | description                                   | additional keys                              |
+| --------- | --------------------------------------------- | -------------------------------------------- |
+| `string`  | Adjust string length via a **range slider**   | `min`, `max`, `step`                         |
+| `number`  | Adjust a numeric value via a **range slider** | `min`, `max`, `step`                         |
+| `array`   | Adjust array length via a **range slider**    | `min`, `max`, `step`, `items`, `defaultItem` |
+| `enum`    | Enum with single/multiple selection           | `selection`, `options`                       |
+| `boolean` | Toggle true/false                             | —                                            |
+| `object`  | Object described by nested field configs      | Nest child fields with their own `type`      |
 
-### Common properties (PropConfig)
+#### string / number / array
 
-| Key  | Type      | Required | Applies to          | Description                                                                        |
-| ---- | --------- | -------- | ------------------- | ---------------------------------------------------------------------------------- | -------- | ------- | --- | --- | ------------------------- |
-| type | `"string" | "number" | "boolean"           | "array"                                                                            | "object" | "enum"` | Yes | All | The value kind to control |
-| min  | `number`  | No       | string/number/array | Slider minimum. For string it means character count; for array it means item count |
-| max  | `number`  | No       | string/number/array | Slider maximum. For string it means character count; for array it means item count |
-| step | `number`  | No       | string/number/array | Slider step                                                                        |
+| key    | type     | default | description                |
+| ------ | -------- | ------- | -------------------------- |
+| `min`  | `number` | `0`     | Minimum value of the range |
+| `max`  | `number` | `100`   | Maximum value of the range |
+| `step` | `number` | `1`     | Step interval              |
 
-### Type-specific properties
+#### array
 
-| type    | Property      | Type          | Required             | Description                                                                        |
-| ------- | ------------- | ------------- | -------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| string  | —             | —             | —                    | Adjusts text length via slider (pads with `x` when increasing) + direct text input |
-| number  | —             | —             | —                    | Adjusts number via slider and direct numeric input                                 |
-| boolean | —             | —             | —                    | Checkbox toggle                                                                    |
-| array   | items         | `PropConfigs` | No                   | Shape of each element (per-key PropConfig)                                         |
-|         | defaultItem   | `any          | (index:number)=>any` | No                                                                                 | Default element when growing the array. If a function, gets the new index |
-| object  | (nested keys) | `PropConfig`  | No                   | Put `type: "object"` and list child keys (the `type` key is treated specially)     |
-| enum    | selection     | `"single"     | "multiple"`          | No (default: `single`)                                                             | Single or multiple selection                                              |
-|         | options       | `Array<string | number               | {label:string; value:any}>`                                                        | No                                                                        | Choices. Object form uses `label` for UI and `value` for the stored value |
+| key           | type                             | description                                                                                                                     |
+| ------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `items`       | Field definition object          | When elements are objects, define their fields using nested prop definitions (e.g., `{ items: { name: { type: "string" } } }`). |
+| `defaultItem` | `any` , `(index: number) => any` | Default value for each element. Either a fixed value or a function that receives the index to generate a value.                 |
 
-Notes:
+#### enum
 
-- `min/max/step` are optional (native input range defaults apply). Specify as needed.
-- For `object`, use `{ type: "object", foo: {...}, bar: {...} }`; keys other than `type` are treated as nested configs.
+| key         | type                                                      | description                                           |
+| ----------- | --------------------------------------------------------- | ----------------------------------------------------- |
+| `selection` | `single`, `multiple`                                      | Single or multiple selection                          |
+| `options`   | `string[]`, `number[]`, `{ label: string; value: any }[]` | List of options. Supports arrays of label/value pairs |
+
+#### object
+
+`object` is expressed by nesting fields, each with its own `type` definition.
+
+```ts
+{
+  type: "object",
+  name: {
+    type: "string"
+  },
+  price: {
+    type: "number"
+  }
+}
+```
 
 ### Examples
 
 ```ts
-// parameters: { range: { ... } }
-range: {
-  // Control string length from 0 to 120
-  title: { type: "string", min: 0, max: 120, step: 1 },
+// Button.stories.ts
+import type { Meta } from "@storybook/your-framework";
+import { Button } from "./Button";
 
-  // Control a number from 0 to 100
-  count: { type: "number", min: 0, max: 100, step: 1 },
+const meta: Meta<typeof Button> = {
+  component: Button,
+  parameters: {
+    range: {
+      // string: adjust length with a range slider
+      title: { type: "string", min: 0, max: 50, step: 5 },
 
-  // Toggle boolean
-  enabled: { type: "boolean" },
+      // number: adjust numeric value with a range slider
+      count: { type: "number", min: 0, max: 20, step: 1 },
 
-  // Control array length (0–20). Define element shape via `items`
-  items: {
-    type: "array",
-    min: 0,
-    max: 20,
-    defaultItem: (i) => ({ id: i + 1, label: `Item ${i + 1}` }),
-    items: {
-      id: { type: "number", min: 1, max: 9999 },
-      label: { type: "string", min: 0, max: 50 },
+      // boolean: toggle
+      enabled: { type: "boolean" },
+
+      // array: control number of elements; generate defaultItem via function
+      tags: {
+        type: "array",
+        min: 0,
+        max: 5,
+        step: 1,
+        defaultItem: (i: number) => `tag-${i + 1}`,
+      },
+
+      // array + items: array of objects
+      users: {
+        type: "array",
+        min: 1,
+        max: 3,
+        items: {
+          name: { type: "string" },
+          age: { type: "number", min: 0, max: 120, step: 1 },
+        },
+        // You can also provide a fixed defaultItem
+        defaultItem: { name: "Alice", age: 20 },
+      },
+
+      // enum (single)
+      size: {
+        type: "enum",
+        selection: "single",
+        options: ["sm", "md", "lg"],
+      },
+
+      // enum (multiple) + label/value object array
+      colors: {
+        type: "enum",
+        selection: "multiple",
+        options: [
+          { label: "Red", value: "#f00" },
+          { label: "Green", value: "#0f0" },
+          { label: "Blue", value: "#00f" },
+        ],
+      },
+
+      // object: define fields with nested types
+      product: {
+        type: "object",
+        name: { type: "string" },
+        price: { type: "number", min: 0, max: 1000, step: 10 },
+      },
     },
   },
+};
 
-  // Nested object
-  settings: {
-    type: "object",
-    threshold: { type: "number", min: 0, max: 10, step: 0.5 },
-    flag: { type: "boolean" },
-  },
-
-  // enum single-select (label/value objects are supported)
-  status: {
-    type: "enum",
-    selection: "single",
-    options: [
-      { label: "Draft", value: "draft" },
-      { label: "Published", value: "published" },
-      { label: "Archived", value: "archived" },
-    ],
-  },
-
-  // enum multi-select
-  features: {
-    type: "enum",
-    selection: "multiple",
-    options: ["a", "b", "c"],
-  },
-}
+export default meta;
 ```

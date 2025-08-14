@@ -1,8 +1,3 @@
-export interface Result {
-  divs: DOMRect[];
-  styled: DOMRect[];
-}
-
 export interface PropConfig {
   type: "string" | "number" | "boolean" | "array" | "object" | "enum";
   min?: number;

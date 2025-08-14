@@ -80,9 +80,9 @@ export const PropControl = memo(
       );
     }
     const propConfig = config as PropConfig;
-    const min = propConfig.min;
-    const max = propConfig.max;
-    const step = propConfig.step;
+    const min = propConfig.min ?? 0;
+    const max = propConfig.max ?? 100;
+    const step = propConfig.step ?? 1;
 
     switch (propConfig.type) {
       case "string": {
