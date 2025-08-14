@@ -230,7 +230,7 @@ export const PropControl = memo(
                           JSON.stringify(currentArray[currentArray.length - 1]),
                         );
                       } else {
-                        newItem = {};
+                        newItem = "x";
                       }
                       newArray.push(newItem);
                     }
