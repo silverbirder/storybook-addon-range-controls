@@ -118,9 +118,6 @@ const meta: Meta<typeof CardList> = {
               type: "string",
               defaultChar: "·",
             },
-            publishedDate: {
-              type: "string",
-            },
             category: {
               type: "string",
               defaultChar: "·",
