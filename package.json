@@ -45,7 +45,7 @@
     "prerelease": "zx scripts/prepublish-checks.js",
     "release": "npm run build && auto shipit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "npm run build && storybook build",
     "chromatic": "npx chromatic"
   },
   "dependencies": {
