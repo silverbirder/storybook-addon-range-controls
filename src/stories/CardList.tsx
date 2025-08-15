@@ -163,13 +163,13 @@ export const CardList = ({
               checked={showFilters}
               onChange={(e) => setShowFilters(e.target.checked)}
             />
-            Show Filters
+            フィルターを表示
           </label>
         </div>
 
         <div className="control-section">
           <label className="control-label">
-            Sort By:
+            ソート:
             <select
               value={sortBy}
               onChange={(e) =>
@@ -177,23 +177,23 @@ export const CardList = ({
               }
               className="control-select"
             >
-              <option value="title">Title</option>
-              <option value="rating">Rating</option>
-              <option value="date">Date</option>
+              <option value="title">タイトル</option>
+              <option value="rating">評価</option>
+              <option value="date">日付</option>
             </select>
           </label>
         </div>
 
         <div className="control-section">
           <label className="control-label">
-            Sort Order:
+            順序:
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
               className="control-select"
             >
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
+              <option value="asc">昇順</option>
+              <option value="desc">降順</option>
             </select>
           </label>
         </div>
@@ -202,7 +202,7 @@ export const CardList = ({
       {/* Category Selection */}
       {availableCategories.length > 0 && (
         <div className="category-controls">
-          <h4 className="category-title">Filter by Categories:</h4>
+          <h4 className="category-title">カテゴリー:</h4>
           <div className="category-buttons">
             {availableCategories.map((category) => (
               <button
@@ -217,14 +217,14 @@ export const CardList = ({
 
           {selectedCategories.length > 0 && (
             <div className="selected-categories">
-              <span className="selected-label">Active category filters:</span>
+              <span className="selected-label">選択中:</span>
               {selectedCategories.map((category) => (
                 <span key={category} className="selected-category">
                   {category}
                   <button
                     className="remove-category"
                     onClick={() => toggleCategory(category)}
-                    aria-label={`Remove ${category} filter`}
+                    aria-label={`${category} フィルターを削除`}
                   >
                     ×
                   </button>
@@ -234,7 +234,7 @@ export const CardList = ({
                 className="clear-all"
                 onClick={() => setSelectedCategories([])}
               >
-                Clear Categories
+                すべて削除
               </button>
             </div>
           )}
@@ -244,7 +244,7 @@ export const CardList = ({
       {/* Tag Selection */}
       {availableTags.length > 0 && (
         <div className="tag-controls">
-          <h4 className="tag-title">Filter by Tags:</h4>
+          <h4 className="tag-title">タグ:</h4>
           <div className="tag-buttons">
             {availableTags.map((tag) => (
               <button
@@ -259,21 +259,21 @@ export const CardList = ({
 
           {selectedTags.length > 0 && (
             <div className="selected-tags">
-              <span className="selected-label">Active tag filters:</span>
+              <span className="selected-label">選択中:</span>
               {selectedTags.map((tag) => (
                 <span key={tag} className="selected-tag">
                   #{tag}
                   <button
                     className="remove-tag"
                     onClick={() => toggleTag(tag)}
-                    aria-label={`Remove ${tag} filter`}
+                    aria-label={`${tag} フィルターを削除`}
                   >
                     ×
                   </button>
                 </span>
               ))}
               <button className="clear-all" onClick={() => setSelectedTags([])}>
-                Clear Tags
+                すべて削除
               </button>
             </div>
           )}
@@ -283,17 +283,17 @@ export const CardList = ({
       {showFilters && (
         <div className="card-list-filters">
           <div className="filter-info">
-            Showing {sortedCards.length} of {safeCards.length} cards
+            {sortedCards.length} / {safeCards.length} 件を表示
           </div>
           <div className="filter-controls">
             <span>
-              Sort by: {sortBy} ({sortOrder})
+              {sortBy} ({sortOrder === "asc" ? "昇順" : "降順"})
             </span>
             {selectedCategories.length > 0 && (
-              <span>Categories: {selectedCategories.join(", ")}</span>
+              <span>カテゴリー: {selectedCategories.join(", ")}</span>
             )}
             {selectedTags.length > 0 && (
-              <span>Tags: {selectedTags.join(", ")}</span>
+              <span>タグ: {selectedTags.join(", ")}</span>
             )}
           </div>
         </div>
@@ -329,7 +329,7 @@ export const CardList = ({
           })
         ) : (
           <div className="no-cards">
-            <p>No cards to display</p>
+            <p>表示するカードがありません</p>
           </div>
         )}
       </div>

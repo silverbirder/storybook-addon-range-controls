@@ -1,5 +1,5 @@
 .card-list-container {
-  padding: 20px;
+  padding: 12px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -8,11 +8,11 @@
 .card-list-controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 20px;
-  padding: 16px;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
   background-color: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid #e9ecef;
 }
 
@@ -48,16 +48,16 @@
 
 /* Category Controls */
 .category-controls {
-  margin-bottom: 20px;
-  padding: 16px;
+  margin-bottom: 12px;
+  padding: 12px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid #e9ecef;
 }
 
 .category-title {
-  margin: 0 0 12px 0;
-  font-size: 16px;
+  margin: 0 0 8px 0;
+  font-size: 14px;
   font-weight: 600;
   color: #495057;
 }
@@ -65,17 +65,17 @@
 .category-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .category-button {
-  padding: 6px 12px;
+  padding: 4px 10px;
   border: 1px solid #ced4da;
-  border-radius: 20px;
+  border-radius: 16px;
   background-color: white;
   color: #495057;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -95,38 +95,38 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  padding-top: 12px;
+  gap: 6px;
+  padding-top: 8px;
   border-top: 1px solid #e9ecef;
 }
 
 .selected-label {
   font-weight: 500;
   color: #495057;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .selected-category {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 8px;
+  padding: 2px 6px;
   background-color: #007bff;
   color: white;
-  border-radius: 16px;
-  font-size: 12px;
+  border-radius: 12px;
+  font-size: 11px;
 }
 
 .remove-category {
   background: none;
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   cursor: pointer;
   padding: 0;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,16 +139,16 @@
 
 /* Tag Controls */
 .tag-controls {
-  margin-bottom: 20px;
-  padding: 16px;
+  margin-bottom: 12px;
+  padding: 12px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid #e9ecef;
 }
 
 .tag-title {
-  margin: 0 0 12px 0;
-  font-size: 16px;
+  margin: 0 0 8px 0;
+  font-size: 14px;
   font-weight: 600;
   color: #495057;
 }
@@ -156,17 +156,17 @@
 .tag-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .tag-button {
-  padding: 4px 10px;
+  padding: 3px 8px;
   border: 1px solid #28a745;
-  border-radius: 16px;
+  border-radius: 12px;
   background-color: white;
   color: #28a745;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
@@ -187,8 +187,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  padding-top: 12px;
+  gap: 6px;
+  padding-top: 8px;
   border-top: 1px solid #e9ecef;
 }
 
@@ -196,11 +196,11 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 8px;
+  padding: 2px 6px;
   background-color: #28a745;
   color: white;
-  border-radius: 16px;
-  font-size: 12px;
+  border-radius: 12px;
+  font-size: 10px;
   font-weight: 500;
 }
 
@@ -208,12 +208,12 @@
   background: none;
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   cursor: pointer;
   padding: 0;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,12 +225,12 @@
 }
 
 .clear-all {
-  padding: 4px 8px;
+  padding: 3px 6px;
   background-color: #6c757d;
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: 10px;
+  font-size: 10px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -243,10 +243,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 12px 16px;
+  margin-bottom: 12px;
+  padding: 8px 12px;
   background-color: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid #e9ecef;
 }
 
@@ -257,13 +257,13 @@
 
 .filter-controls {
   display: flex;
-  gap: 16px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 12px;
   color: #6c757d;
 }
 
 .filter-controls span {
-  padding: 4px 8px;
+  padding: 2px 6px;
   background-color: #e9ecef;
   border-radius: 4px;
 }
@@ -330,12 +330,13 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .card-list-container {
-    padding: 12px;
+    padding: 8px;
   }
 
   .card-list-controls {
     flex-direction: column;
     align-items: stretch;
+    padding: 8px;
   }
 
   .control-section {
@@ -344,61 +345,61 @@
 
   .category-controls,
   .tag-controls {
-    padding: 12px;
+    padding: 8px;
   }
 
   .category-buttons,
   .tag-buttons {
-    gap: 6px;
+    gap: 4px;
   }
 
   .category-button {
-    font-size: 12px;
-    padding: 4px 8px;
+    font-size: 11px;
+    padding: 3px 6px;
   }
 
   .tag-button {
-    font-size: 11px;
-    padding: 3px 8px;
+    font-size: 10px;
+    padding: 2px 6px;
   }
 
   .selected-categories,
   .selected-tags {
-    gap: 6px;
+    gap: 4px;
   }
 
   .card-list--grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
 
   .card-list-filters {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
   }
 
   .filter-controls {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
 }
 
 @media (max-width: 480px) {
   .card-list-container {
-    padding: 8px;
+    padding: 6px;
   }
 
   .card-list-controls {
-    padding: 12px;
+    padding: 8px;
   }
 
   .category-controls,
   .tag-controls {
-    padding: 8px;
+    padding: 6px;
   }
 
   .card-list--grid {
-    gap: 12px;
+    gap: 8px;
   }
 }
