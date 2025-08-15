@@ -65,12 +65,42 @@
   margin: 0;
   color: #333;
   word-break: break-word;
+  flex: 1;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
 }
 
 .rating {
   color: #ff9800;
   font-weight: bold;
-  white-space: nowrap;
+}
+
+.likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #e91e63;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.heart-icon {
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+.card:hover .heart-icon {
+  transform: scale(1.1);
+}
+
+.likes-count {
+  min-width: 20px;
+  text-align: left;
 }
 
 .card-body {

@@ -22,6 +22,7 @@ interface CardData {
   isPublished: boolean;
   avatars?: Avatar[];
   thumbnail?: string;
+  likesCount?: number;
 }
 
 interface CardListProps {
@@ -265,7 +266,7 @@ export const CardList = ({
 
       <div className={containerClass} style={gridStyle}>
         {sortedCards.length > 0 ? (
-          sortedCards.map((card) => {
+          sortedCards.map((card, index) => {
             // Safety check for card object
             if (!card || typeof card !== "object") {
               return null;
@@ -273,7 +274,7 @@ export const CardList = ({
 
             return (
               <Card
-                key={card.id || `card-${Math.random()}`}
+                key={card.id || `card-${index}`}
                 title={card.title || "Untitled"}
                 description={card.description || ""}
                 tags={Array.isArray(card.tags) ? card.tags : []}
@@ -288,6 +289,7 @@ export const CardList = ({
                 isPublished={Boolean(card.isPublished)}
                 avatars={Array.isArray(card.avatars) ? card.avatars : []}
                 thumbnail={card.thumbnail}
+                likesCount={typeof card.likesCount === "number" ? card.likesCount : 0}
               />
             );
           })

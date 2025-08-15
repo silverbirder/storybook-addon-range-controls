@@ -58,7 +58,7 @@ const generateSampleCards = (count: number) => {
       name: authors[(authorIndex + avatarIndex) % authors.length]!,
       imageUrl:
         avatarIndex % 2 === 0
-          ? `https://i.pravatar.cc/40?img=${index + avatarIndex + 1}`
+          ? `https://i.pravatar.cc/40?u=${index + avatarIndex + 1}`
           : undefined,
     }));
 
@@ -82,7 +82,8 @@ const generateSampleCards = (count: number) => {
       thumbnail:
         index % 3 === 0
           ? undefined
-          : `https://picsum.photos/300/200?random=${index + 1}`,
+          : `https://picsum.photos/300/200?seed=${index + 1}`,
+      likesCount: (((index + 1) * 7) % 500) + 1,
     };
   });
 };
@@ -114,6 +115,7 @@ const meta: Meta<typeof CardList> = {
             },
           ],
           thumbnail: "https://picsum.photos/300/200?random=1",
+          likesCount: 0,
         }),
         items: {
           type: "object",
@@ -191,6 +193,12 @@ const meta: Meta<typeof CardList> = {
             min: 0,
             max: 200,
             defaultChar: "h",
+          },
+          likesCount: {
+            type: "number",
+            min: 0,
+            max: 1000,
+            step: 1,
           },
         },
       },

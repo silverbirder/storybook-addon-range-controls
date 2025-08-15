@@ -20,6 +20,7 @@ interface CardProps {
   isPublished: boolean;
   avatars?: Avatar[];
   thumbnail?: string;
+  likesCount?: number;
 }
 
 export const Card = ({
@@ -31,6 +32,7 @@ export const Card = ({
   isPublished = false,
   avatars = [],
   thumbnail,
+  likesCount = 0,
 }: CardProps) => {
   // Ensure tags is always an array
   const safeTags = Array.isArray(tags) ? tags : [];
@@ -76,7 +78,13 @@ export const Card = ({
       </div>
       <div className="card-header">
         <h3>{title}</h3>
-        <div className="rating">★ {rating}/5</div>
+        <div className="card-actions">
+          <div className="rating">★ {rating}/5</div>
+          <div className="likes">
+            <span className="heart-icon">❤️</span>
+            <span className="likes-count">{likesCount}</span>
+          </div>
+        </div>
       </div>
       <div className="card-body">
         <p>{description}</p>
