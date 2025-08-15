@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "./Card";
 import "./cardList.css";
 
@@ -32,27 +32,94 @@ interface CardListProps {
   sortBy?: "title" | "rating" | "date";
   sortOrder?: "asc" | "desc";
   selectedCategories?: string[];
+  selectedTags?: string[];
 }
 
 export const CardList = ({
   cards = [], // Default to empty array
   layout = "grid",
   maxColumns = 3,
-  showFilters = false,
-  sortBy = "title",
-  sortOrder = "asc",
-  selectedCategories = [],
+  showFilters: initialShowFilters = false,
+  sortBy: initialSortBy = "title",
+  sortOrder: initialSortOrder = "asc",
+  selectedCategories: initialSelectedCategories = [],
+  selectedTags: initialSelectedTags = [],
 }: CardListProps) => {
+  // State for interactive controls
+  const [showFilters, setShowFilters] = useState(initialShowFilters);
+  const [sortBy, setSortBy] = useState(initialSortBy);
+  const [sortOrder, setSortOrder] = useState(initialSortOrder);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    initialSelectedCategories,
+  );
+  const [selectedTags, setSelectedTags] =
+    useState<string[]>(initialSelectedTags);
+
+  // Update state when props change
+  useEffect(() => {
+    setShowFilters(initialShowFilters);
+  }, [initialShowFilters]);
+
+  useEffect(() => {
+    setSortBy(initialSortBy);
+  }, [initialSortBy]);
+
+  useEffect(() => {
+    setSortOrder(initialSortOrder);
+  }, [initialSortOrder]);
+
+  useEffect(() => {
+    setSelectedCategories(initialSelectedCategories);
+  }, [initialSelectedCategories]);
+
+  useEffect(() => {
+    setSelectedTags(initialSelectedTags);
+  }, [initialSelectedTags]);
+
   // Ensure cards is always an array
   const safeCards = Array.isArray(cards) ? cards : [];
 
+  // Get unique categories from cards
+  const availableCategories = Array.from(
+    new Set(safeCards.map((card) => card?.metadata?.category).filter(Boolean)),
+  ).sort();
+
+  // Get unique tags from cards
+  const availableTags = Array.from(
+    new Set(safeCards.flatMap((card) => card?.tags || []).filter(Boolean)),
+  ).sort();
+
+  // Toggle category selection
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((cat) => cat !== category)
+        : [...prev, category],
+    );
+  };
+
+  // Toggle tag selection
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
+  };
+
   // Filter cards by selected categories
-  const filteredCards =
+  const categoryFilteredCards =
     selectedCategories.length > 0
       ? safeCards.filter((card) =>
           selectedCategories.includes(card?.metadata?.category),
         )
       : safeCards;
+
+  // Filter cards by selected tags
+  const filteredCards =
+    selectedTags.length > 0
+      ? categoryFilteredCards.filter((card) =>
+          selectedTags.some((tag) => card?.tags?.includes(tag)),
+        )
+      : categoryFilteredCards;
 
   // Sort cards
   const sortedCards = [...filteredCards].sort((a, b) => {
@@ -87,6 +154,132 @@ export const CardList = ({
 
   return (
     <div className="card-list-container">
+      {/* Interactive Controls */}
+      <div className="card-list-controls">
+        <div className="control-section">
+          <label className="control-label">
+            <input
+              type="checkbox"
+              checked={showFilters}
+              onChange={(e) => setShowFilters(e.target.checked)}
+            />
+            Show Filters
+          </label>
+        </div>
+
+        <div className="control-section">
+          <label className="control-label">
+            Sort By:
+            <select
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(e.target.value as "title" | "rating" | "date")
+              }
+              className="control-select"
+            >
+              <option value="title">Title</option>
+              <option value="rating">Rating</option>
+              <option value="date">Date</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="control-section">
+          <label className="control-label">
+            Sort Order:
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+              className="control-select"
+            >
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      {/* Category Selection */}
+      {availableCategories.length > 0 && (
+        <div className="category-controls">
+          <h4 className="category-title">Filter by Categories:</h4>
+          <div className="category-buttons">
+            {availableCategories.map((category) => (
+              <button
+                key={category}
+                className={`category-button ${selectedCategories.includes(category) ? "selected" : ""}`}
+                onClick={() => toggleCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {selectedCategories.length > 0 && (
+            <div className="selected-categories">
+              <span className="selected-label">Active category filters:</span>
+              {selectedCategories.map((category) => (
+                <span key={category} className="selected-category">
+                  {category}
+                  <button
+                    className="remove-category"
+                    onClick={() => toggleCategory(category)}
+                    aria-label={`Remove ${category} filter`}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <button
+                className="clear-all"
+                onClick={() => setSelectedCategories([])}
+              >
+                Clear Categories
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tag Selection */}
+      {availableTags.length > 0 && (
+        <div className="tag-controls">
+          <h4 className="tag-title">Filter by Tags:</h4>
+          <div className="tag-buttons">
+            {availableTags.map((tag) => (
+              <button
+                key={tag}
+                className={`tag-button ${selectedTags.includes(tag) ? "selected" : ""}`}
+                onClick={() => toggleTag(tag)}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
+
+          {selectedTags.length > 0 && (
+            <div className="selected-tags">
+              <span className="selected-label">Active tag filters:</span>
+              {selectedTags.map((tag) => (
+                <span key={tag} className="selected-tag">
+                  #{tag}
+                  <button
+                    className="remove-tag"
+                    onClick={() => toggleTag(tag)}
+                    aria-label={`Remove ${tag} filter`}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <button className="clear-all" onClick={() => setSelectedTags([])}>
+                Clear Tags
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {showFilters && (
         <div className="card-list-filters">
           <div className="filter-info">
@@ -98,6 +291,9 @@ export const CardList = ({
             </span>
             {selectedCategories.length > 0 && (
               <span>Categories: {selectedCategories.join(", ")}</span>
+            )}
+            {selectedTags.length > 0 && (
+              <span>Tags: {selectedTags.join(", ")}</span>
             )}
           </div>
         </div>

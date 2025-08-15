@@ -220,6 +220,25 @@ const meta: Meta<typeof CardList> = {
           { label: "Education", value: "Education" },
         ],
       },
+      selectedTags: {
+        type: "enum",
+        selection: "multiple",
+        options: [
+          { label: "Tag1", value: "Tag1" },
+          { label: "Tag2", value: "Tag2" },
+          { label: "Tag3", value: "Tag3" },
+          { label: "Tag4", value: "Tag4" },
+          { label: "Tag5", value: "Tag5" },
+          { label: "Featured", value: "Featured" },
+          { label: "Regular", value: "Regular" },
+          { label: "Technology", value: "Technology" },
+          { label: "Design", value: "Design" },
+          { label: "Business", value: "Business" },
+          { label: "Science", value: "Science" },
+          { label: "Art", value: "Art" },
+          { label: "Education", value: "Education" },
+        ],
+      },
       sortBy: {
         type: "enum",
         selection: "single",
@@ -255,5 +274,6 @@ export const Default: Story = {
     sortBy: "title",
     sortOrder: "asc",
     selectedCategories: [],
+    selectedTags: [],
   },
 };

@@ -80,13 +80,25 @@ export const Card = ({
       </div>
       <div className="card-body">
         <p>{description}</p>
-        <div className="tags">
-          {safeTags.map((tag, index) => (
-            <span key={index} className="tag">
-              {tag}
-            </span>
-          ))}
-        </div>
+        
+        {/* Category Display */}
+        {metadata?.category && (
+          <div className="card-category">
+            <span className="category-chip">{metadata.category}</span>
+          </div>
+        )}
+        
+        {/* Tags Display */}
+        {safeTags.length > 0 && (
+          <div className="tags">
+            {safeTags.map((tag, index) => (
+              <span key={index} className="tag">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+        
         {safeAvatars.length > 0 && (
           <div className="card-avatars">
             <div className="avatars-label">Contributors:</div>
@@ -103,7 +115,6 @@ export const Card = ({
       <div className="card-footer">
         <div className="metadata">
           <span>By {metadata?.author || "Unknown"}</span>
-          <span>{metadata?.category || "Uncategorized"}</span>
           <span>{metadata?.publishedDate || "No date"}</span>
         </div>
         <div className="status">{isPublished ? "Published" : "Draft"}</div>
