@@ -119,10 +119,14 @@ const meta: Meta<typeof CardList> = {
           type: "object",
           title: {
             type: "string",
+            min: 0,
+            max: 99,
             defaultChar: "T",
           },
           description: {
             type: "string",
+            min: 0,
+            max: 999,
             defaultChar: "D",
           },
           tags: {
