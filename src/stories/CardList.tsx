@@ -20,7 +20,7 @@ interface CardData {
     category: string;
   };
   isPublished: boolean;
-  avatars?: Avatar[];
+  contributors?: Avatar[];
   thumbnail?: string;
   likesCount?: number;
 }
@@ -287,7 +287,9 @@ export const CardList = ({
                   }
                 }
                 isPublished={Boolean(card.isPublished)}
-                avatars={Array.isArray(card.avatars) ? card.avatars : []}
+                contributors={
+                  Array.isArray(card.contributors) ? card.contributors : []
+                }
                 thumbnail={card.thumbnail}
                 likesCount={
                   typeof card.likesCount === "number" ? card.likesCount : 0
