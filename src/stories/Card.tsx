@@ -88,14 +88,14 @@ export const Card = ({
       </div>
       <div className="card-body">
         <p>{description}</p>
-        
+
         {/* Category Display */}
         {metadata?.category && (
           <div className="card-category">
             <span className="category-chip">{metadata.category}</span>
           </div>
         )}
-        
+
         {/* Tags Display */}
         {safeTags.length > 0 && (
           <div className="tags">
@@ -106,7 +106,7 @@ export const Card = ({
             ))}
           </div>
         )}
-        
+
         {safeAvatars.length > 0 && (
           <div className="card-avatars">
             <div className="avatars-label">Contributors:</div>

@@ -289,7 +289,9 @@ export const CardList = ({
                 isPublished={Boolean(card.isPublished)}
                 avatars={Array.isArray(card.avatars) ? card.avatars : []}
                 thumbnail={card.thumbnail}
-                likesCount={typeof card.likesCount === "number" ? card.likesCount : 0}
+                likesCount={
+                  typeof card.likesCount === "number" ? card.likesCount : 0
+                }
               />
             );
           })
