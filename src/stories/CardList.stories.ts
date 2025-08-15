@@ -42,26 +42,25 @@ const generateSampleCards = (count: number) => {
       `Tag${(index % 5) + 1}`,
     ];
 
-    if (Math.random() > 0.5) {
+    // Add alternating tags based on index
+    if (index % 2 === 0) {
       selectedTags.push("Featured");
     } else {
       selectedTags.push("Regular");
     }
 
-    const finalTagCount = Math.floor(Math.random() * 3) + 1;
+    const finalTagCount = Math.min(selectedTags.length, 3);
 
-    // Generate avatars
-    const avatars = Array.from(
-      { length: Math.floor(Math.random() * 4) + 1 },
-      (_, avatarIndex) => ({
-        id: `avatar-${index}-${avatarIndex}`,
-        name: authors[(authorIndex + avatarIndex) % authors.length]!,
-        imageUrl:
-          Math.random() > 0.5
-            ? `https://i.pravatar.cc/40?img=${index + avatarIndex + 1}`
-            : undefined,
-      }),
-    );
+    // Generate fixed number of avatars based on index
+    const avatarCount = (index % 4) + 1;
+    const avatars = Array.from({ length: avatarCount }, (_, avatarIndex) => ({
+      id: `avatar-${index}-${avatarIndex}`,
+      name: authors[(authorIndex + avatarIndex) % authors.length]!,
+      imageUrl:
+        avatarIndex % 2 === 0
+          ? `https://i.pravatar.cc/40?img=${index + avatarIndex + 1}`
+          : undefined,
+    }));
 
     return {
       id: `card-${index + 1}`,
@@ -72,14 +71,18 @@ const generateSampleCards = (count: number) => {
           : ""),
       description: `This is a sample description for card ${index + 1}. It demonstrates how the CardList component handles multiple cards with varying content lengths and different types of information.`,
       tags: selectedTags.slice(0, finalTagCount),
-      rating: Math.round((Math.random() * 4 + 1) * 10) / 10,
+      rating: Math.round(((index % 5) + 1) * 10) / 10, // Rating 1.0 to 5.0
       metadata: {
         author: authors[authorIndex]!,
-        publishedDate: `2024-${String(Math.floor(Math.random() * 12) + 1).padStart(2, "0")}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, "0")}`,
+        publishedDate: `2024-${String((index % 12) + 1).padStart(2, "0")}-${String((index % 28) + 1).padStart(2, "0")}`,
         category: categories[categoryIndex]!,
       },
-      isPublished: Math.random() > 0.3,
+      isPublished: index % 3 !== 0, // 2/3 are published, 1/3 are drafts
       avatars,
+      thumbnail:
+        index % 3 === 0
+          ? undefined
+          : `https://picsum.photos/300/200?random=${index + 1}`,
     };
   });
 };
@@ -110,6 +113,7 @@ const meta: Meta<typeof CardList> = {
               name: "John Doe",
             },
           ],
+          thumbnail: "https://picsum.photos/300/200?random=1",
         }),
         items: {
           type: "object",
@@ -177,6 +181,12 @@ const meta: Meta<typeof CardList> = {
                 defaultChar: "h",
               },
             },
+          },
+          thumbnail: {
+            type: "string",
+            min: 0,
+            max: 200,
+            defaultChar: "h",
           },
         },
       },

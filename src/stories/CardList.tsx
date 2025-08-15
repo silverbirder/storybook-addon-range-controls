@@ -21,6 +21,7 @@ interface CardData {
   };
   isPublished: boolean;
   avatars?: Avatar[];
+  thumbnail?: string;
 }
 
 interface CardListProps {
@@ -126,6 +127,7 @@ export const CardList = ({
                 }
                 isPublished={Boolean(card.isPublished)}
                 avatars={Array.isArray(card.avatars) ? card.avatars : []}
+                thumbnail={card.thumbnail}
               />
             );
           })

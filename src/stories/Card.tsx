@@ -19,6 +19,7 @@ interface CardProps {
   };
   isPublished: boolean;
   avatars?: Avatar[];
+  thumbnail?: string;
 }
 
 export const Card = ({
@@ -29,6 +30,7 @@ export const Card = ({
   metadata = { author: "", publishedDate: "", category: "" },
   isPublished = false,
   avatars = [],
+  thumbnail,
 }: CardProps) => {
   // Ensure tags is always an array
   const safeTags = Array.isArray(tags) ? tags : [];
@@ -53,10 +55,7 @@ export const Card = ({
         .substring(0, 2)
         .toUpperCase();
       return (
-        <div
-          className="avatar-initials"
-          title={avatar.name}
-        >
+        <div className="avatar-initials" title={avatar.name}>
           {initials}
         </div>
       );
@@ -65,6 +64,16 @@ export const Card = ({
 
   return (
     <div className={`card ${isPublished ? "published" : "draft"}`}>
+      <div className="card-thumbnail">
+        <img
+          src={
+            thumbnail ||
+            "https://placehold.co/300x200/e0e0e0/666666?text=No+Image"
+          }
+          alt={title}
+          className="thumbnail-image"
+        />
+      </div>
       <div className="card-header">
         <h3>{title}</h3>
         <div className="rating">★ {rating}/5</div>
