@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import type { PropConfig, PropConfigs } from "../../types";
+import type { PropConfig } from "../../types";
 
 type Props = {
   value: any;
-  config: PropConfig | PropConfigs;
+  config: PropConfig;
   onValueChange: (newValue: any) => void;
 };
 
@@ -13,14 +13,12 @@ export const usePropControl = ({ value, config, onValueChange }: Props) => {
     value?.length ? Math.min(value.length, 5) : 5,
   );
 
-  const isObjectConfig = useMemo(
-    () => "type" in config && config.type === "object",
-    [config],
-  );
+  const isObjectConfig = useMemo(() => config.type === "object", [config]);
 
   useEffect(() => {
     setLocalValue(value);
   }, [value]);
+
   useEffect(() => {
     if (localValue?.length) {
       setDisplayLimit(Math.min(localValue.length, displayLimit));

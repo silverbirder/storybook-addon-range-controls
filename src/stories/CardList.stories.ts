@@ -42,13 +42,25 @@ const generateSampleCards = (count: number) => {
       `Tag${(index % 5) + 1}`,
     ];
 
-    if (Math.random() > 0.5) {
+    // Add alternating tags based on index
+    if (index % 2 === 0) {
       selectedTags.push("Featured");
     } else {
       selectedTags.push("Regular");
     }
 
-    const finalTagCount = Math.floor(Math.random() * 3) + 1;
+    const finalTagCount = Math.min(selectedTags.length, 3);
+
+    // Generate fixed number of avatars based on index
+    const avatarCount = (index % 4) + 1;
+    const avatars = Array.from({ length: avatarCount }, (_, avatarIndex) => ({
+      id: `avatar-${index}-${avatarIndex}`,
+      name: authors[(authorIndex + avatarIndex) % authors.length]!,
+      imageUrl:
+        avatarIndex % 2 === 0
+          ? `https://i.pravatar.cc/40?u=${index + avatarIndex + 1}`
+          : undefined,
+    }));
 
     return {
       id: `card-${index + 1}`,
@@ -59,13 +71,19 @@ const generateSampleCards = (count: number) => {
           : ""),
       description: `This is a sample description for card ${index + 1}. It demonstrates how the CardList component handles multiple cards with varying content lengths and different types of information.`,
       tags: selectedTags.slice(0, finalTagCount),
-      rating: Math.round((Math.random() * 4 + 1) * 10) / 10,
+      rating: Math.round(((index % 5) + 1) * 10) / 10, // Rating 1.0 to 5.0
       metadata: {
         author: authors[authorIndex]!,
-        publishedDate: `2024-${String(Math.floor(Math.random() * 12) + 1).padStart(2, "0")}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, "0")}`,
+        publishedDate: `2024-${String((index % 12) + 1).padStart(2, "0")}-${String((index % 28) + 1).padStart(2, "0")}`,
         category: categories[categoryIndex]!,
       },
-      isPublished: Math.random() > 0.3,
+      isPublished: index % 3 !== 0, // 2/3 are published, 1/3 are drafts
+      avatars,
+      thumbnail:
+        index % 3 === 0
+          ? undefined
+          : `https://picsum.photos/300/200?seed=${index + 1}`,
+      likesCount: (((index + 1) * 7) % 500) + 1,
     };
   });
 };
@@ -82,25 +100,44 @@ const meta: Meta<typeof CardList> = {
           id: `card-${index + 1}`,
           title: "x",
           description: "x",
-          tags: [`Tag${(index % 5) + 1}`],
+          tags: [`Tag${index + 1}`],
           rating: 0,
           isPublished: true,
           metadata: {
-            author: "x",
+            author: "john Doe",
             publishedDate: "2024-01-01",
             category: "Technology",
           },
+          avatars: [
+            {
+              id: `avatar-${index}-1`,
+              name: "John Doe",
+            },
+          ],
+          thumbnail: "https://picsum.photos/300/200?random=1",
+          likesCount: 0,
         }),
         items: {
+          type: "object",
           title: {
             type: "string",
+            min: 0,
+            max: 99,
+            defaultChar: "T",
           },
           description: {
             type: "string",
+            min: 0,
+            max: 999,
+            defaultChar: "D",
           },
           tags: {
             type: "array",
             defaultItem: "Tag1",
+            items: {
+              type: "string",
+            },
+            defaultItems: (index: number) => `Tag${index + 1}`,
           },
           rating: {
             type: "number",
@@ -114,13 +151,54 @@ const meta: Meta<typeof CardList> = {
             type: "object",
             author: {
               type: "string",
-            },
-            publishedDate: {
-              type: "string",
+              defaultChar: "T",
             },
             category: {
               type: "string",
+              defaultChar: "C",
             },
+          },
+          avatars: {
+            type: "array",
+            min: 0,
+            max: 5,
+            defaultItem: (index: number) => ({
+              id: `avatar-${index}`,
+              name: "New User",
+            }),
+            items: {
+              type: "object",
+              id: {
+                type: "string",
+                min: 5,
+                max: 20,
+                defaultChar: "a",
+              },
+              name: {
+                type: "string",
+                min: 2,
+                max: 30,
+                defaultChar: "N",
+              },
+              imageUrl: {
+                type: "string",
+                min: 0,
+                max: 100,
+                defaultChar: "h",
+              },
+            },
+          },
+          thumbnail: {
+            type: "string",
+            min: 0,
+            max: 200,
+            defaultChar: "h",
+          },
+          likesCount: {
+            type: "number",
+            min: 0,
+            max: 1000,
+            step: 1,
           },
         },
       },
@@ -130,7 +208,6 @@ const meta: Meta<typeof CardList> = {
         options: [
           { label: "Grid Layout", value: "grid" },
           { label: "List Layout", value: "list" },
-          { label: "Card Layout", value: "card" },
         ],
       },
       maxColumns: {
@@ -143,6 +220,25 @@ const meta: Meta<typeof CardList> = {
         type: "enum",
         selection: "multiple",
         options: [
+          { label: "Technology", value: "Technology" },
+          { label: "Design", value: "Design" },
+          { label: "Business", value: "Business" },
+          { label: "Science", value: "Science" },
+          { label: "Art", value: "Art" },
+          { label: "Education", value: "Education" },
+        ],
+      },
+      selectedTags: {
+        type: "enum",
+        selection: "multiple",
+        options: [
+          { label: "Tag1", value: "Tag1" },
+          { label: "Tag2", value: "Tag2" },
+          { label: "Tag3", value: "Tag3" },
+          { label: "Tag4", value: "Tag4" },
+          { label: "Tag5", value: "Tag5" },
+          { label: "Featured", value: "Featured" },
+          { label: "Regular", value: "Regular" },
           { label: "Technology", value: "Technology" },
           { label: "Design", value: "Design" },
           { label: "Business", value: "Business" },
@@ -182,9 +278,9 @@ export const Default: Story = {
     cards: generateSampleCards(6),
     layout: "grid",
     maxColumns: 3,
-    showFilters: true,
     sortBy: "title",
     sortOrder: "asc",
     selectedCategories: [],
+    selectedTags: [],
   },
 };
