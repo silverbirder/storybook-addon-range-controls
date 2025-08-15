@@ -28,7 +28,6 @@ interface CardListProps {
   cards: CardData[];
   layout?: "grid" | "list";
   maxColumns?: number;
-  showFilters?: boolean;
   sortBy?: "title" | "rating" | "date";
   sortOrder?: "asc" | "desc";
   selectedCategories?: string[];
@@ -39,14 +38,12 @@ export const CardList = ({
   cards = [], // Default to empty array
   layout = "grid",
   maxColumns = 3,
-  showFilters: initialShowFilters = false,
   sortBy: initialSortBy = "title",
   sortOrder: initialSortOrder = "asc",
   selectedCategories: initialSelectedCategories = [],
   selectedTags: initialSelectedTags = [],
 }: CardListProps) => {
   // State for interactive controls
-  const [showFilters, setShowFilters] = useState(initialShowFilters);
   const [sortBy, setSortBy] = useState(initialSortBy);
   const [sortOrder, setSortOrder] = useState(initialSortOrder);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
@@ -56,10 +53,6 @@ export const CardList = ({
     useState<string[]>(initialSelectedTags);
 
   // Update state when props change
-  useEffect(() => {
-    setShowFilters(initialShowFilters);
-  }, [initialShowFilters]);
-
   useEffect(() => {
     setSortBy(initialSortBy);
   }, [initialSortBy]);
@@ -154,51 +147,6 @@ export const CardList = ({
 
   return (
     <div className="card-list-container">
-      {/* Interactive Controls */}
-      <div className="card-list-controls">
-        <div className="control-section">
-          <label className="control-label">
-            <input
-              type="checkbox"
-              checked={showFilters}
-              onChange={(e) => setShowFilters(e.target.checked)}
-            />
-            フィルターを表示
-          </label>
-        </div>
-
-        <div className="control-section">
-          <label className="control-label">
-            ソート:
-            <select
-              value={sortBy}
-              onChange={(e) =>
-                setSortBy(e.target.value as "title" | "rating" | "date")
-              }
-              className="control-select"
-            >
-              <option value="title">タイトル</option>
-              <option value="rating">評価</option>
-              <option value="date">日付</option>
-            </select>
-          </label>
-        </div>
-
-        <div className="control-section">
-          <label className="control-label">
-            順序:
-            <select
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
-              className="control-select"
-            >
-              <option value="asc">昇順</option>
-              <option value="desc">降順</option>
-            </select>
-          </label>
-        </div>
-      </div>
-
       {/* Category Selection */}
       {availableCategories.length > 0 && (
         <div className="category-controls">
@@ -280,24 +228,40 @@ export const CardList = ({
         </div>
       )}
 
-      {showFilters && (
-        <div className="card-list-filters">
-          <div className="filter-info">
-            {sortedCards.length} / {safeCards.length} 件を表示
-          </div>
-          <div className="filter-controls">
-            <span>
-              {sortBy} ({sortOrder === "asc" ? "昇順" : "降順"})
-            </span>
-            {selectedCategories.length > 0 && (
-              <span>カテゴリー: {selectedCategories.join(", ")}</span>
-            )}
-            {selectedTags.length > 0 && (
-              <span>タグ: {selectedTags.join(", ")}</span>
-            )}
-          </div>
+      <div className="card-list-filters">
+        <div className="filter-info">
+          {sortedCards.length} / {safeCards.length} 件を表示
         </div>
-      )}
+        <div className="filter-controls">
+          <div className="sort-controls">
+            <select
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(e.target.value as "title" | "rating" | "date")
+              }
+              className="control-select"
+            >
+              <option value="title">タイトル</option>
+              <option value="rating">評価</option>
+              <option value="date">日付</option>
+            </select>
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+              className="control-select"
+            >
+              <option value="asc">昇順</option>
+              <option value="desc">降順</option>
+            </select>
+          </div>
+          {selectedCategories.length > 0 && (
+            <span>カテゴリー: {selectedCategories.join(", ")}</span>
+          )}
+          {selectedTags.length > 0 && (
+            <span>タグ: {selectedTags.join(", ")}</span>
+          )}
+        </div>
+      </div>
 
       <div className={containerClass} style={gridStyle}>
         {sortedCards.length > 0 ? (

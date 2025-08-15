@@ -270,7 +270,6 @@ export const Default: Story = {
     cards: generateSampleCards(6),
     layout: "grid",
     maxColumns: 3,
-    showFilters: false,
     sortBy: "title",
     sortOrder: "asc",
     selectedCategories: [],
