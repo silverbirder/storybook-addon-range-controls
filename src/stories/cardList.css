@@ -37,8 +37,10 @@
 .card-list--grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto-fit, auto auto 1fr auto); /* thumbnail, header, body, footer */
   gap: 20px;
   max-width: 100%;
+  align-items: start;
 }
 
 /* Respect maxColumns setting */
@@ -61,6 +63,17 @@
 
 .card-list--list .card {
   margin: 0;
+  /* Disable subgrid for list layout */
+  display: block;
+  grid-template-rows: unset;
+  grid-row: unset;
+}
+
+.card-list--list .card-thumbnail,
+.card-list--list .card-header,
+.card-list--list .card-body,
+.card-list--list .card-footer {
+  grid-row: unset;
 }
 
 /* No cards message */
