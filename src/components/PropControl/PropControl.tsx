@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import type { PropConfig, PropConfigs } from "../../types";
+import type { PropConfig } from "../../types";
 import {
   StyledDetails,
   StyledSummary,
@@ -27,7 +27,7 @@ import { usePropControl } from "./PropControl.hooks";
 type Props = {
   propKey: string;
   value: any;
-  config: PropConfig | PropConfigs;
+  config: PropConfig;
   onValueChange: (newValue: any) => void;
   level?: number;
 };
@@ -56,7 +56,7 @@ export const PropControl = memo(
                 <TypeLabel>(object)</TypeLabel>
               </SummaryTitle>
               <SummaryBadge status="neutral">
-                {Object.keys(config).length} keys
+                {Object.keys(config).filter((k) => k !== "type").length} keys
               </SummaryBadge>
             </SummaryContent>
           </StyledSummary>
@@ -68,7 +68,7 @@ export const PropControl = memo(
                   key={itemKey}
                   propKey={itemKey}
                   value={value?.[itemKey]}
-                  config={itemConfig}
+                  config={itemConfig as PropConfig}
                   onValueChange={(newValue) =>
                     handleChange({ ...value, [itemKey]: newValue })
                   }
@@ -80,13 +80,14 @@ export const PropControl = memo(
       );
     }
     const propConfig = config as PropConfig;
-    const min = propConfig.min ?? 0;
-    const max = propConfig.max ?? 100;
-    const step = propConfig.step ?? 1;
 
     switch (propConfig.type) {
       case "string": {
-        const padChar = (propConfig as PropConfig).defaultChar ?? "x";
+        const min = "min" in propConfig ? (propConfig.min ?? 0) : 0;
+        const max = "max" in propConfig ? (propConfig.max ?? 100) : 100;
+        const step = "step" in propConfig ? (propConfig.step ?? 1) : 1;
+        const padChar =
+          "defaultChar" in propConfig ? (propConfig.defaultChar ?? "x") : "x";
         return (
           <StyledDetails>
             <StyledSummary>
@@ -130,6 +131,9 @@ export const PropControl = memo(
         );
       }
       case "number": {
+        const min = "min" in propConfig ? (propConfig.min ?? 0) : 0;
+        const max = "max" in propConfig ? (propConfig.max ?? 100) : 100;
+        const step = "step" in propConfig ? (propConfig.step ?? 1) : 1;
         return (
           <StyledDetails>
             <StyledSummary>
@@ -192,15 +196,21 @@ export const PropControl = memo(
           </StyledDetails>
         );
       case "array": {
+        const min = "min" in propConfig ? (propConfig.min ?? 0) : 0;
+        const max = "max" in propConfig ? (propConfig.max ?? 100) : 100;
+        const step = "step" in propConfig ? (propConfig.step ?? 1) : 1;
         const currentArray = Array.isArray(localValue) ? localValue : [];
         const defaultItem = propConfig.defaultItem;
+        const itemConfig = propConfig.items;
         return (
           <StyledDetails>
             <StyledSummary>
               <SummaryContent>
                 <SummaryTitle>
                   {propKey}
-                  <TypeLabel>(array)</TypeLabel>
+                  <TypeLabel>
+                    (array{itemConfig ? ` of ${itemConfig.type}` : ""})
+                  </TypeLabel>
                 </SummaryTitle>
                 <SummaryBadge status="neutral">
                   {currentArray.length} items
@@ -230,8 +240,6 @@ export const PropControl = memo(
                         newItem = JSON.parse(
                           JSON.stringify(currentArray[currentArray.length - 1]),
                         );
-                      } else {
-                        newItem = "x";
                       }
                       newArray.push(newItem);
                     }
@@ -241,7 +249,7 @@ export const PropControl = memo(
                   handleChange(newArray);
                 }}
               />
-              {propConfig.items && localValue && localValue.length > 0 && (
+              {itemConfig && localValue && localValue.length > 0 && (
                 <div>
                   <DisplayLimitContainer>
                     <DisplayLimitLabel>Showing</DisplayLimitLabel>
@@ -280,25 +288,75 @@ export const PropControl = memo(
                           </SummaryContent>
                         </StyledSummary>
                         <DetailsContent>
-                          {Object.entries(propConfig.items!).map(
-                            ([itemKey, itemConfig]) => (
-                              <PropControl
-                                key={itemKey}
-                                propKey={itemKey}
-                                value={item?.[itemKey]}
-                                config={itemConfig}
-                                onValueChange={(newItemValue) => {
-                                  const newArray = [...localValue];
-                                  newArray[index] = {
-                                    ...newArray[index],
-                                    [itemKey]: newItemValue,
-                                  };
-                                  handleChange(newArray);
-                                }}
-                                level={level + 1}
-                              />
-                            ),
-                          )}
+                          {itemConfig.type === "object" ? (
+                            Object.entries(itemConfig)
+                              .filter(([k]) => k !== "type")
+                              .map(([itemKey, childConfig]) => (
+                                <PropControl
+                                  key={itemKey}
+                                  propKey={itemKey}
+                                  value={item?.[itemKey]}
+                                  config={childConfig as PropConfig}
+                                  onValueChange={(newItemValue) => {
+                                    const newArray = [...localValue];
+                                    newArray[index] = {
+                                      ...newArray[index],
+                                      [itemKey]: newItemValue,
+                                    };
+                                    handleChange(newArray);
+                                  }}
+                                  level={level + 1}
+                                />
+                              ))
+                          ) : itemConfig.type === "string" ? (
+                            <PropControl
+                              propKey={`item`}
+                              value={item}
+                              config={itemConfig}
+                              onValueChange={(newItemValue) => {
+                                const newArray = [...localValue];
+                                newArray[index] = newItemValue;
+                                handleChange(newArray);
+                              }}
+                              level={level + 1}
+                            />
+                          ) : itemConfig.type === "number" ? (
+                            <PropControl
+                              propKey={`item`}
+                              value={item}
+                              config={itemConfig}
+                              onValueChange={(newItemValue) => {
+                                const newArray = [...localValue];
+                                newArray[index] = newItemValue;
+                                handleChange(newArray);
+                              }}
+                              level={level + 1}
+                            />
+                          ) : itemConfig.type === "boolean" ? (
+                            <PropControl
+                              propKey={`item`}
+                              value={item}
+                              config={itemConfig}
+                              onValueChange={(newItemValue) => {
+                                const newArray = [...localValue];
+                                newArray[index] = newItemValue;
+                                handleChange(newArray);
+                              }}
+                              level={level + 1}
+                            />
+                          ) : itemConfig.type === "enum" ? (
+                            <PropControl
+                              propKey={`item`}
+                              value={item}
+                              config={itemConfig}
+                              onValueChange={(newItemValue) => {
+                                const newArray = [...localValue];
+                                newArray[index] = newItemValue;
+                                handleChange(newArray);
+                              }}
+                              level={level + 1}
+                            />
+                          ) : null}
                         </DetailsContent>
                       </StyledDetails>
                     ))}

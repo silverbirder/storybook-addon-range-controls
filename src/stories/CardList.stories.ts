@@ -92,6 +92,7 @@ const meta: Meta<typeof CardList> = {
           },
         }),
         items: {
+          type: "object",
           title: {
             type: "string",
             defaultChar: "·",
@@ -103,6 +104,9 @@ const meta: Meta<typeof CardList> = {
           tags: {
             type: "array",
             defaultItem: "Tag1",
+            items: {
+              type: "string",
+            },
           },
           rating: {
             type: "number",

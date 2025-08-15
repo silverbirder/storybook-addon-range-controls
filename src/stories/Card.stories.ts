@@ -10,15 +10,13 @@ const meta: Meta<typeof Card> = {
         type: "string",
         min: 1,
         max: 100,
-          step: 1,
-          defaultChar: "·",
+        step: 1,
       },
       description: {
         type: "string",
         min: 10,
         max: 500,
-          step: 10,
-          defaultChar: "·",
+        step: 10,
       },
       tags: {
         type: "array",
@@ -26,6 +24,9 @@ const meta: Meta<typeof Card> = {
         max: 10,
         step: 1,
         defaultItem: "Tag",
+        items: {
+          type: "string",
+        },
       },
       rating: {
         type: "number",
@@ -38,15 +39,15 @@ const meta: Meta<typeof Card> = {
           type: "string",
           min: 1,
           max: 50,
-            step: 1,
-            defaultChar: "·",
+          step: 1,
+          defaultChar: "·",
         },
         category: {
           type: "string",
           min: 1,
           max: 30,
-            step: 1,
-            defaultChar: "·",
+          step: 1,
+          defaultChar: "·",
         },
       },
       isPublished: {

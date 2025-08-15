@@ -93,10 +93,10 @@ For `string` only:
 
 #### array
 
-| key           | type                             | description                                                                                                                     |
-| ------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `items`       | Field definition object          | When elements are objects, define their fields using nested prop definitions (e.g., `{ items: { name: { type: "string" } } }`). |
-| `defaultItem` | `any` , `(index: number) => any` | Default value for each element. Either a fixed value or a function that receives the index to generate a value.                 |
+| key           | type                             | description                                                                                                                                                                      |
+| ------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `items`       | `PropConfig`                     | Definition of element type. Must include `type`. For object elements: `{ items: { type: "object", name: { type: "string" } } }`. For primitives: `{ items: { type: "string" } }` |
+| `defaultItem` | `any` , `(index: number) => any` | Default value for each element. Either a fixed value or a function that receives the index to generate a value.                                                                  |
 
 #### enum
 
@@ -157,12 +157,25 @@ const meta: Meta<typeof Button> = {
         type: "array",
         min: 1,
         max: 3,
+        // items must declare a type
         items: {
+          type: "object",
           name: { type: "string" },
           age: { type: "number", min: 0, max: 120, step: 1 },
         },
         // You can also provide a fixed defaultItem
         defaultItem: { name: "Alice", age: 20 },
+      },
+
+      // array of primitives (strings)
+      tags: {
+        type: "array",
+        min: 0,
+        max: 5,
+        step: 1,
+        items: { type: "string" },
+        // optional: default item when growing array
+        defaultItem: (i: number) => `tag-${i + 1}`,
       },
 
       // enum (single)
