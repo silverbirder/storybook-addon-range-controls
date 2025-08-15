@@ -82,11 +82,11 @@ const meta: Meta<typeof CardList> = {
           id: `card-${index + 1}`,
           title: "x",
           description: "x",
-          tags: [`Tag${(index % 5) + 1}`],
+          tags: [`Tag${index + 1}`],
           rating: 0,
           isPublished: true,
           metadata: {
-            author: "x",
+            author: "john Doe",
             publishedDate: "2024-01-01",
             category: "Technology",
           },
@@ -95,11 +95,11 @@ const meta: Meta<typeof CardList> = {
           type: "object",
           title: {
             type: "string",
-            defaultChar: "·",
+            defaultChar: "T",
           },
           description: {
             type: "string",
-            defaultChar: "·",
+            defaultChar: "D",
           },
           tags: {
             type: "array",
@@ -107,6 +107,7 @@ const meta: Meta<typeof CardList> = {
             items: {
               type: "string",
             },
+            defaultItems: (index: number) => `Tag${index + 1}`,
           },
           rating: {
             type: "number",
@@ -120,11 +121,11 @@ const meta: Meta<typeof CardList> = {
             type: "object",
             author: {
               type: "string",
-              defaultChar: "·",
+              defaultChar: "T",
             },
             category: {
               type: "string",
-              defaultChar: "·",
+              defaultChar: "C",
             },
           },
         },
