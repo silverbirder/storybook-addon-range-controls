@@ -50,6 +50,19 @@ const generateSampleCards = (count: number) => {
 
     const finalTagCount = Math.floor(Math.random() * 3) + 1;
 
+    // Generate avatars
+    const avatars = Array.from(
+      { length: Math.floor(Math.random() * 4) + 1 },
+      (_, avatarIndex) => ({
+        id: `avatar-${index}-${avatarIndex}`,
+        name: authors[(authorIndex + avatarIndex) % authors.length]!,
+        imageUrl:
+          Math.random() > 0.5
+            ? `https://i.pravatar.cc/40?img=${index + avatarIndex + 1}`
+            : undefined,
+      }),
+    );
+
     return {
       id: `card-${index + 1}`,
       title:
@@ -66,6 +79,7 @@ const generateSampleCards = (count: number) => {
         category: categories[categoryIndex]!,
       },
       isPublished: Math.random() > 0.3,
+      avatars,
     };
   });
 };
@@ -90,6 +104,12 @@ const meta: Meta<typeof CardList> = {
             publishedDate: "2024-01-01",
             category: "Technology",
           },
+          avatars: [
+            {
+              id: `avatar-${index}-1`,
+              name: "John Doe",
+            },
+          ],
         }),
         items: {
           type: "object",
@@ -128,6 +148,36 @@ const meta: Meta<typeof CardList> = {
               defaultChar: "C",
             },
           },
+          avatars: {
+            type: "array",
+            min: 0,
+            max: 5,
+            defaultItem: (index: number) => ({
+              id: `avatar-${index}`,
+              name: "New User",
+            }),
+            items: {
+              type: "object",
+              id: {
+                type: "string",
+                min: 5,
+                max: 20,
+                defaultChar: "a",
+              },
+              name: {
+                type: "string",
+                min: 2,
+                max: 30,
+                defaultChar: "N",
+              },
+              imageUrl: {
+                type: "string",
+                min: 0,
+                max: 100,
+                defaultChar: "h",
+              },
+            },
+          },
         },
       },
       layout: {
@@ -136,7 +186,6 @@ const meta: Meta<typeof CardList> = {
         options: [
           { label: "Grid Layout", value: "grid" },
           { label: "List Layout", value: "list" },
-          { label: "Card Layout", value: "card" },
         ],
       },
       maxColumns: {

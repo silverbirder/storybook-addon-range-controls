@@ -2,6 +2,12 @@ import React from "react";
 import { Card } from "./Card";
 import "./cardList.css";
 
+interface Avatar {
+  id: string;
+  name: string;
+  imageUrl?: string;
+}
+
 interface CardData {
   id: string;
   title: string;
@@ -14,6 +20,7 @@ interface CardData {
     category: string;
   };
   isPublished: boolean;
+  avatars?: Avatar[];
 }
 
 interface CardListProps {
@@ -118,6 +125,7 @@ export const CardList = ({
                   }
                 }
                 isPublished={Boolean(card.isPublished)}
+                avatars={Array.isArray(card.avatars) ? card.avatars : []}
               />
             );
           })

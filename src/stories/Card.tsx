@@ -1,6 +1,12 @@
 import React from "react";
 import "./card.css";
 
+interface Avatar {
+  id: string;
+  name: string;
+  imageUrl?: string;
+}
+
 interface CardProps {
   title: string;
   description: string;
@@ -12,6 +18,7 @@ interface CardProps {
     category: string;
   };
   isPublished: boolean;
+  avatars?: Avatar[];
 }
 
 export const Card = ({
@@ -21,9 +28,40 @@ export const Card = ({
   rating = 0,
   metadata = { author: "", publishedDate: "", category: "" },
   isPublished = false,
+  avatars = [],
 }: CardProps) => {
   // Ensure tags is always an array
   const safeTags = Array.isArray(tags) ? tags : [];
+  // Ensure avatars is always an array
+  const safeAvatars = Array.isArray(avatars) ? avatars : [];
+
+  const renderAvatar = (avatar: Avatar) => {
+    if (avatar.imageUrl) {
+      return (
+        <img
+          src={avatar.imageUrl}
+          alt={avatar.name}
+          className="avatar-image"
+          title={avatar.name}
+        />
+      );
+    } else {
+      const initials = avatar.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .substring(0, 2)
+        .toUpperCase();
+      return (
+        <div
+          className="avatar-initials"
+          title={avatar.name}
+        >
+          {initials}
+        </div>
+      );
+    }
+  };
 
   return (
     <div className={`card ${isPublished ? "published" : "draft"}`}>
@@ -40,6 +78,18 @@ export const Card = ({
             </span>
           ))}
         </div>
+        {safeAvatars.length > 0 && (
+          <div className="card-avatars">
+            <div className="avatars-label">Contributors:</div>
+            <div className="avatars-list">
+              {safeAvatars.map((avatar) => (
+                <div key={avatar.id} className="avatar">
+                  {renderAvatar(avatar)}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className="card-footer">
         <div className="metadata">
