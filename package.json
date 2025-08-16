@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-range-controls",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Storybook Addon Range Controls lets you discover layout issues by adjusting story args with sliders.",
   "keywords": [
     "storybook-addons",
