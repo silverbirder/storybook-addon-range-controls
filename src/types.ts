@@ -13,6 +13,15 @@ export type NumberPropConfig = {
   step?: number;
 };
 
+export type ArrayPropConfig = {
+  type: "array";
+  min?: number;
+  max?: number;
+  step?: number;
+  items?: PropConfig;
+  defaultItem?: any | ((index: number) => any);
+};
+
 export type BooleanPropConfig = {
   type: "boolean";
 };
@@ -29,25 +38,16 @@ export type ObjectPropConfig = {
   [K in string as K extends "type" ? never : K]: PropConfig;
 };
 
-export type ArrayPropConfig = {
-  type: "array";
-  min?: number;
-  max?: number;
-  step?: number;
-  items?: PropConfig;
-  defaultItem?: any | ((index: number) => any);
-};
-
 export type PropConfig =
   | StringPropConfig
   | NumberPropConfig
+  | ArrayPropConfig
   | BooleanPropConfig
   | EnumPropConfig
-  | ObjectPropConfig
-  | ArrayPropConfig;
+  | ObjectPropConfig;
 
-export interface PropConfigs {
+export type PropConfigs = {
   [key: string]: PropConfig;
-}
+};
 
-export interface RangeControlsParameters extends PropConfigs {}
+export type RangeControlsParameters = PropConfigs;

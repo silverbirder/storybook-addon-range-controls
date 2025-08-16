@@ -18,7 +18,7 @@ interface CardProps {
     category: string;
   };
   isPublished: boolean;
-  avatars?: Avatar[];
+  contributors?: Avatar[];
   thumbnail?: string;
   likesCount?: number;
 }
@@ -30,14 +30,14 @@ export const Card = ({
   rating = 0,
   metadata = { author: "", publishedDate: "", category: "" },
   isPublished = false,
-  avatars = [],
+  contributors = [],
   thumbnail,
   likesCount = 0,
 }: CardProps) => {
   // Ensure tags is always an array
   const safeTags = Array.isArray(tags) ? tags : [];
-  // Ensure avatars is always an array
-  const safeAvatars = Array.isArray(avatars) ? avatars : [];
+  // Ensure contributors is always an array
+  const safeContributors = Array.isArray(contributors) ? contributors : [];
 
   const renderAvatar = (avatar: Avatar) => {
     if (avatar.imageUrl) {
@@ -107,11 +107,11 @@ export const Card = ({
           </div>
         )}
 
-        {safeAvatars.length > 0 && (
+        {safeContributors.length > 0 && (
           <div className="card-avatars">
             <div className="avatars-label">Contributors:</div>
             <div className="avatars-list">
-              {safeAvatars.map((avatar) => (
+              {safeContributors.map((avatar) => (
                 <div key={avatar.id} className="avatar">
                   {renderAvatar(avatar)}
                 </div>

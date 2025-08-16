@@ -51,16 +51,19 @@ const generateSampleCards = (count: number) => {
 
     const finalTagCount = Math.min(selectedTags.length, 3);
 
-    // Generate fixed number of avatars based on index
+    // Generate fixed number of contributors based on index
     const avatarCount = (index % 4) + 1;
-    const avatars = Array.from({ length: avatarCount }, (_, avatarIndex) => ({
-      id: `avatar-${index}-${avatarIndex}`,
-      name: authors[(authorIndex + avatarIndex) % authors.length]!,
-      imageUrl:
-        avatarIndex % 2 === 0
-          ? `https://i.pravatar.cc/40?u=${index + avatarIndex + 1}`
-          : undefined,
-    }));
+    const contributors = Array.from(
+      { length: avatarCount },
+      (_, avatarIndex) => ({
+        id: `avatar-${index}-${avatarIndex}`,
+        name: authors[(authorIndex + avatarIndex) % authors.length]!,
+        imageUrl:
+          avatarIndex % 2 === 0
+            ? `https://i.pravatar.cc/40?u=${index + avatarIndex + 1}`
+            : undefined,
+      }),
+    );
 
     return {
       id: `card-${index + 1}`,
@@ -78,7 +81,7 @@ const generateSampleCards = (count: number) => {
         category: categories[categoryIndex]!,
       },
       isPublished: index % 3 !== 0, // 2/3 are published, 1/3 are drafts
-      avatars,
+      contributors,
       thumbnail:
         index % 3 === 0
           ? undefined
@@ -89,7 +92,6 @@ const generateSampleCards = (count: number) => {
 };
 
 const meta: Meta<typeof CardList> = {
-  title: "Example/CardList",
   component: CardList,
   parameters: {
     layout: "fullscreen",
@@ -108,7 +110,7 @@ const meta: Meta<typeof CardList> = {
             publishedDate: "2024-01-01",
             category: "Technology",
           },
-          avatars: [
+          contributors: [
             {
               id: `avatar-${index}-1`,
               name: "John Doe",
@@ -158,7 +160,7 @@ const meta: Meta<typeof CardList> = {
               defaultChar: "C",
             },
           },
-          avatars: {
+          contributors: {
             type: "array",
             min: 0,
             max: 5,
