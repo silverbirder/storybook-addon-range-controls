@@ -4,9 +4,13 @@
   "description": "Storybook Addon Range Controls lets you discover layout issues by adjusting story args with sliders.",
   "keywords": [
     "storybook-addons",
+    "data-state",
+    "test",
+    "style",
+    "design",
     "range",
-    "controls",
-    "react"
+    "slider",
+    "controls"
   ],
   "repository": {
     "type": "git",
@@ -92,6 +96,10 @@
     "displayName": "Range Controls",
     "supportedFrameworks": [
       "react"
+    ],
+    "unsupportedFrameworks": [
+      "vue",
+      "angular"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
   }
