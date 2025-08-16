@@ -2,7 +2,7 @@
 
 # Storybook Addon Range Controls
 
-Range your story args to quickly probe layout breaks: scale text length, item counts, and numbers via sliders.
+Storybook Addon Range Controls lets you discover layout issues by adjusting story args with sliders.
 
 ## [DEMO](https://develop--689dd119bb72c220c0ddb738.chromatic.com)
 
@@ -20,7 +20,8 @@ Then, register it as an addon in `.storybook/main.js`.
 ```ts
 // .storybook/main.js
 
-// Replace your-framework with the framework you are using (e.g., react, nextjs)
+// Replace your-framework with the framework you are using (e.g., @storybook/react, @storybook/nextjs)
+// Note: This addon currently supports React based Storybook projects.
 import type { StorybookConfig } from "@storybook/react";
 
 const config = {
@@ -40,15 +41,15 @@ The primary way to use this addon is to define the `range` parameter. You can do
 component level, as below, to affect all stories in the file, or you can do it for a single story.
 
 ```ts
-// Button.stories.ts
+// Card.stories.ts
 
-// Replace your-framework with the name of your framework
+// Replace your-framework with the framework you are using (e.g., @storybook/react, @storybook/nextjs)
 import type { Meta } from "@storybook/your-framework";
 
-import { Button } from "./Button";
+import { Card } from "./Card";
 
-const meta: Meta<typeof Button> = {
-  component: Button,
+const meta: Meta<typeof Card> = {
+  component: Card,
   parameters: {
     range: {
       // See API section below for available parameters
@@ -61,26 +62,78 @@ export default meta;
 
 ## API
 
-### Parameters
+This addon contributes a `range` parameter to Storybook, defined using **PropConfig** objects.
 
-This addon contributes the following parameters to Storybook, under the `range` namespace:
+```ts
+export type StringPropConfig = {
+  type: "string";
+  min?: number;
+  max?: number;
+  step?: number;
+  defaultChar?: string;
+};
 
-| key  | value                                               | required |
-| ---- | --------------------------------------------------- | -------- |
-| type | `string` `number` `array` `boolean` `object` `enum` | true     |
+export type NumberPropConfig = {
+  type: "number";
+  min?: number;
+  max?: number;
+  step?: number;
+};
 
-### Types and additional options
+export type ArrayPropConfig = {
+  type: "array";
+  min?: number;
+  max?: number;
+  step?: number;
+  items?: PropConfig;
+  defaultItem?: any | ((index: number) => any);
+};
 
-| type      | description                                   | additional keys                              |
+export type BooleanPropConfig = {
+  type: "boolean";
+};
+
+export type EnumPropConfig = {
+  type: "enum";
+  selection?: "single" | "multiple";
+  options?: string[] | number[] | { label: string; value: any }[];
+};
+
+export type ObjectPropConfig = {
+  type: "object";
+} & {
+  [K in string as K extends "type" ? never : K]: PropConfig;
+};
+
+export type PropConfig =
+  | StringPropConfig
+  | NumberPropConfig
+  | ArrayPropConfig
+  | BooleanPropConfig
+  | EnumPropConfig
+  | ObjectPropConfig;
+
+export type PropConfigs = {
+  [key: string]: PropConfig;
+};
+```
+
+### Configuration
+
+The `range` parameter accepts the following configuration options.
+
+| type      | description                                   | options                                      |
 | --------- | --------------------------------------------- | -------------------------------------------- |
-| `string`  | Adjust string length via a **range slider**   | `min`, `max`, `step`, `defaultChar`          |
-| `number`  | Adjust a numeric value via a **range slider** | `min`, `max`, `step`                         |
-| `array`   | Adjust array length via a **range slider**    | `min`, `max`, `step`, `items`, `defaultItem` |
-| `enum`    | Enum with single/multiple selection           | `selection`, `options`                       |
+| `string`  | Adjust string length via a slider             | `min`, `max`, `step`, `defaultChar`          |
+| `number`  | Adjust a numeric value via a slider           | `min`, `max`, `step`                         |
+| `array`   | Adjust array length via a slider              | `min`, `max`, `step`, `items`, `defaultItem` |
+| `enum`    | Enum with single or multiple selection        | `selection`, `options`                       |
 | `boolean` | Toggle true/false                             | —                                            |
-| `object`  | Object described by nested field configs      | Nest child fields with their own `type`      |
+| `object`  | Nested fields, each defined by its own `type` | —                                            |
 
-#### string / number / array
+---
+
+#### Common options (`string`, `number`, `array`)
 
 | key    | type     | default | description                |
 | ------ | -------- | ------- | -------------------------- |
@@ -88,97 +141,83 @@ This addon contributes the following parameters to Storybook, under the `range` 
 | `max`  | `number` | `100`   | Maximum value of the range |
 | `step` | `number` | `1`     | Step interval              |
 
-For `string` only:
+#### `string` only
 
-| key           | type     | default | description                                             |
-| ------------- | -------- | ------- | ------------------------------------------------------- |
-| `defaultChar` | `string` | `"x"`   | Character used to pad when increasing length via slider |
+| key           | type     | default | description                                   |
+| ------------- | -------- | ------- | --------------------------------------------- |
+| `defaultChar` | `string` | `"x"`   | Character used when padding length via slider |
 
-#### array
+#### `array` only
 
-| key           | type                             | description                                                                                                                                                                      |
-| ------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `items`       | `PropConfig`                     | Definition of element type. Must include `type`. For object elements: `{ items: { type: "object", name: { type: "string" } } }`. For primitives: `{ items: { type: "string" } }` |
-| `defaultItem` | `any` , `(index: number) => any` | Default value for each element. Either a fixed value or a function that receives the index to generate a value.                                                                  |
+| key           | type                              | description                                                     |
+| ------------- | --------------------------------- | --------------------------------------------------------------- |
+| `items`       | `PropConfig`                      | Definition of element type.                                     |
+| `defaultItem` | `any` \| `(index: number) => any` | Default element value. Can be fixed or generated by a function. |
 
-#### enum
+#### `enum` only
 
-| key         | type                                                      | description                                           |
-| ----------- | --------------------------------------------------------- | ----------------------------------------------------- |
-| `selection` | `single`, `multiple`                                      | Single or multiple selection                          |
-| `options`   | `string[]`, `number[]`, `{ label: string; value: any }[]` | List of options. Supports arrays of label/value pairs |
+| key         | type                                                          | description                                           |
+| ----------- | ------------------------------------------------------------- | ----------------------------------------------------- |
+| `selection` | `"single"` \| `"multiple"`                                    | Single or multiple selection                          |
+| `options`   | `string[]` \| `number[]` \| `{ label: string; value: any }[]` | List of options. Supports arrays of label/value pairs |
 
-#### object
+#### `object` only
 
-`object` is expressed by nesting fields, each with its own `type` definition.
+Define nested fields, each with its own `type`:
 
 ```ts
 {
   type: "object",
-  name: {
-    type: "string"
-  },
-  price: {
-    type: "number"
-  }
+  name: { type: "string" },
+  price: { type: "number" }
 }
 ```
 
 ### Examples
 
-```ts
-// Button.stories.ts
-import type { Meta } from "@storybook/your-framework";
-import { Button } from "./Button";
+Configure `range` on a story (or per-file) to control strings, numbers, arrays, enums, booleans, and nested objects with interactive controls.
 
-const meta: Meta<typeof Button> = {
-  component: Button,
+```tsx
+// Card.stories.ts
+import type { Meta } from "@storybook/your-framework";
+import { Card } from "./Card";
+
+const meta: Meta<typeof Card> = {
+  component: Card,
+
   parameters: {
     range: {
-      // string: adjust length with a range slider
+      // string
       title: { type: "string", min: 0, max: 50, step: 5 },
-      // You can change the padding character when slider grows the string
       subtitle: { type: "string", min: 0, max: 30, step: 1, defaultChar: "·" },
 
-      // number: adjust numeric value with a range slider
-      count: { type: "number", min: 0, max: 20, step: 1 },
+      // number
+      likes: { type: "number", min: 0, max: 999, step: 1 },
 
-      // boolean: toggle
-      enabled: { type: "boolean" },
+      // boolean
+      featured: { type: "boolean" },
 
-      // array: control number of elements; generate defaultItem via function
-      tags: {
-        type: "array",
-        min: 0,
-        max: 5,
-        step: 1,
-        defaultItem: (i: number) => `tag-${i + 1}`,
-      },
-
-      // array + items: array of objects
-      users: {
-        type: "array",
-        min: 1,
-        max: 3,
-        // items must declare a type
-        items: {
-          type: "object",
-          name: { type: "string" },
-          age: { type: "number", min: 0, max: 120, step: 1 },
-        },
-        // You can also provide a fixed defaultItem
-        defaultItem: { name: "Alice", age: 20 },
-      },
-
-      // array of primitives (strings)
+      // array of primitives
       tags: {
         type: "array",
         min: 0,
         max: 5,
         step: 1,
         items: { type: "string" },
-        // optional: default item when growing array
         defaultItem: (i: number) => `tag-${i + 1}`,
+      },
+
+      // array of objects
+      users: {
+        type: "array",
+        min: 1,
+        max: 3,
+        items: {
+          type: "object",
+          name: { type: "string", min: 0, max: 20 },
+          age: { type: "number", min: 0, max: 120, step: 1 },
+        },
+        defaultItem: { name: "Alice", age: 20 },
       },
 
       // enum (single)
@@ -188,7 +227,7 @@ const meta: Meta<typeof Button> = {
         options: ["sm", "md", "lg"],
       },
 
-      // enum (multiple) + label/value object array
+      // enum (multiple)
       colors: {
         type: "enum",
         selection: "multiple",
@@ -199,11 +238,16 @@ const meta: Meta<typeof Button> = {
         ],
       },
 
-      // object: define fields with nested types
+      // object with nesting
       product: {
         type: "object",
         name: { type: "string" },
         price: { type: "number", min: 0, max: 1000, step: 10 },
+
+        specs: {
+          type: "object",
+          weight: { type: "number", min: 0, max: 5000, step: 50 },
+        },
       },
     },
   },
