@@ -6,6 +6,9 @@ Range your story args to quickly probe layout breaks: scale text length, item co
 
 ## [DEMO](https://develop--689dd119bb72c220c0ddb738.chromatic.com)
 
+![Card List - DEMO](./assets/storybook-addon-range-control-card-list.png)
+![Range Controls - DEMO](./assets/storybook-addon-range-control-panel.png)
+
 ## Installation
 
 ```bash
