@@ -1,3 +1,39 @@
+# v0.0.4 (Fri Aug 15 2025)
+
+#### 🐛 Bug Fix
+
+- Release [#5](https://github.com/silverbirder/storybook-addon-range-controls/pull/5) ([@silverbirder](https://github.com/silverbirder))
+
+#### Authors: 1
+
+- silverbirder ([@silverbirder](https://github.com/silverbirder))
+
+---
+
+# v0.0.3 (Thu Aug 14 2025)
+
+#### 🐛 Bug Fix
+
+- Release [#4](https://github.com/silverbirder/storybook-addon-range-controls/pull/4) ([@silverbirder](https://github.com/silverbirder))
+
+#### Authors: 1
+
+- silverbirder ([@silverbirder](https://github.com/silverbirder))
+
+---
+
+# v0.0.2 (Wed Aug 13 2025)
+
+#### 🐛 Bug Fix
+
+- Release [#3](https://github.com/silverbirder/storybook-addon-range-controls/pull/3) ([@silverbirder](https://github.com/silverbirder))
+
+#### Authors: 1
+
+- silverbirder ([@silverbirder](https://github.com/silverbirder))
+
+---
+
 # v0.0.1 (Wed Aug 13 2025)
 
 #### 🐛 Bug Fix
