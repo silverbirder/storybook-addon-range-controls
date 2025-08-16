@@ -1,3 +1,15 @@
+# v0.0.7 (Sat Aug 16 2025)
+
+#### 🐛 Bug Fix
+
+- docs: add motivation section to README.md [#8](https://github.com/silverbirder/storybook-addon-range-controls/pull/8) ([@silverbirder](https://github.com/silverbirder))
+
+#### Authors: 1
+
+- silverbirder ([@silverbirder](https://github.com/silverbirder))
+
+---
+
 # v0.0.6 (Sat Aug 16 2025)
 
 #### 🐛 Bug Fix
