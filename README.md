@@ -9,6 +9,17 @@ Storybook Addon Range Controls lets you discover layout issues by adjusting stor
 ![Card List - DEMO](./assets/storybook-addon-range-control-card-list.png)
 ![Range Controls - DEMO](./assets/storybook-addon-range-control-panel.png)
 
+## Motivation
+
+Originally, I used Storybook’s built-in `argTypes` with `type: "range"` sliders to check design variations.  
+This was great for interactively testing data growth and reduction.
+
+However, setting it up often required extra boilerplate code.  
+For simple primitives like strings and numbers, it wasn’t a big issue, but for more complex structures—such as **arrays of nested objects** (e.g., tags inside a card)—I found myself writing the same setup code repeatedly.
+
+That repetitive overhead was what motivated me to create this addon:  
+a simpler way to configure sliders for **strings, numbers, and arrays** to stress-test UIs more easily.
+
 ## Installation
 
 ```bash
