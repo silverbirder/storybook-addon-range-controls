@@ -92,7 +92,6 @@ const generateSampleCards = (count: number) => {
 };
 
 const meta: Meta<typeof CardList> = {
-  title: "Example/CardList",
   component: CardList,
   parameters: {
     layout: "fullscreen",
