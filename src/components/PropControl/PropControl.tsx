@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState, type ChangeEvent } from "react";
 import type { PropConfig } from "../../types";
 import {
   StyledDetails,
@@ -82,6 +82,87 @@ export const PropControl = memo(
     const propConfig = config as PropConfig;
 
     switch (propConfig.type) {
+      case "image": {
+        const { width: widthObj, height: heightObj, src } = propConfig;
+        const widthDefault = widthObj?.default ?? 300;
+        const widthMin = widthObj?.min ?? 50;
+        const widthMax = widthObj?.max ?? 800;
+        const widthStep = widthObj?.step ?? 1;
+        const heightDefault = heightObj?.default ?? 200;
+        const heightMin = heightObj?.min ?? 50;
+        const heightMax = heightObj?.max ?? 800;
+        const heightStep = heightObj?.step ?? 1;
+        const [width, setWidth] = useState<number>(widthDefault);
+        const [height, setHeight] = useState<number>(heightDefault);
+        const getImageUrl = ({
+          width,
+          height,
+        }: {
+          width?: number;
+          height?: number;
+        }) => {
+          if (typeof src === "function") {
+            return src({ width, height });
+          }
+          if (width && height) return `https://placehold.co/${width}x${height}`;
+          if (width) return `https://placehold.co/${width}x${width}`;
+          if (height) return `https://placehold.co/${height}x${height}`;
+          return "";
+        };
+        const handleWidthChange = (e: ChangeEvent<HTMLInputElement>) => {
+          const newWidth = Number(e.target.value);
+          setWidth(newWidth);
+          handleChange(getImageUrl({ width: newWidth, height }));
+        };
+        const handleHeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+          const newHeight = Number(e.target.value);
+          setHeight(newHeight);
+          handleChange(getImageUrl({ width, height: newHeight }));
+        };
+        return (
+          <StyledDetails>
+            <StyledSummary>
+              <SummaryContent>
+                <SummaryTitle>
+                  {propKey}
+                  <TypeLabel>(image)</TypeLabel>
+                </SummaryTitle>
+                <SummaryBadge status="neutral">
+                  {`${widthObj ? width : "?"} x ${heightObj ? height : "?"}`}
+                </SummaryBadge>
+              </SummaryContent>
+            </StyledSummary>
+            <DetailsContent>
+              {widthObj && (
+                <label>
+                  Width: {width}
+                  <RangeInput
+                    type="range"
+                    min={widthMin}
+                    max={widthMax}
+                    step={widthStep}
+                    value={width}
+                    onChange={handleWidthChange}
+                  />
+                </label>
+              )}
+              {heightObj && (
+                <label>
+                  Height: {height}
+                  <RangeInput
+                    type="range"
+                    min={heightMin}
+                    max={heightMax}
+                    step={heightStep}
+                    value={height}
+                    onChange={handleHeightChange}
+                  />
+                </label>
+              )}
+            </DetailsContent>
+          </StyledDetails>
+        );
+      }
       case "string": {
         const min = "min" in propConfig ? (propConfig.min ?? 0) : 0;
         const max = "max" in propConfig ? (propConfig.max ?? 100) : 100;
