@@ -183,18 +183,34 @@ const meta: Meta<typeof CardList> = {
                 defaultChar: "N",
               },
               imageUrl: {
-                type: "string",
-                min: 0,
-                max: 100,
-                defaultChar: "h",
+                type: "image",
+                src: ({ width }: { width: number }) =>
+                  `https://i.pravatar.cc/${width}`,
+                width: {
+                  min: 40,
+                  default: 40,
+                  max: 100,
+                  step: 1,
+                },
               },
             },
           },
           thumbnail: {
-            type: "string",
-            min: 0,
-            max: 200,
-            defaultChar: "h",
+            type: "image",
+            src: ({ width, height }: { width: number; height: number }) =>
+              `https://placehold.co/${width}x${height}/e0e0e0/666666?text=${width}x${height}`,
+            width: {
+              min: 50,
+              default: 300,
+              max: 800,
+              step: 1,
+            },
+            height: {
+              min: 50,
+              default: 200,
+              max: 800,
+              step: 1,
+            },
           },
           likesCount: {
             type: "number",

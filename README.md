@@ -116,13 +116,31 @@ export type ObjectPropConfig = {
   [K in string as K extends "type" ? never : K]: PropConfig;
 };
 
+export type ImagePropConfig = {
+  type: "image";
+  width?: {
+    min?: number;
+    default?: number;
+    max?: number;
+    step?: number;
+  };
+  height?: {
+    min?: number;
+    default?: number;
+    max?: number;
+    step?: number;
+  };
+  src?: ({ width, height }: { width?: number; height?: number }) => string;
+};
+
 export type PropConfig =
   | StringPropConfig
   | NumberPropConfig
   | ArrayPropConfig
   | BooleanPropConfig
   | EnumPropConfig
-  | ObjectPropConfig;
+  | ObjectPropConfig
+  | ImagePropConfig;
 
 export type PropConfigs = {
   [key: string]: PropConfig;
@@ -141,6 +159,7 @@ The `range` parameter accepts the following configuration options.
 | `enum`    | Enum with single or multiple selection        | `selection`, `options`                       |
 | `boolean` | Toggle true/false                             | —                                            |
 | `object`  | Nested fields, each defined by its own `type` | —                                            |
+| `image`   | Adjust image width/height                     | `width`, `height`, `src`                     |
 
 ---
 
@@ -183,6 +202,14 @@ Define nested fields, each with its own `type`:
   price: { type: "number" }
 }
 ```
+
+#### `image` only
+
+| key      | type                            | description                                                                  |
+| -------- | ------------------------------- | ---------------------------------------------------------------------------- |
+| `width`  | `{ min, default, max, step }`   | Slider settings for width. Defaults: `default=300, min=50, max=800, step=1`  |
+| `height` | `{ min, default, max, step }`   | Slider settings for height. Defaults: `default=200, min=50, max=800, step=1` |
+| `src`    | `({ width, height }) => string` | Custom URL generator. Defaults to `https://placehold.co/{width}x{height}`    |
 
 ### Examples
 
@@ -259,6 +286,15 @@ const meta: Meta<typeof Card> = {
           type: "object",
           weight: { type: "number", min: 0, max: 5000, step: 50 },
         },
+      },
+
+      // image
+      thumbnail: {
+        type: "image",
+        width: { min: 100, default: 300, max: 600, step: 10 },
+        height: { min: 100, default: 200, max: 400, step: 10 },
+        src: ({ width, height }) =>
+          `https://picsum.photos/${width}/${height}?random=1`,
       },
     },
   },

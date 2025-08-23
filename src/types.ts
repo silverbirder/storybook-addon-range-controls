@@ -38,13 +38,31 @@ export type ObjectPropConfig = {
   [K in string as K extends "type" ? never : K]: PropConfig;
 };
 
+export type ImagePropConfig = {
+  type: "image";
+  width?: {
+    min?: number;
+    default?: number;
+    max?: number;
+    step?: number;
+  };
+  height?: {
+    min?: number;
+    default?: number;
+    max?: number;
+    step?: number;
+  };
+  src?: ({ width, height }: { width?: number; height?: number }) => string;
+};
+
 export type PropConfig =
   | StringPropConfig
   | NumberPropConfig
   | ArrayPropConfig
   | BooleanPropConfig
   | EnumPropConfig
-  | ObjectPropConfig;
+  | ObjectPropConfig
+  | ImagePropConfig;
 
 export type PropConfigs = {
   [key: string]: PropConfig;
